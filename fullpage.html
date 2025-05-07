@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollToPlugin.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+		<link rel="stylesheet" href="/assets/css/fullpage.css" />
+	</head>
+	<body>
+		<!--
+Sections animate in and out on scroll. Scroll up or down and the sections will wrap around after hitting the start or end. Uses GSAP for the animations.
+-->
+
+		<header>
+			<nav class="nav">
+				<div class="logo">
+					<img src="/assets/images/logo.svg" alt="logo" />
+				</div>
+				<ul>
+					<li><a href="">About</a></li>
+					<li><a href="">Portfolio</a></li>
+					<li><a href="">Contact</a></li>
+				</ul>
+			</nav>
+		</header>
+		<section class="first">
+			<div class="outer">
+				<div class="inner">
+					<div class="bg one">
+						<h2 class="section-heading">Scroll down</h2>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="second">
+			<div class="outer">
+				<div class="inner">
+					<div class="bg">
+						<h2 class="section-heading">Animated with GSAP</h2>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="portfolio">
+			<section class="third">
+				<div class="outer">
+					<div class="inner">
+						<div class="bg">
+							<h2 class="section-heading">GreenSock</h2>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="fourth">
+				<div class="outer">
+					<div class="inner">
+						<div class="bg">
+							<h2 class="section-heading">Animation platform</h2>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<section class="fifth">
+			<div class="outer">
+				<div class="inner">
+					<div class="bg">
+						<h2 class="section-heading">The Growth Lab</h2>
+						<a href="mailto:ksidea@ksidea.co.kr">ksidea@ksidea.co.kr</a>
+						<a href="">강남구 봉은사로 306 NK타워 9층</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script src="/assets/js/fullpage.js"></script>
+	</body>
+</html>
