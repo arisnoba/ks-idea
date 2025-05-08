@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap');
-
 $bg-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
 
 * {
@@ -131,5 +128,19 @@ section {
 		// 	url('https://images.unsplash.com/photo-1617141636403-f511e2d5dc17?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYxODAzMjc4Mw&ixlib=rb-1.2.1&q=75w=1920');
 		background-position: 50% 45%;
 		background-color: #fff;
+	}
+}
+.portfolio {
+	height: 100%;
+	display: flex;
+
+	.bg {
+		background-color: #fff;
+	}
+	section {
+		width: 100%;
+		.inner {
+			overflow-y: auto !important;
+		}
 	}
 }
