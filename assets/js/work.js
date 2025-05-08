@@ -31,7 +31,7 @@ const touch = {
 // GSAP 타임라인 기본 옵션
 const tlDefaults = {
 	ease: 'slow.inOut',
-	duration: 0.5,
+	duration: 1,
 };
 
 // 각 헤딩 텍스트를 SplitText로 분리(애니메이션용)
@@ -47,11 +47,11 @@ function revealSectionHeading() {
 	return gsap.to(splitHeadings[next].chars, {
 		autoAlpha: 1,
 		xPercent: 0,
-		duration: 0.5, // 등장 속도(수정 가능)
+		duration: 1, // 등장 속도(수정 가능)
 		ease: 'power2',
 		stagger: {
-			each: 0.02,
-			from: 'random',
+			each: 0.05,
+			// from: 'random',
 		},
 	});
 }
@@ -81,14 +81,14 @@ function slideIn() {
 			},
 		})
 		.to([outerWrappers[next], innerWrappers[next]], { xPercent: 0 }, 0)
-		.from(images[next], { xPercent: 15 }, 0)
+		.from(images[next], { xPercent: 0 }, 0)
 		.add(revealSectionHeading(), 0);
 
 	// 이전 섹션이 있다면 퇴장 애니메이션 추가
 	if (current !== undefined) {
 		tl.add(
 			gsap.to(images[current], {
-				xPercent: -15,
+				xPercent: 0,
 				...tlDefaults,
 			}),
 			0
@@ -118,8 +118,8 @@ function slideOut() {
 		})
 		.to(outerWrappers[current], { xPercent: 100 }, 0)
 		.to(innerWrappers[current], { xPercent: -100 }, 0)
-		.to(images[current], { xPercent: 15 }, 0)
-		.from(images[next], { xPercent: -15 }, 0)
+		.to(images[current], { xPercent: 0 }, 0)
+		.from(images[next], { xPercent: 0 }, 0)
 		.add(revealSectionHeading(), '>-1')
 		.set(images[current], { xPercent: 0 });
 }
