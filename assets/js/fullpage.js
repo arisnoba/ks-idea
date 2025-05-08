@@ -14,7 +14,7 @@ document.addEventListener('touchend', handleTouchEnd);
 
 // 상태 관리 변수
 let listening = false, // 이벤트 리스닝 가능 여부
-	direction = 'down', // 스크롤 방향 ('down' 또는 'up')
+	direction = 'right', // 스크롤 방향 ('right' 또는 'left')
 	current, // 현재 활성화된 섹션 인덱스
 	next = 0; // 다음에 보여질 섹션 인덱스
 
@@ -46,7 +46,7 @@ const splitHeadings = headings.map(heading => {
 function revealSectionHeading() {
 	return gsap.to(splitHeadings[next].chars, {
 		autoAlpha: 1,
-		yPercent: 0,
+		xPercent: 0,
 		duration: 0.5, // 등장 속도(수정 가능)
 		ease: 'power2',
 		stagger: {
@@ -57,8 +57,8 @@ function revealSectionHeading() {
 }
 
 // 초기 상태: 모든 섹션, 이미지, 헤딩을 숨기고 래퍼 위치 세팅
-gsap.set(outerWrappers, { yPercent: 100 });
-gsap.set(innerWrappers, { yPercent: -100 });
+gsap.set(outerWrappers, { xPercent: 100 });
+gsap.set(innerWrappers, { xPercent: -100 });
 
 // 아래로 스크롤 시 섹션 등장 애니메이션
 function slideIn() {
@@ -67,8 +67,8 @@ function slideIn() {
 
 	// 다음 섹션을 보이게 세팅
 	gsap.set(sections[next], { autoAlpha: 1, zIndex: 1 });
-	gsap.set(images[next], { yPercent: 0 });
-	gsap.set(splitHeadings[next].chars, { autoAlpha: 0, yPercent: 100 });
+	gsap.set(images[next], { xPercent: 0 });
+	gsap.set(splitHeadings[next].chars, { autoAlpha: 0, xPercent: 100 });
 
 	// 타임라인으로 등장 애니메이션 실행
 	const tl = gsap
@@ -80,20 +80,20 @@ function slideIn() {
 				current = next;
 			},
 		})
-		.to([outerWrappers[next], innerWrappers[next]], { yPercent: 0 }, 0)
-		.from(images[next], { yPercent: 15 }, 0)
+		.to([outerWrappers[next], innerWrappers[next]], { xPercent: 0 }, 0)
+		.from(images[next], { xPercent: 15 }, 0)
 		.add(revealSectionHeading(), 0);
 
 	// 이전 섹션이 있다면 퇴장 애니메이션 추가
 	if (current !== undefined) {
 		tl.add(
 			gsap.to(images[current], {
-				yPercent: -15,
+				xPercent: -15,
 				...tlDefaults,
 			}),
 			0
 		).add(
-			gsap.timeline().set(outerWrappers[current], { yPercent: 100 }).set(innerWrappers[current], { yPercent: -100 }).set(images[current], { yPercent: 0 }).set(sections[current], { autoAlpha: 0 })
+			gsap.timeline().set(outerWrappers[current], { xPercent: 100 }).set(innerWrappers[current], { xPercent: -100 }).set(images[current], { xPercent: 0 }).set(sections[current], { autoAlpha: 0 })
 		);
 	}
 
@@ -104,9 +104,9 @@ function slideIn() {
 function slideOut() {
 	gsap.set(sections[current], { zIndex: 1 });
 	gsap.set(sections[next], { autoAlpha: 1, zIndex: 0 });
-	gsap.set(splitHeadings[next].chars, { autoAlpha: 0, yPercent: 100 });
-	gsap.set([outerWrappers[next], innerWrappers[next]], { yPercent: 0 });
-	gsap.set(images[next], { yPercent: 0 });
+	gsap.set(splitHeadings[next].chars, { autoAlpha: 0, xPercent: 100 });
+	gsap.set([outerWrappers[next], innerWrappers[next]], { xPercent: 0 });
+	gsap.set(images[next], { xPercent: 0 });
 
 	gsap
 		.timeline({
@@ -116,19 +116,19 @@ function slideOut() {
 				current = next;
 			},
 		})
-		.to(outerWrappers[current], { yPercent: 100 }, 0)
-		.to(innerWrappers[current], { yPercent: -100 }, 0)
-		.to(images[current], { yPercent: 15 }, 0)
-		.from(images[next], { yPercent: -15 }, 0)
+		.to(outerWrappers[current], { xPercent: 100 }, 0)
+		.to(innerWrappers[current], { xPercent: -100 }, 0)
+		.to(images[current], { xPercent: 15 }, 0)
+		.from(images[next], { xPercent: -15 }, 0)
 		.add(revealSectionHeading(), '>-1')
-		.set(images[current], { yPercent: 0 });
+		.set(images[current], { xPercent: 0 });
 }
 
 // 스크롤 방향에 따라 섹션 전환을 제어하는 함수
 function handleDirection() {
 	listening = false;
 
-	if (direction === 'down') {
+	if (direction === 'right') {
 		next = current + 1;
 		// 무한 스크롤 제거: 마지막 섹션에서 더 이상 이동하지 않음
 		if (next >= sections.length) {
@@ -139,7 +139,7 @@ function handleDirection() {
 		slideIn();
 	}
 
-	if (direction === 'up') {
+	if (direction === 'left') {
 		next = current - 1;
 		// 무한 스크롤 제거: 첫 섹션에서 더 이상 이동하지 않음
 		if (next < 0) {
@@ -154,7 +154,12 @@ function handleDirection() {
 // 마우스 휠 이벤트 핸들러 (스크롤 방향 결정)
 function handleWheel(e) {
 	if (!listening) return;
-	direction = e.wheelDeltaY < 0 ? 'down' : 'up';
+	// e.deltaX가 0이면 e.deltaY로 대체(트랙패드 호환)
+	if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+		direction = e.deltaX > 0 ? 'right' : 'left';
+	} else {
+		direction = e.deltaY > 0 ? 'right' : 'left';
+	}
 	handleDirection();
 }
 
@@ -178,8 +183,8 @@ function handleTouchEnd(e) {
 	const t = e.changedTouches[0];
 	touch.dx = t.pageX - touch.startX;
 	touch.dy = t.pageY - touch.startY;
-	if (touch.dy > 10) direction = 'up';
-	if (touch.dy < -10) direction = 'down';
+	if (touch.dx > 10) direction = 'left';
+	if (touch.dx < -10) direction = 'right';
 	handleDirection();
 }
 

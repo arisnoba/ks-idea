@@ -79,6 +79,22 @@ header {
   letter-spacing: 0.5em;
 }
 
+.about-section section .outer,
+.about-section section .inner {
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  will-change: transform;
+}
+
+.portfolio-section section .outer,
+.portfolio-section section .inner {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  will-change: transform;
+}
+
 section {
   height: 100%;
   width: 100%;
@@ -91,7 +107,6 @@ section .outer,
 section .inner {
   width: 100%;
   height: 100%;
-  overflow-y: hidden;
   will-change: transform;
 }
 section .bg {
