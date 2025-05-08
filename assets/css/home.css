@@ -1,0 +1,97 @@
+body {
+  text-wrap: balance;
+  word-break: keep-all;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  color: #000;
+  background: #000;
+  font-family: "futura-pt", sans-serif;
+  text-transform: uppercase;
+}
+
+.home h1,
+.home h2 {
+  font-size: clamp(1rem, 5vw, 2rem);
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 0.35em;
+  color: #000;
+  text-align: justify;
+}
+.home section {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  position: fixed;
+  visibility: hidden;
+  will-change: transform;
+}
+.home section .outer,
+.home section .inner {
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  will-change: transform;
+}
+.home section .bg {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: #fff;
+}
+.home section .bg .clip-text {
+  overflow: hidden;
+}
+.home .text-wrap {
+  max-width: 520px;
+}
+.home .text-wrap h2 {
+  margin-bottom: 64px;
+  margin-top: 0;
+}
+.home .text-wrap p {
+  font-size: clamp(1rem, 2vw, 24px);
+  line-height: 1.7;
+  color: #4d4d4d;
+}
+.home .text-wrap .part {
+  position: relative;
+  display: block;
+  margin-top: 0.5em;
+  text-transform: none;
+}
+.home .sub-text {
+  opacity: 0;
+  visibility: hidden;
+  text-wrap: balance;
+  word-break: keep-all;
+}
