@@ -9,6 +9,7 @@ body {
   text-align: center;
   letter-spacing: -0.02em;
   color: #000;
+  font-family: "SUIT", sans-serif;
 }
 .work section {
   height: 100%;
@@ -76,6 +77,7 @@ body {
 }
 .work .work-info p {
   text-align: left;
+  font-family: "SUIT", sans-serif;
 }
 .work .work-info .brand {
   font-size: 20px;

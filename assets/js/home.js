@@ -61,9 +61,9 @@ function revealSubText() {
 		{
 			autoAlpha: 1,
 			y: 0,
-			duration: 1,
-			delay: 0.25,
-			ease: 'power2.out',
+			duration: 0.5,
+			delay: 0.1,
+			// ease: '',
 			onComplete: () => {
 				subText.classList.add('shown');
 			},
