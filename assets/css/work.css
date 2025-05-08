@@ -42,6 +42,8 @@ body {
   width: 100%;
   top: 0;
   background-color: #fff;
+  background-size: cover;
+  background-position: center;
 }
 .work section .bg .clip-text {
   overflow: hidden;
