@@ -52,11 +52,21 @@
 	</head>
 
 	<body>
+		<nav>
+			<a href="#"><img src="/assets/images/logo.svg" alt="logo" /></a>
+			<ul>
+				<li><a href="#">works</a></li>
+				<li><a href="#">contact</a></li>
+			</ul>
+		</nav>
 		<!-- Swiper -->
-
 		<div class="swiper mySwiper swiper-v">
 			<div class="swiper-wrapper">
-				<div class="swiper-slide">V0</div>
+				<div class="swiper-slide">
+					<svg width="500" height="200" viewBox="0 0 500 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M0 200V132.19L500 0V200H0Z" fill="black" style="fill: black; fill-opacity: 1" />
+					</svg>
+				</div>
 				<div class="swiper-slide">V1</div>
 				<div class="swiper-slide">V2</div>
 				<div class="swiper-slide">V3</div>
@@ -95,6 +105,7 @@
 			var swiperH = new Swiper('.swiper-h', {
 				spaceBetween: 50,
 				mousewheel: false, // 처음엔 비활성화
+				allowTouchMove: false, // 좌우 스와이프 막기
 				pagination: {
 					el: '.swiper-pagination',
 					clickable: true,
@@ -161,6 +172,38 @@
 					e.preventDefault();
 				}
 			}
+
+			// 모바일 상하 스와이프 감지 및 swiper-h 슬라이드 이동
+			let touchStartY = 0;
+			let touchEndY = 0;
+			const swiperHEl = document.querySelector('.swiper-h');
+
+			swiperHEl.addEventListener('touchstart', function (e) {
+				if (e.touches.length === 1) {
+					touchStartY = e.touches[0].clientY;
+				}
+			});
+
+			swiperHEl.addEventListener(
+				'touchend',
+				function (e) {
+					if (e.changedTouches.length === 1) {
+						touchEndY = e.changedTouches[0].clientY;
+						const diffY = touchEndY - touchStartY;
+						if (Math.abs(diffY) > 40) {
+							// 임계값(조정 가능)
+							e.stopPropagation(); // 이벤트 버블링 방지
+							e.preventDefault(); // 기본 동작 방지
+							if (diffY < 0) {
+								swiperH.slideNext();
+							} else {
+								swiperH.slidePrev();
+							}
+						}
+					}
+				},
+				{ passive: false }
+			);
 		</script>
 	</body>
 </html>
