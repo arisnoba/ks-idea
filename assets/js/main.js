@@ -1,172 +1,47 @@
-gsap.registerPlugin(SplitText);
+gsap.registerPlugin(ScrollTrigger);
 
-gsap.set('h1', { opacity: 1 });
-
-let split = SplitText.create('#heading', { type: 'chars' });
-gsap.from(split.chars, {
-	y: -10,
-	autoAlpha: 0,
-	stagger: 0.09,
-});
-
-// grow-or-disappear section 애니메이션
-// h2 span 각각 등장
-gsap.from('.grow-or-disappear h2 span', {
-	scrollTrigger: {
-		trigger: '.grow-or-disappear',
-		start: 'top 50%',
-		toggleActions: 'play none none none',
-		onEnter: () => console.log('grow-or-disappear h2 span 애니메이션 시작'),
-	},
-	y: 60,
-	opacity: 0,
-	stagger: 1,
-	duration: 1,
-	ease: 'power3.out',
-	onComplete: () => console.log('grow-or-disappear h2 span 애니메이션 끝'),
-});
-// p 등장
-gsap.from('.grow-or-disappear p', {
-	scrollTrigger: {
-		trigger: '.grow-or-disappear',
-		start: 'top 50%',
-		toggleActions: 'play none none none',
-		onEnter: () => console.log('grow-or-disappear p 애니메이션 시작'),
-	},
-	y: 40,
-	opacity: 0,
-	duration: 1,
-	delay: 0.6,
-	ease: 'power3.out',
-	onComplete: () => console.log('grow-or-disappear p 애니메이션 끝'),
+// 1. 세로 fullpage swiper
+const verticalSections = gsap.utils.toArray('.vertical');
+verticalSections.forEach((section, i) => {
+	ScrollTrigger.create({
+		trigger: section,
+		start: 'top top',
+		end: 'bottom top',
+		pin: true,
+		snap: {
+			snapTo: 1,
+			duration: { min: 0.2, max: 0.5 },
+			ease: 'power1.inOut',
+		},
+		// markers: true,
+	});
 });
 
-// grow-lab section 애니메이션
-// h2 등장
-gsap.from('.grow-lab h2', {
-	scrollTrigger: {
-		trigger: '.grow-lab',
-		start: 'top 50%',
-		toggleActions: 'play none none none',
-		onEnter: () => console.log('grow-lab h2 애니메이션 시작'),
-	},
-	y: 60,
-	opacity: 0,
-	duration: 1,
-	ease: 'power3.out',
-	onComplete: () => console.log('grow-lab h2 애니메이션 끝'),
-});
-// p 등장
-gsap.from('.grow-lab p', {
-	scrollTrigger: {
-		trigger: '.grow-lab',
-		start: 'top 50%',
-		toggleActions: 'play none none none',
-		onEnter: () => console.log('grow-lab p 애니메이션 시작'),
-	},
-	y: 40,
-	opacity: 0,
-	duration: 1,
-	delay: 0.3,
-	ease: 'power3.out',
-	onComplete: () => console.log('grow-lab p 애니메이션 끝'),
-});
+// 2. 가로 fullpage swiper
+const horizontalScroll = document.querySelector('.horizontal-scroll');
+if (horizontalScroll) {
+	const horizontalSections = gsap.utils.toArray('.horizontal-scroll .horizontal');
+	const totalSections = horizontalSections.length;
 
-// program section 애니메이션
-// h2 등장
-gsap.from('.program h2', {
-	scrollTrigger: {
-		trigger: '.program',
-		start: 'top 50%',
-		toggleActions: 'play none none none',
-		onEnter: () => console.log('program h2 애니메이션 시작'),
-	},
-	y: 60,
-	opacity: 0,
-	duration: 1,
-	ease: 'power3.out',
-	onComplete: () => console.log('program h2 애니메이션 끝'),
-});
-// p 등장
-gsap.from('.program p', {
-	scrollTrigger: {
-		trigger: '.program',
-		start: 'top 50%',
-		toggleActions: 'play none none none',
-		onEnter: () => console.log('program p 애니메이션 시작'),
-	},
-	y: 40,
-	opacity: 0,
-	duration: 1,
-	delay: 0.3,
-	ease: 'power3.out',
-	onComplete: () => console.log('program p 애니메이션 끝'),
-});
-
-// .works 섹션 가로 스크롤 등장 애니메이션 (이미지와 텍스트 분리)
-const worksSections = document.querySelectorAll('.horizontal-scroll .works');
-worksSections.forEach((section, i) => {
-	const picture = section.querySelector('picture');
-	const text = section.querySelector('.text');
-	if (picture) {
-		gsap.fromTo(
-			picture,
-			{ y: 80, opacity: 0 },
-			{
-				y: 0,
-				opacity: 1,
-				duration: 1,
-				ease: 'power3.out',
-				scrollTrigger: {
-					trigger: section,
-					containerAnimation: ScrollTrigger.getById('horizontalScroll'),
-					start: 'center center',
-					end: '+=200',
-					markers: true,
-					toggleActions: 'play none none none',
-					// markers: true, // 필요시 활성화
-				},
-			}
-		);
-	}
-	if (text) {
-		gsap.fromTo(
-			text,
-			{ y: 80, opacity: 0 },
-			{
-				y: 0,
-				opacity: 1,
-				duration: 1,
-				ease: 'power3.out',
-				scrollTrigger: {
-					trigger: section,
-					containerAnimation: ScrollTrigger.getById('horizontalScroll'),
-					start: 'center center',
-					end: '+=200',
-					markers: true,
-					toggleActions: 'play none none none',
-					// markers: true, // 필요시 활성화
-				},
-			}
-		);
-	}
-});
-
-// 가로 스크롤 트리거(ScrollTrigger 인스턴스에 id 부여)
-const horizontal = document.querySelector('.horizontal-scroll');
-if (horizontal) {
-	const sections = gsap.utils.toArray('.horizontal-scroll .works');
-	gsap.to(sections, {
-		xPercent: -100 * (sections.length - 1),
+	gsap.to(horizontalSections, {
+		xPercent: -100 * (totalSections - 1),
 		ease: 'none',
 		scrollTrigger: {
-			id: 'horizontalScroll',
-			trigger: horizontal,
+			trigger: horizontalScroll,
+			start: 'top top',
+			end: () => '+=' + horizontalScroll.offsetWidth * (totalSections - 1),
 			pin: true,
-			markers: true,
 			scrub: 1,
-			end: () => '+=' + horizontal.offsetWidth,
+			snap: {
+				snapTo: 1 / (totalSections - 1),
+				duration: { min: 0.2, max: 0.5 },
+				ease: 'power1.inOut',
+			},
 			anticipatePin: 1,
+			// markers: true,
+			horizontal: true,
 		},
 	});
 }
+
+document.body.style.overflowX = 'hidden';

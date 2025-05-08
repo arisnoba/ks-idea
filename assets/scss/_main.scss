@@ -1,8 +1,8 @@
 html {
 	overflow-y: scroll;
 	height: 100%;
-	-webkit-overflow-scrolling: touch;
-	overflow-scrolling: touch;
+	// -webkit-overflow-scrolling: touch;
+	// overflow-scrolling: touch;
 }
 
 body {
@@ -30,7 +30,7 @@ h5 {
 	font-family: 'futura-pt', sans-serif !important;
 	font-weight: 500;
 	letter-spacing: 0.35em;
-	margin-roght: -0.25em;
+	margin-right: -0.25em;
 }
 section {
 	height: 100vh;
@@ -38,6 +38,7 @@ section {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+	position: relative;
 	h1,
 	h2 {
 		font-size: 32px;
@@ -98,7 +99,7 @@ section {
 .horizontal-scroll {
 	width: 100vw;
 	height: 100vh;
-	overflow-x: hidden;
+	overflow-x: auto;
 	overflow-y: hidden;
 	white-space: nowrap;
 	display: flex;
