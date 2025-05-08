@@ -185,3 +185,24 @@ function handleTouchEnd(e) {
 
 // 첫 진입 시 첫 섹션 등장
 slideIn();
+
+// 네비게이션 앵커 클릭 시 해당 섹션으로 이동
+const navLinks = document.querySelectorAll('nav a[href^="#"]');
+navLinks.forEach(link => {
+	link.addEventListener('click', function (e) {
+		e.preventDefault();
+		const targetId = this.getAttribute('href').replace('#', '');
+		const targetSection = document.getElementById(targetId);
+		if (!targetSection) return;
+		const targetIdx = Array.from(sections).indexOf(targetSection);
+		if (targetIdx === -1 || targetIdx === current) return;
+
+		// 상태 업데이트 및 애니메이션 실행
+		next = targetIdx;
+		if (next > current) {
+			slideIn();
+		} else if (next < current) {
+			slideOut();
+		}
+	});
+});
