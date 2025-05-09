@@ -12,7 +12,49 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollToPlugin.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
 		<link rel="stylesheet" href="/assets/css/main.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 		<link rel="stylesheet" href="/assets/css/work.css" />
+		<style>
+			html,
+			body {
+				position: relative;
+				height: 100%;
+			}
+
+			body {
+				background: #eee;
+				font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+				font-size: 14px;
+				color: #000;
+				margin: 0;
+				padding: 0;
+			}
+
+			.swiper {
+				width: 100%;
+				height: 100%;
+			}
+
+			.swiper-slide {
+				text-align: center;
+				font-size: 18px;
+				background: #fff;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.swiper-slide img {
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			.swiper-h {
+				background: #eee;
+			}
+		</style>
 	</head>
 	<body>
 		<header>
@@ -25,94 +67,90 @@
 			</nav>
 		</header>
 		<main class="work">
-			<div class="portfolio-section">
-				<section class="work-01">
-					<div class="outer">
-						<div class="inner">
-							<div class="bg">
-								<div class="box">
-									<div class="work-img">
-										<img src="/assets/images/portfolio-01.jpg" alt="work-01" />
-									</div>
-									<div class="work-info">
-										<h2 class="section-heading">Fandom이 필요해</h2>
-										<p class="brand">호카 팝업스토어 ‘HOKA BONDI-9 POP UP’</p>
-										<p class="work-desc">
-											러닝 매니아들 사이에서 인기 브랜드로 떠오르기 시작한 호카의 성장을 위해 가장 필요한 것은 브랜드 팬덤 외연의 확장이었다 팬덤이 있는 곳을 찾아가 브랜드의 차별적 실체를
-											공유했다 2025년 브랜드 팝업은 호카 아시아 태평양 지역 전체의 가이드라인이 되었다
-										</p>
-									</div>
-								</div>
+			<!-- Swiper -->
+			<div class="swiper mySwiper swiper-h">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div class="contents">
+							<div class="work-img">
+								<img src="/assets/images/portfolio-01.jpg" alt="work-01" />
+							</div>
+							<div class="work-info">
+								<h2 class="section-heading">Fandom이 필요해</h2>
+								<p class="brand">호카 팝업스토어 'HOKA BONDI-9 POP UP'</p>
+								<p class="work-desc">
+									러닝 매니아들 사이에서 인기 브랜드로 떠오르기 시작한 호카의 성장을 위해 가장 필요한 것은 브랜드 팬덤 외연의 확장이었다 팬덤이 있는 곳을 찾아가 브랜드의 차별적 실체를
+									공유했다 2025년 브랜드 팝업은 호카 아시아 태평양 지역 전체의 가이드라인이 되었다
+								</p>
 							</div>
 						</div>
 					</div>
-				</section>
-				<section class="work-02">
-					<div class="outer">
-						<div class="inner">
-							<div class="bg">
-								<div class="box">
-									<div class="work-img">
-										<img src="/assets/images/portfolio-02.jpg" alt="work-01" />
-									</div>
-									<div class="work-info">
-										<h2 class="section-heading">이런 증권회사였어?</h2>
-										<p class="brand">NH투자증권 팝업스토어 ‘N2, Night’</p>
-										<p class="work-desc">
-											업계 5위권에 드는 실체에 비해 브랜드 인지도나 그 위상이 턱없이 낮은 수준인 NH투자증권을 위해, 다른 투자증권회사 대비 우월한 브랜드 이미지를 구축하는 것이 성장의 핵심
-											전략이었다 ‘투자, 문화가 되다’라는 슬로건으로 시작한 브랜드 캠페인은 자기성장이라는 메세지를 전달하기 위한 ‘N2, Night’라는 브랜드 캠페인으로까지 이어졌다
-										</p>
-									</div>
-								</div>
+					<div class="swiper-slide">
+						<div class="contents">
+							<div class="work-img">
+								<img src="/assets/images/portfolio-02.jpg" alt="work-01" />
+							</div>
+							<div class="work-info">
+								<h2 class="section-heading">이런 증권회사였어?</h2>
+								<p class="brand">NH투자증권 팝업스토어 'N2, Night'</p>
+								<p class="work-desc">
+									업계 5위권에 드는 실체에 비해 브랜드 인지도나 그 위상이 턱없이 낮은 수준인 NH투자증권을 위해, 다른 투자증권회사 대비 우월한 브랜드 이미지를 구축하는 것이 성장의 핵심
+									전략이었다 '투자, 문화가 되다'라는 슬로건으로 시작한 브랜드 캠페인은 자기성장이라는 메세지를 전달하기 위한 'N2, Night'라는 브랜드 캠페인으로까지 이어졌다
+								</p>
 							</div>
 						</div>
 					</div>
-				</section>
-				<section class="work-03">
-					<div class="outer">
-						<div class="inner">
-							<div class="bg">
-								<div class="box">
-									<div class="work-img">
-										<img src="/assets/images/portfolio-03.jpg" alt="work-01" />
-									</div>
-									<div class="work-info">
-										<h2 class="section-heading">나 여기 있어요</h2>
-										<p class="brand">프로스펙스 광고 캠페인 ‘잘됐으면 좋겠어 대한민국 오리지널’</p>
-										<p class="work-desc">
-											2020년 프로스펙스는 한국 소비자들에게 거의 잊혀져 가던 이름이었다 대형 스포츠 브랜드가 하는 캠페인 방식에서 과감히 벗어나 브랜드 존재감의 불씨를 되살리는 것이 목표였다
-											한국을 대표하는 스포츠 브랜드로 자리매김하기 위한 첫걸음을 떼게 했다
-										</p>
-									</div>
-								</div>
+					<div class="swiper-slide">
+						<div class="contents">
+							<div class="work-img">
+								<img src="/assets/images/portfolio-03.jpg" alt="work-01" />
+							</div>
+							<div class="work-info">
+								<h2 class="section-heading">나 여기 있어요</h2>
+								<p class="brand">프로스펙스 광고 캠페인 '잘됐으면 좋겠어 대한민국 오리지널'</p>
+								<p class="work-desc">
+									2020년 프로스펙스는 한국 소비자들에게 거의 잊혀져 가던 이름이었다 대형 스포츠 브랜드가 하는 캠페인 방식에서 과감히 벗어나 브랜드 존재감의 불씨를 되살리는 것이 목표였다
+									한국을 대표하는 스포츠 브랜드로 자리매김하기 위한 첫걸음을 떼게 했다
+								</p>
 							</div>
 						</div>
 					</div>
-				</section>
-				<section class="work-04">
-					<div class="outer">
-						<div class="inner">
-							<div class="bg">
-								<div class="box">
-									<div class="work-img">
-										<img src="/assets/images/portfolio-04.png" alt="work-01" />
-									</div>
-									<div class="work-info">
-										<h2 class="section-heading">경험이 답이다</h2>
-										<p class="brand">LG U+ 팝업스토어 ‘일상로5G길’</p>
-										<p class="work-desc">
-											3위 통신사의 입지를 벗어나기 위한 LG U+에게 2019년 5G 런칭 은 절호의 기회였다 서비스 실체의 경험을 성장의 핵심 전략으로 제안했다 강남역 한복판에서 5G가 펼쳐줄 세상을
-											MZ의 관점에서 흥미 있게 경험할 수 있는 캠페인을 기획, 실행했다
-										</p>
-									</div>
-								</div>
+					<div class="swiper-slide">
+						<div class="contents">
+							<div class="work-img">
+								<img src="/assets/images/portfolio-04.png" alt="work-01" />
+							</div>
+							<div class="work-info">
+								<h2 class="section-heading">경험이 답이다</h2>
+								<p class="brand">LG U+ 팝업스토어 '일상로5G길'</p>
+								<p class="work-desc">
+									3위 통신사의 입지를 벗어나기 위한 LG U+에게 2019년 5G 런칭 은 절호의 기회였다 서비스 실체의 경험을 성장의 핵심 전략으로 제안했다 강남역 한복판에서 5G가 펼쳐줄 세상을 MZ의
+									관점에서 흥미 있게 경험할 수 있는 캠페인을 기획, 실행했다
+								</p>
 							</div>
 						</div>
 					</div>
-				</section>
+				</div>
+				<div class="swiper-pagination"></div>
 			</div>
+
+			<!-- Swiper JS -->
+			<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+			<!-- Initialize Swiper -->
+			<script>
+				// 세로 Swiper
+				var swiperH = new Swiper('.swiper-h', {
+					direction: 'horizontal',
+					// mousewheel: true,
+					pagination: {
+						el: '.swiper-pagination',
+						clickable: true,
+					},
+				});
+			</script>
 		</main>
 
-		<script src="/assets/js/work.js"></script>
+		<!-- <script src="/assets/js/work.js"></script> -->
 	</body>
 </html>
