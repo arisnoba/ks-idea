@@ -50,6 +50,8 @@
 				background: #eee;
 			}
 		</style>
+		<!-- GSAP CDN 추가 -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
 	</head>
 
 	<body>
@@ -105,7 +107,22 @@
 
 		<!-- Initialize Swiper -->
 		<script>
-			// 세로 Swiper
+			// GSAP 애니메이션 함수 정의
+			function animateSlideContent(slide) {
+				const h1 = slide.querySelector('h1');
+				const h2 = slide.querySelector('h2');
+				const desc = slide.querySelector('p.desc');
+
+				if (h1) gsap.set(h1, { opacity: 0, y: 40 });
+				if (h2) gsap.set(h2, { opacity: 0, y: 40 });
+				if (desc) gsap.set(desc, { opacity: 0, y: 40 });
+
+				const tl = gsap.timeline();
+				if (h1) tl.to(h1, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0);
+				if (h2) tl.to(h2, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.3);
+				if (desc) tl.to(desc, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.6);
+			}
+
 			var swiperV = new Swiper('.swiper-v', {
 				direction: 'vertical',
 				mousewheel: true,
@@ -113,6 +130,26 @@
 					el: '.swiper-pagination',
 					clickable: true,
 				},
+				on: {
+					slideChangeTransitionStart: function () {
+						this.slides.forEach(function (slide) {
+							const h1 = slide.querySelector('h1');
+							const h2 = slide.querySelector('h2');
+							const desc = slide.querySelector('p.desc');
+							if (h1) gsap.set(h1, { opacity: 0, y: 40 });
+							if (h2) gsap.set(h2, { opacity: 0, y: 40 });
+							if (desc) gsap.set(desc, { opacity: 0, y: 40 });
+						});
+						const activeSlide = this.slides[this.activeIndex];
+						animateSlideContent(activeSlide);
+					},
+				},
+			});
+
+			// 첫 로드시에도 모션 적용
+			document.addEventListener('DOMContentLoaded', function () {
+				const firstActive = document.querySelector('.swiper-slide-active');
+				if (firstActive) animateSlideContent(firstActive);
 			});
 		</script>
 	</body>

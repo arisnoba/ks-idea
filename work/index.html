@@ -139,7 +139,25 @@
 
 			<!-- Initialize Swiper -->
 			<script>
-				// 세로 Swiper
+				// GSAP 애니메이션 함수 정의
+				function animateSlideContent(slide) {
+					const heading = slide.querySelector('.section-heading');
+					const brand = slide.querySelector('.brand');
+					const desc = slide.querySelector('.work-desc');
+
+					// 모두 초기화
+					if (heading) gsap.set(heading, { opacity: 0, y: 40 });
+					if (brand) gsap.set(brand, { opacity: 0, y: 40 });
+					if (desc) gsap.set(desc, { opacity: 0, y: 40 });
+
+					// 순차 애니메이션
+					const tl = gsap.timeline();
+					if (heading) tl.to(heading, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0);
+					if (brand) tl.to(brand, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.1);
+					if (desc) tl.to(desc, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.2);
+				}
+
+				// Swiper 초기화
 				var swiperH = new Swiper('.swiper-h', {
 					direction: 'horizontal',
 					// mousewheel: true,
@@ -147,6 +165,28 @@
 						el: '.swiper-pagination',
 						clickable: true,
 					},
+					on: {
+						slideChangeTransitionStart: function () {
+							// 모든 슬라이드 텍스트 초기화
+							this.slides.forEach(function (slide) {
+								const heading = slide.querySelector('.section-heading');
+								const brand = slide.querySelector('.brand');
+								const desc = slide.querySelector('.work-desc');
+								if (heading) gsap.set(heading, { opacity: 0, y: 40 });
+								if (brand) gsap.set(brand, { opacity: 0, y: 40 });
+								if (desc) gsap.set(desc, { opacity: 0, y: 40 });
+							});
+							// 현재 활성 슬라이드에 애니메이션 적용
+							const activeSlide = this.slides[this.activeIndex];
+							animateSlideContent(activeSlide);
+						},
+					},
+				});
+
+				// 첫 로드시에도 모션 적용
+				document.addEventListener('DOMContentLoaded', function () {
+					const firstActive = document.querySelector('.swiper-slide-active');
+					if (firstActive) animateSlideContent(firstActive);
 				});
 			</script>
 		</main>
