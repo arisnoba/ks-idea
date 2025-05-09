@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 		<!-- Link Swiper's CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
+		<link rel="stylesheet" href="assets/css/style.css" />
 		<!-- Demo styles -->
 		<style>
 			html,
@@ -63,26 +63,36 @@
 		<div class="swiper mySwiper swiper-v">
 			<div class="swiper-wrapper">
 				<div class="swiper-slide">
-					<svg width="500" height="200" viewBox="0 0 500 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M0 200V132.19L500 0V200H0Z" fill="black" style="fill: black; fill-opacity: 1" />
-					</svg>
-				</div>
-				<div class="swiper-slide">V1</div>
-				<div class="swiper-slide">V2</div>
-				<div class="swiper-slide">V3</div>
-				<div class="swiper-slide v-sections">
-					<div class="swiper mySwiper2 swiper-h">
-						<div class="swiper-wrapper">
-							<div class="swiper-slide">H0</div>
-							<div class="swiper-slide">H1</div>
-							<div class="swiper-slide">H2</div>
-							<div class="swiper-slide">H3</div>
-							<div class="swiper-slide">H4</div>
-						</div>
-						<div class="swiper-pagination"></div>
+					<div class="contents">
+						<svg width="500" height="200" viewBox="0 0 500 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M0 200V132.19L500 0V200H0Z" fill="black" style="fill: black; fill-opacity: 1" />
+						</svg>
+						<h1>GROW OR DISAPPEAR</h1>
 					</div>
 				</div>
-				<div class="swiper-slide">V4</div>
+				<div class="swiper-slide">
+					<div class="contents">
+						<h2>GROW OR DISAPPEAR</h2>
+						<p class="desc">브랜드에게 성장의 반대말은 소멸이다 페달을 밟지 않으면 넘어지는 자전거와 같다 사라지는 브랜드가 되지 않으려면 성장해야 한다 성장은 브랜드의 숙명이다</p>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<div class="contents">
+						<h2>THE GROWTH LAB</h2>
+						<p class="desc">
+							잘 성장하던 중 길을 잃은 브랜드에게, 나이 들어 성장 속도가 느려진 브랜드에게, 2차 성장의 때가 다가온 브랜드에게 필요한 것은 대대적인 광고 캠페인일까, 유명한 컨설팅 펌의
+							리포트일까? 브랜드 상황에 적합한 성장 목표를 설정하고 자신만의 성장 프로그램을 만들고 실행하는 것이 답이다
+						</p>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<div class="contents">
+						<h2>G-C-I PROGRAM</h2>
+						<p class="desc">
+							브랜드마다 성장의 목표가 다를 수밖에 없다. 통찰력 있는 성장 목표를 설정하고 그 목표를 달성할 수 있는 핵심 역량을 발견하여 그를 바탕으로 성장을 실행할 차별적 아이디어를 제안한다.
+						</p>
+					</div>
+				</div>
 			</div>
 			<div class="swiper-pagination"></div>
 		</div>
@@ -92,118 +102,15 @@
 
 		<!-- Initialize Swiper -->
 		<script>
-			// 동적으로 인덱스 파악
-			const vSlides = document.querySelectorAll('.swiper-v .swiper-slide');
-			const vSectionIndex = Array.from(vSlides).findIndex(slide => slide.classList.contains('v-sections'));
-			const vLastIndex = vSlides.length - 1;
-
-			const hSlides = document.querySelectorAll('.swiper-h .swiper-slide');
-			const hFirstIndex = 0;
-			const hLastIndex = hSlides.length - 1;
-
-			// 가로 Swiper
-			var swiperH = new Swiper('.swiper-h', {
-				spaceBetween: 50,
-				mousewheel: false, // 처음엔 비활성화
-				allowTouchMove: false, // 좌우 스와이프 막기
-				pagination: {
-					el: '.swiper-pagination',
-					clickable: true,
-				},
-			});
-
 			// 세로 Swiper
 			var swiperV = new Swiper('.swiper-v', {
 				direction: 'vertical',
-				spaceBetween: 50,
 				mousewheel: true,
 				pagination: {
 					el: '.swiper-pagination',
 					clickable: true,
 				},
-				on: {
-					slideChange: function () {
-						if (this.activeIndex === vSectionIndex) {
-							this.mousewheel.disable();
-							swiperH.mousewheel.disable();
-							setTimeout(() => {
-								swiperH.mousewheel.enable();
-							}, 500);
-						} else {
-							this.mousewheel.enable();
-							swiperH.mousewheel.disable();
-						}
-					},
-				},
 			});
-
-			// 가로 Swiper에서 vSectionIndex+1(마지막)로, hFirstIndex(처음)로 이동
-			swiperH.on('slideChange', function () {
-				// 마지막에서 down
-				if (swiperH.activeIndex === hLastIndex) {
-					swiperH.el.addEventListener('wheel', goToNextVertical, { passive: false });
-				} else {
-					swiperH.el.removeEventListener('wheel', goToNextVertical, { passive: false });
-				}
-				// 처음에서 up
-				if (swiperH.activeIndex === hFirstIndex) {
-					swiperH.el.addEventListener('wheel', goToPrevVertical, { passive: false });
-				} else {
-					swiperH.el.removeEventListener('wheel', goToPrevVertical, { passive: false });
-				}
-			});
-
-			function goToNextVertical(e) {
-				if (e.deltaY > 0) {
-					swiperV.slideTo(vSectionIndex + 1); // v-sections 다음 슬라이드
-					swiperH.mousewheel.disable();
-					swiperV.mousewheel.enable();
-					swiperH.el.removeEventListener('wheel', goToNextVertical, { passive: false });
-					e.preventDefault();
-				}
-			}
-
-			function goToPrevVertical(e) {
-				if (e.deltaY < 0) {
-					swiperV.slideTo(vSectionIndex); // v-sections 슬라이드
-					swiperH.mousewheel.disable();
-					swiperV.mousewheel.enable();
-					swiperH.el.removeEventListener('wheel', goToPrevVertical, { passive: false });
-					e.preventDefault();
-				}
-			}
-
-			// 모바일 상하 스와이프 감지 및 swiper-h 슬라이드 이동
-			let touchStartY = 0;
-			let touchEndY = 0;
-			const swiperHEl = document.querySelector('.swiper-h');
-
-			swiperHEl.addEventListener('touchstart', function (e) {
-				if (e.touches.length === 1) {
-					touchStartY = e.touches[0].clientY;
-				}
-			});
-
-			swiperHEl.addEventListener(
-				'touchend',
-				function (e) {
-					if (e.changedTouches.length === 1) {
-						touchEndY = e.changedTouches[0].clientY;
-						const diffY = touchEndY - touchStartY;
-						if (Math.abs(diffY) > 40) {
-							// 임계값(조정 가능)
-							e.stopPropagation(); // 이벤트 버블링 방지
-							e.preventDefault(); // 기본 동작 방지
-							if (diffY < 0) {
-								swiperH.slideNext();
-							} else {
-								swiperH.slidePrev();
-							}
-						}
-					}
-				},
-				{ passive: false }
-			);
 		</script>
 	</body>
 </html>
