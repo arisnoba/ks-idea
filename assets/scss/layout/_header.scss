@@ -1,0 +1,6 @@
+.nav {
+	@include flex-center;
+	height: 64px;
+	background: #fff;
+	border-bottom: 1px solid #eee;
+}

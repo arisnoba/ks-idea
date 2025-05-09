@@ -1,0 +1,6 @@
+.footer {
+	@include flex-center;
+	height: 80px;
+	background: #f8f8f8;
+	color: $sub-text;
+}

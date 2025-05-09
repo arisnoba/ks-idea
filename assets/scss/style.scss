@@ -1,10 +1,22 @@
-// 변수 선언
-@import 'variable';
-// 리셋
-@import 'reset';
-// @import 'scroll';
-// 공통 레이아웃/컴포넌트
-@import 'main';
-// 페이지별 스타일
-@import 'home';
-@import 'work';
+// abstracts
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+@import 'abstracts/functions';
+
+// base
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/base';
+
+// layout
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/grid';
+
+// components
+@import 'components/button';
+@import 'components/card';
+
+// pages
+@import 'pages/home';
+@import 'pages/work';

@@ -1,0 +1,6 @@
+// 믹스인 예시
+@mixin flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
