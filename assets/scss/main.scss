@@ -1,8 +1,26 @@
 @import 'variable.scss';
 @import 'reset.scss';
 
+* {
+	box-sizing: border-box;
+	user-select: none;
+}
+
 body {
-	font-family: 'SUIT', sans-serif;
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	color: $heading-text;
+	font-family: 'futura-pt', sans-serif;
+	text-transform: uppercase;
+}
+
+.contents {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	max-width: 500px;
 }
 
 nav {
