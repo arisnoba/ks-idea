@@ -1,213 +1,106 @@
-// 섹션, 이미지, 헤딩 등 주요 DOM 요소를 선택
-const sections = document.querySelectorAll('section'); // 각 섹션 DOM
-const images = document.querySelectorAll('.bg'); // 섹션별 배경 이미지
-const headings = gsap.utils.toArray('.section-heading'); // 섹션별 헤딩 텍스트
-const outerWrappers = gsap.utils.toArray('.outer'); // 외부 래퍼(애니메이션용)
-const innerWrappers = gsap.utils.toArray('.inner'); // 내부 래퍼(애니메이션용)
+function animateSlideContent(slide) {
+	const heading = slide.querySelector('.section-heading');
+	const brand = slide.querySelector('.brand');
+	const desc = slide.querySelector('.work-desc');
 
-// 마우스 휠, 터치 이벤트 리스너 등록
-// (스크롤/스와이프 시 섹션 전환)
-document.addEventListener('wheel', handleWheel);
-document.addEventListener('touchstart', handleTouchStart);
-document.addEventListener('touchmove', handleTouchMove);
-document.addEventListener('touchend', handleTouchEnd);
+	if (heading) gsap.set(heading, { opacity: 0, x: 40 });
+	if (brand) gsap.set(brand, { opacity: 0, x: 40 });
+	if (desc) gsap.set(desc, { opacity: 0, x: 40 });
 
-// 상태 관리 변수
-let listening = false, // 이벤트 리스닝 가능 여부
-	direction = 'right', // 스크롤 방향 ('right' 또는 'left')
-	current, // 현재 활성화된 섹션 인덱스
-	next = 0; // 다음에 보여질 섹션 인덱스
+	const tl = gsap.timeline();
+	if (heading) tl.to(heading, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
+	if (brand) tl.to(brand, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.8);
+	if (desc) tl.to(desc, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.9);
+}
 
-// 터치 이벤트 좌표 및 시간 저장용 객체
-const touch = {
-	startX: 0,
-	startY: 0,
-	dx: 0,
-	dy: 0,
-	startTime: 0,
-	dt: 0,
-};
+function fadeOutSlideContent(slide) {
+	const heading = slide.querySelector('.section-heading');
+	const brand = slide.querySelector('.brand');
+	const desc = slide.querySelector('.work-desc');
 
-// GSAP 타임라인 기본 옵션
-const tlDefaults = {
-	ease: 'slow.inOut',
-	duration: 1,
-};
+	const tl = gsap.timeline();
+	if (heading) tl.to(heading, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
+	if (brand) tl.to(brand, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
+	if (desc) tl.to(desc, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
+}
 
-// 각 헤딩 텍스트를 SplitText로 분리(애니메이션용)
-const splitHeadings = headings.map(heading => {
-	return new SplitText(heading, {
-		type: 'chars, words, lines',
-		linesClass: 'clip-text',
-	});
-});
-
-// 헤딩 등장 애니메이션 함수
-function revealSectionHeading() {
-	return gsap.to(splitHeadings[next].chars, {
-		autoAlpha: 1,
-		xPercent: 0,
-		duration: 1, // 등장 속도(수정 가능)
-		ease: 'power2',
-		stagger: {
-			each: 0.05,
-			// from: 'random',
+var prevIndex = 0;
+var swiperH = new Swiper('.swiper-h', {
+	direction: 'horizontal',
+	mousewheel: true,
+	speed: 1000,
+	pagination: {
+		el: '.swiper-pagination',
+		clickable: true,
+	},
+	on: {
+		slideChangeTransitionStart: function () {
+			// 이전 슬라이드 텍스트 자연스럽게 사라지게
+			if (typeof prevIndex === 'number' && this.slides[prevIndex]) {
+				fadeOutSlideContent(this.slides[prevIndex]);
+			}
+			// 새 슬라이드 텍스트는 바로 나타나게
+			const activeSlide = this.slides[this.activeIndex];
+			animateSlideContent(activeSlide);
+			prevIndex = this.activeIndex;
 		},
-	});
-}
-
-// 초기 상태: 모든 섹션, 이미지, 헤딩을 숨기고 래퍼 위치 세팅
-gsap.set(outerWrappers, { xPercent: 100 });
-gsap.set(innerWrappers, { xPercent: -100 });
-
-// 아래로 스크롤 시 섹션 등장 애니메이션
-function slideIn() {
-	// current가 undefined면 첫 진입(초기화)
-	if (current !== undefined) gsap.set(sections[current], { zIndex: 0 });
-
-	// 다음 섹션을 보이게 세팅
-	gsap.set(sections[next], { autoAlpha: 1, zIndex: 1 });
-	gsap.set(images[next], { xPercent: 0 });
-	gsap.set(splitHeadings[next].chars, { autoAlpha: 0, xPercent: 100 });
-
-	// 타임라인으로 등장 애니메이션 실행
-	const tl = gsap
-		.timeline({
-			paused: true,
-			defaults: tlDefaults,
-			onComplete: () => {
-				listening = true;
-				current = next;
-			},
-		})
-		.to([outerWrappers[next], innerWrappers[next]], { xPercent: 0 }, 0)
-		.from(images[next], { xPercent: 0 }, 0)
-		.add(revealSectionHeading(), 0);
-
-	// 이전 섹션이 있다면 퇴장 애니메이션 추가
-	if (current !== undefined) {
-		tl.add(
-			gsap.to(images[current], {
-				xPercent: 0,
-				...tlDefaults,
-			}),
-			0
-		).add(
-			gsap.timeline().set(outerWrappers[current], { xPercent: 100 }).set(innerWrappers[current], { xPercent: -100 }).set(images[current], { xPercent: 0 }).set(sections[current], { autoAlpha: 0 })
-		);
-	}
-
-	tl.play(0);
-}
-
-// 위로 스크롤 시 섹션 퇴장 애니메이션
-function slideOut() {
-	gsap.set(sections[current], { zIndex: 1 });
-	gsap.set(sections[next], { autoAlpha: 1, zIndex: 0 });
-	gsap.set(splitHeadings[next].chars, { autoAlpha: 0, xPercent: 100 });
-	gsap.set([outerWrappers[next], innerWrappers[next]], { xPercent: 0 });
-	gsap.set(images[next], { xPercent: 0 });
-
-	gsap
-		.timeline({
-			defaults: tlDefaults,
-			onComplete: () => {
-				listening = true;
-				current = next;
-			},
-		})
-		.to(outerWrappers[current], { xPercent: 100 }, 0)
-		.to(innerWrappers[current], { xPercent: -100 }, 0)
-		.to(images[current], { xPercent: 0 }, 0)
-		.from(images[next], { xPercent: 0 }, 0)
-		.add(revealSectionHeading(), '>-1')
-		.set(images[current], { xPercent: 0 });
-}
-
-// 스크롤 방향에 따라 섹션 전환을 제어하는 함수
-function handleDirection() {
-	listening = false;
-
-	if (direction === 'right') {
-		next = current + 1;
-		// 무한 스크롤 제거: 마지막 섹션에서 더 이상 이동하지 않음
-		if (next >= sections.length) {
-			next = current;
-			listening = true;
-			return;
-		}
-		slideIn();
-	}
-
-	if (direction === 'left') {
-		next = current - 1;
-		// 무한 스크롤 제거: 첫 섹션에서 더 이상 이동하지 않음
-		if (next < 0) {
-			next = current;
-			listening = true;
-			return;
-		}
-		slideOut();
-	}
-}
-
-// 마우스 휠 이벤트 핸들러 (스크롤 방향 결정)
-function handleWheel(e) {
-	if (!listening) return;
-	// e.deltaX가 0이면 e.deltaY로 대체(트랙패드 호환)
-	if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-		direction = e.deltaX > 0 ? 'right' : 'left';
-	} else {
-		direction = e.deltaY > 0 ? 'right' : 'left';
-	}
-	handleDirection();
-}
-
-// 터치 시작 시 좌표 저장
-function handleTouchStart(e) {
-	if (!listening) return;
-	const t = e.changedTouches[0];
-	touch.startX = t.pageX;
-	touch.startY = t.pageY;
-}
-
-// 터치 이동 시 기본 동작 방지(스크롤 막기)
-function handleTouchMove(e) {
-	if (!listening) return;
-	e.preventDefault();
-}
-
-// 터치 종료 시 방향 계산 후 섹션 전환
-function handleTouchEnd(e) {
-	if (!listening) return;
-	const t = e.changedTouches[0];
-	touch.dx = t.pageX - touch.startX;
-	touch.dy = t.pageY - touch.startY;
-	if (touch.dx > 10) direction = 'left';
-	if (touch.dx < -10) direction = 'right';
-	handleDirection();
-}
-
-// 첫 진입 시 첫 섹션 등장
-slideIn();
-
-// 네비게이션 앵커 클릭 시 해당 섹션으로 이동
-const navLinks = document.querySelectorAll('nav a[href^="#"]');
-navLinks.forEach(link => {
-	link.addEventListener('click', function (e) {
-		e.preventDefault();
-		const targetId = this.getAttribute('href').replace('#', '');
-		const targetSection = document.getElementById(targetId);
-		if (!targetSection) return;
-		const targetIdx = Array.from(sections).indexOf(targetSection);
-		if (targetIdx === -1 || targetIdx === current) return;
-
-		// 상태 업데이트 및 애니메이션 실행
-		next = targetIdx;
-		if (next > current) {
-			slideIn();
-		} else if (next < current) {
-			slideOut();
-		}
-	});
+	},
 });
+
+// 첫 로드시에도 모션 적용
+document.addEventListener('DOMContentLoaded', function () {
+	const firstActive = document.querySelector('.swiper-slide-active');
+	if (firstActive) animateSlideContent(firstActive);
+});
+
+// 슬라이드 동적 생성
+fetch('/assets/data/works.json')
+	.then(res => res.json())
+	.then(data => {
+		const wrapper = document.querySelector('.swiper-wrapper');
+		wrapper.innerHTML = '';
+		data.forEach(work => {
+			const slide = document.createElement('div');
+			slide.className = 'swiper-slide';
+			slide.innerHTML = `
+				<div class="contents">
+					<div class="work-img">
+						<img src="${work.image}" alt="${work.id}" />
+					</div>
+					<div class="work-info">
+						<h2 class="section-heading">${work.title}</h2>
+						<p class="brand">${work.brand}</p>
+						<p class="work-desc">${work.desc}</p>
+					</div>
+				</div>
+			`;
+			wrapper.appendChild(slide);
+		});
+		// 동적으로 생성 후 Swiper 재초기화
+		if (window.swiperH) window.swiperH.destroy(true, true);
+		window.swiperH = new Swiper('.swiper-h', {
+			direction: 'horizontal',
+			mousewheel: true,
+			speed: 1000,
+			pagination: {
+				el: '.swiper-pagination',
+				clickable: true,
+			},
+			on: {
+				slideChangeTransitionStart: function () {
+					if (typeof window.prevIndex === 'number' && this.slides[window.prevIndex]) {
+						fadeOutSlideContent(this.slides[window.prevIndex]);
+					}
+					const activeSlide = this.slides[this.activeIndex];
+					animateSlideContent(activeSlide);
+					window.prevIndex = this.activeIndex;
+				},
+			},
+		});
+		// 첫 로드시에도 모션 적용
+		document.addEventListener('DOMContentLoaded', function () {
+			const firstActive = document.querySelector('.swiper-slide-active');
+			if (firstActive) animateSlideContent(firstActive);
+		});
+		window.prevIndex = 0;
+	});
