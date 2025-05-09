@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 	<head>
 		<meta charset="utf-8" />
 		<title>Swiper demo</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+		<link rel="stylesheet" href="https://use.typekit.net/kee2rox.css" />
+
 		<!-- Link Swiper's CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 		<!-- <link rel="stylesheet" href="assets/css/style.css" /> -->
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/home.css" />
 		<!-- Demo styles -->
 		<style>
 			html,
@@ -64,84 +67,148 @@
 				</ul>
 			</nav>
 		</header>
-		<!-- Swiper -->
-		<div class="swiper mySwiper swiper-v">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide">
-					<div class="contents">
-						<svg width="500" height="200" viewBox="0 0 500 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M0 200V132.19L500 0V200H0Z" fill="black" style="fill: black; fill-opacity: 1" />
-						</svg>
-						<h1>GROW OR DISAPPEAR</h1>
+		<main class="home">
+			<!-- Swiper -->
+			<div class="swiper mySwiper swiper-v">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div class="contents">
+							<svg width="500" height="200" viewBox="0 0 500 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M0 200V132.19L500 0V200H0Z" fill="black" style="fill: black; fill-opacity: 1" />
+							</svg>
+							<h1>GROW OR DISAPPEAR</h1>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="contents">
+							<h2>GROW OR DISAPPEAR</h2>
+							<p class="desc">
+								브랜드에게 성장의 반대말은 소멸이다.
+								<br />
+								페달을 밟지 않으면 넘어지는 자전거와 같다.
+								<br />
+								사라지는 브랜드가 되지 않으려면 성장해야 한다.
+								<br />
+								성장은 브랜드의 숙명이다.
+							</p>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="contents">
+							<h2>THE GROWTH LAB</h2>
+							<p class="desc">
+								잘 성장하던 중 길을 잃은 브랜드에게, 나이 들어 성장 속도가 느려진 브랜드에게, 2차 성장의 때가 다가온 브랜드에게 필요한 것은 대대적인 광고 캠페인일까, 유명한 컨설팅 펌의
+								리포트일까? 브랜드 상황에 적합한 성장 목표를 설정하고 자신만의 성장 프로그램을 만들고 실행하는 것이 답이다.
+							</p>
+						</div>
+					</div>
+
+					<div class="swiper-slide">
+						<div class="contents">
+							<h2>G-C-I PROGRAM</h2>
+							<div class="growth-list">
+								<div class="growth-row">
+									<span class="growth-en">Goal of Growth</span>
+									<span class="growth-ko">통찰력 있는 성장 목표를 설정하고</span>
+									<span class="growth-dots"></span>
+								</div>
+								<div class="growth-row">
+									<span class="growth-en">Core of Growth</span>
+									<span class="growth-ko">그 목표를 달성할 수 있는 핵심 역량을 발견하여</span>
+									<span class="growth-dots"></span>
+								</div>
+								<div class="growth-row">
+									<span class="growth-en">Idea of Growth</span>
+									<span class="growth-ko">그를 바탕으로 성장을 실행할 차별적 아이디어를 제안한다</span>
+									<span class="growth-dots"></span>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="swiper-slide">
-					<div class="contents">
-						<h2>GROW OR DISAPPEAR</h2>
-						<p class="desc">브랜드에게 성장의 반대말은 소멸이다 페달을 밟지 않으면 넘어지는 자전거와 같다 사라지는 브랜드가 되지 않으려면 성장해야 한다 성장은 브랜드의 숙명이다</p>
-					</div>
-				</div>
-				<div class="swiper-slide">
-					<div class="contents">
-						<h2>THE GROWTH LAB</h2>
-						<p class="desc">
-							잘 성장하던 중 길을 잃은 브랜드에게, 나이 들어 성장 속도가 느려진 브랜드에게, 2차 성장의 때가 다가온 브랜드에게 필요한 것은 대대적인 광고 캠페인일까, 유명한 컨설팅 펌의
-							리포트일까? 브랜드 상황에 적합한 성장 목표를 설정하고 자신만의 성장 프로그램을 만들고 실행하는 것이 답이다
-						</p>
-					</div>
-				</div>
-				<div class="swiper-slide">
-					<div class="contents">
-						<h2>G-C-I PROGRAM</h2>
-						<p class="desc">
-							브랜드마다 성장의 목표가 다를 수밖에 없다. 통찰력 있는 성장 목표를 설정하고 그 목표를 달성할 수 있는 핵심 역량을 발견하여 그를 바탕으로 성장을 실행할 차별적 아이디어를 제안한다.
-						</p>
-					</div>
-				</div>
+				<div class="swiper-pagination"></div>
 			</div>
-			<div class="swiper-pagination"></div>
-		</div>
+		</main>
 
 		<!-- Swiper JS -->
 		<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 		<!-- Initialize Swiper -->
 		<script>
-			// GSAP 애니메이션 함수 정의
+			function animateGrowthRows() {
+				document.querySelectorAll('.swiper-slide-active .growth-row').forEach((row, i) => {
+					const ko = row.querySelector('.growth-ko');
+					const dots = row.querySelector('.growth-dots');
+					const en = row.querySelector('.growth-en');
+
+					gsap.set(ko, { opacity: 0 });
+					gsap.set(dots, { opacity: 0, width: 0 });
+					gsap.set(en, { opacity: 0 });
+
+					const tl = gsap.timeline({ delay: i * 0.5 });
+					tl.to(ko, { opacity: 1, duration: 0.5, ease: 'power2.in' })
+						.to(dots, { opacity: 1, width: '100%', duration: 0.8, ease: 'power2.in' }, '+=0.2')
+						.to(en, { opacity: 1, duration: 0.9, ease: 'power2.in' }, '-=0.1');
+				});
+			}
+
 			function animateSlideContent(slide) {
 				const h1 = slide.querySelector('h1');
 				const h2 = slide.querySelector('h2');
 				const desc = slide.querySelector('p.desc');
+				const growthList = slide.querySelector('.growth-list');
 
 				if (h1) gsap.set(h1, { opacity: 0, y: 40 });
 				if (h2) gsap.set(h2, { opacity: 0, y: 40 });
 				if (desc) gsap.set(desc, { opacity: 0, y: 40 });
 
 				const tl = gsap.timeline();
-				if (h1) tl.to(h1, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0);
-				if (h2) tl.to(h2, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.3);
-				if (desc) tl.to(desc, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.6);
+				if (h1) tl.to(h1, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
+				if (h2) tl.to(h2, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.8);
+				if (desc) tl.to(desc, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.9);
+
+				if (growthList) animateGrowthRows();
 			}
 
+			function fadeOutSlideContent(slide) {
+				const h1 = slide.querySelector('h1');
+				const h2 = slide.querySelector('h2');
+				const desc = slide.querySelector('p.desc');
+
+				const tl = gsap.timeline();
+				if (h1) tl.to(h1, { opacity: 0, y: 40, duration: 0.3, ease: 'power2.in' }, 0);
+				if (h2) tl.to(h2, { opacity: 0, y: 40, duration: 0.3, ease: 'power2.in' }, 0);
+				if (desc) tl.to(desc, { opacity: 0, y: 40, duration: 0.3, ease: 'power2.in' }, 0);
+			}
+
+			function fadeOutGrowthRows() {
+				document.querySelectorAll('.swiper-slide .growth-row').forEach(row => {
+					const en = row.querySelector('.growth-en');
+					if (en) {
+						gsap.to(en, { opacity: 0, x: '100%', duration: 0.5, ease: 'power2.in' });
+					}
+				});
+			}
+
+			var prevIndex = 0;
 			var swiperV = new Swiper('.swiper-v', {
 				direction: 'vertical',
 				mousewheel: true,
+				speed: 1200,
 				pagination: {
 					el: '.swiper-pagination',
 					clickable: true,
 				},
 				on: {
 					slideChangeTransitionStart: function () {
-						this.slides.forEach(function (slide) {
-							const h1 = slide.querySelector('h1');
-							const h2 = slide.querySelector('h2');
-							const desc = slide.querySelector('p.desc');
-							if (h1) gsap.set(h1, { opacity: 0, y: 40 });
-							if (h2) gsap.set(h2, { opacity: 0, y: 40 });
-							if (desc) gsap.set(desc, { opacity: 0, y: 40 });
-						});
+						// 이전 슬라이드 텍스트 자연스럽게 사라지게
+						if (typeof prevIndex === 'number' && this.slides[prevIndex]) {
+							fadeOutSlideContent(this.slides[prevIndex]);
+						}
+						// 새 슬라이드 텍스트는 바로 나타나게
 						const activeSlide = this.slides[this.activeIndex];
 						animateSlideContent(activeSlide);
+						prevIndex = this.activeIndex;
 					},
 				},
 			});

@@ -1,3 +1,68 @@
+body {
+  text-wrap: balance;
+  word-break: keep-all;
+}
+
+.work {
+  height: 100%;
+  width: 100%;
+}
+.work h2 {
+  font-size: clamp(1rem, 5vw, 36px);
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #000;
+  font-family: "SUIT", sans-serif;
+}
+.work .contents {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: clamp(40px, 5vw, 80px);
+}
+.work .work-img {
+  width: 100%;
+  max-width: 720px;
+}
+.work .work-img img {
+  width: 100%;
+  aspect-ratio: 720/306;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.work .work-info {
+  max-width: 480px;
+  text-align: left;
+}
+.work .work-info h2 {
+  text-align: left;
+}
+.work .work-info p {
+  text-align: left;
+  font-family: "SUIT", sans-serif;
+}
+.work .work-info .brand {
+  font-size: 20px;
+  color: #808080;
+  margin-bottom: 24px;
+}
+.work .work-info .work-desc {
+  font-size: 20px;
+  color: #4d4d4d;
+}
+
+body {
+  text-wrap: balance;
+  word-break: keep-all;
+}
+
 .work h2 {
   font-size: clamp(1rem, 5vw, 36px);
   font-weight: 400;
@@ -78,10 +143,10 @@
 }
 .work .work-info .brand {
   font-size: 20px;
-  color: #666;
+  color: #808080;
   margin-bottom: 24px;
 }
 .work .work-info .work-desc {
   font-size: 20px;
-  color: #999;
+  color: #4d4d4d;
 }

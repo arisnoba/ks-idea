@@ -1,6 +1,8 @@
-$main-color: #000;
-$sub-color: #fff;
-$body-color: #333;
-$sub-text: #666;
-$body-text: #999;
 $heading-text: #000;
+$body-text: #4d4d4d;
+$sub-text: #808080;
+
+body {
+	text-wrap: balance;
+	word-break: keep-all;
+}
