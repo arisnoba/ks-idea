@@ -1,6 +1,46 @@
-.nav {
-	@include flex-center;
-	height: 64px;
-	background: #fff;
-	border-bottom: 1px solid #eee;
+nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 2.5%;
+	width: 100%;
+	z-index: 3;
+	font-family: 'futura-pt', sans-serif;
+	.logo {
+		img {
+			height: clamp(12px, 2vw, 16px);
+		}
+	}
+	ul {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 20px;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		a {
+			text-transform: uppercase;
+			text-decoration: none;
+			color: $body-text;
+			letter-spacing: 0.3em;
+			font-size: clamp(16px, 2vw, 24px);
+		}
+	}
+}
+
+header {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 5%;
+	width: 100%;
+	z-index: 3;
+	height: 7em;
+	@include mq(mobile) {
+		height: 64px;
+	}
+	font-size: clamp(0.66rem, 2vw, 1rem);
+	letter-spacing: 0.5em;
 }

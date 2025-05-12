@@ -4,3 +4,21 @@
 	align-items: center;
 	justify-content: center;
 }
+
+// 반응형 미디어 쿼리 믹스인
+$breakpoints: (
+	'mobile': 480px,
+	'tablet': 768px,
+	'desktop': 1200px,
+);
+
+@mixin mq($breakpoint) {
+	$value: map-get($breakpoints, $breakpoint);
+	@if $value {
+		@media (max-width: $value) {
+			@content;
+		}
+	} @else {
+		@warn 'No value found for breakpoint: #{$breakpoint}';
+	}
+}
