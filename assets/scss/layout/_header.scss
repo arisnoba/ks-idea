@@ -14,7 +14,7 @@ nav {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 20px;
+		gap: 24px;
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -23,7 +23,7 @@ nav {
 			text-decoration: none;
 			color: $body-text;
 			letter-spacing: 0.3em;
-			font-size: clamp(16px, 2vw, 24px);
+			font-size: clamp(14px, 2vw, 16px);
 		}
 	}
 }
@@ -36,10 +36,8 @@ header {
 	padding: 0 5%;
 	width: 100%;
 	z-index: 3;
-	height: 7em;
-	@include mq(mobile) {
-		height: 64px;
-	}
+	height: clamp(64px, 7vw, 112px);
+
 	font-size: clamp(0.66rem, 2vw, 1rem);
 	letter-spacing: 0.5em;
 }
@@ -65,7 +63,7 @@ header {
 		width: 28px;
 		height: 1px;
 		background: #222;
-		margin: 6px 0;
+		margin: 5px 0;
 		border-radius: 2px;
 		transition: 0.4s;
 	}
@@ -108,10 +106,10 @@ header {
 		text-decoration: none;
 	}
 	.hamburger.open .bar1 {
-		transform: rotate(45deg) translateY(9px);
+		transform: rotate(45deg) translateY(8px);
 	}
 	.hamburger.open .bar2 {
-		transform: rotate(-45deg) translateY(-9px);
+		transform: rotate(-45deg) translateY(-8px);
 	}
 	.drawer-dim {
 		position: fixed;

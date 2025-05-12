@@ -2,6 +2,7 @@
 	height: 100%;
 	width: 100%;
 	$text-ls: 0.25em;
+
 	h2 {
 		font-size: clamp(1rem, 5vw, 36px);
 		font-weight: 400;
@@ -10,71 +11,154 @@
 		color: #000;
 		font-family: 'SUIT', sans-serif;
 	}
+
+	.swiper {
+		&::after {
+			content: '';
+			position: absolute;
+			top: 64px;
+			left: 0;
+			width: 100%;
+			height: 100px;
+			position: absolute;
+			z-index: 100;
+			pointer-events: none;
+			clip-path: polygon(0 0, 100% 0, 0 100%);
+			background-color: white;
+			@include mq(tablet) {
+				top: 72px;
+			}
+			@include mq(mobile) {
+				top: 64px;
+			}
+		}
+	}
+
 	.swiper-slide {
 		height: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		@include mq(mobile) {
+
+		@include mq(tablet) {
 			align-items: start;
-			padding-top: 64px;
+			padding-top: 72px;
 			justify-content: start;
 		}
+		@include mq(mobile) {
+			padding-top: 64px;
+		}
 	}
+
+	.swiper-slide-next {
+		.work-info {
+			* {
+				opacity: 0;
+			}
+		}
+	}
+
 	.contents {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		gap: clamp(40px, 5vw, 80px);
-		@include mq(mobile) {
+
+		@include mq(tablet) {
 			flex-direction: column;
 		}
 	}
+
 	.work-img {
 		width: 100%;
-		max-width: 720px;
+		max-width: 40vw;
 		img {
 			width: 100%;
 			aspect-ratio: 720 / 306;
 			object-fit: cover;
+
 			@include mq(mobile) {
 				aspect-ratio: 54 / 35;
-				mask-image: url(/assets/images/mask.svg);
-				mask-size: 100% 100%;
-				mask-repeat: no-repeat;
-				mask-position: center;
 			}
 		}
+
+		@include mq(tablet) {
+			max-width: 100%;
+		}
 	}
+
 	.work-info {
-		// width: 100%;
+		width: 100%;
 		max-width: 480px;
 		text-align: left;
+
 		@include mq(mobile) {
 			max-width: 100%;
 			padding-inline: 13vw;
 		}
+
 		h2 {
 			text-align: left;
-			font-size: clamp(20px, 2vw, 24px);
+			font-size: clamp(20px, 2vw, 32px);
+			font-weight: 600;
 			margin-top: 0;
 			margin-bottom: 0.5em;
 		}
+
 		p {
 			text-align: left;
 			font-family: 'SUIT', sans-serif;
 			font-size: clamp(14px, 2vw, 20px);
+			font-weight: 300;
 			margin: 0;
 		}
+
 		.brand {
 			font-size: clamp(16px, 2vw, 20px);
 			color: $sub-text;
-			margin-bottom: clamp(20px, 2vw, 24px);
+			margin-bottom: clamp(20px, 2vw, 20px);
 		}
+
 		.work-desc {
 			color: $body-text;
 			line-height: 1.5;
+		}
+	}
+	.swiper-pagination {
+		display: flex;
+		justify-content: end;
+		align-items: end;
+		gap: 0.15em;
+		&-bullet {
+			width: 100%;
+			height: 10px;
+			border-radius: 0;
+			background: transparent;
+			margin: 0 !important;
+			transition: none;
+			position: relative;
+			&:hover {
+				&::after {
+					height: 4px;
+					background: #000;
+				}
+			}
+			&::after {
+				position: absolute;
+				bottom: 0px;
+				content: '';
+				display: block;
+				width: 100%;
+				height: 2px;
+				background: #999;
+				transition: all 0.23s ease-in-out;
+			}
+		}
+		&-bullet-active {
+			&::after {
+				background: #000;
+			}
 		}
 	}
 }
@@ -83,4 +167,8 @@
 .swiper-h {
 	overscroll-behavior: contain;
 	touch-action: pan-x pan-y;
+}
+
+.work-img.fixed-mask {
+	display: none;
 }

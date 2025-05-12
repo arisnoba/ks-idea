@@ -3,4 +3,10 @@ $body-text: #444;
 $heading-text: #111;
 $sub-text: #888;
 $spacing-unit: 16px;
-// ... 필요 변수 추가
+
+// 반응형 미디어 쿼리 믹스인
+$breakpoints: (
+	'mobile': 540px,
+	'tablet': 1024px,
+	'desktop': 1200px,
+);

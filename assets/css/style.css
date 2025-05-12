@@ -114,7 +114,7 @@ nav ul {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  gap: 20px;
+  gap: 24px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -124,7 +124,7 @@ nav ul a {
   text-decoration: none;
   color: #444;
   letter-spacing: 0.3em;
-  font-size: clamp(16px, 2vw, 24px);
+  font-size: clamp(14px, 2vw, 16px);
 }
 
 header {
@@ -141,14 +141,9 @@ header {
   padding: 0 5%;
   width: 100%;
   z-index: 3;
-  height: 7em;
+  height: clamp(64px, 7vw, 112px);
   font-size: clamp(0.66rem, 2vw, 1rem);
   letter-spacing: 0.5em;
-}
-@media (max-width: 480px) {
-  header {
-    height: 64px;
-  }
 }
 
 @media (max-width: 768px) {
@@ -182,7 +177,7 @@ header {
     width: 28px;
     height: 1px;
     background: #222;
-    margin: 6px 0;
+    margin: 5px 0;
     border-radius: 2px;
     -webkit-transition: 0.4s;
     transition: 0.4s;
@@ -246,12 +241,12 @@ header {
     text-decoration: none;
   }
   .hamburger.open .bar1 {
-    -webkit-transform: rotate(45deg) translateY(9px);
-            transform: rotate(45deg) translateY(9px);
+    -webkit-transform: rotate(45deg) translateY(8px);
+            transform: rotate(45deg) translateY(8px);
   }
   .hamburger.open .bar2 {
-    -webkit-transform: rotate(-45deg) translateY(-9px);
-            transform: rotate(-45deg) translateY(-9px);
+    -webkit-transform: rotate(-45deg) translateY(-8px);
+            transform: rotate(-45deg) translateY(-8px);
   }
   .drawer-dim {
     position: fixed;
@@ -361,12 +356,12 @@ header {
   font-size: clamp(16px, 4vw, 2rem);
   line-height: 1.2;
   margin-top: 0;
+  text-align: left;
 }
-@media (max-width: 480px) {
+@media (max-width: 540px) {
   .home h1,
   .home h2 {
     letter-spacing: 0.25em;
-    text-align: left;
   }
 }
 .home h1 {
@@ -388,9 +383,9 @@ header {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  max-width: 500px;
+  width: auto;
 }
-@media (max-width: 480px) {
+@media (max-width: 540px) {
   .home .contents {
     max-width: 100%;
     padding-left: 16vw;
@@ -402,6 +397,7 @@ header {
   }
 }
 .home .contents .desc {
+  max-width: 520px;
   position: relative;
   width: 100%;
   font-size: clamp(14px, 2vw, 24px);
@@ -413,8 +409,6 @@ header {
   word-break: keep-all;
 }
 .home .growth-list {
-  margin-top: 2em;
-  margin-bottom: 2em;
   position: relative;
 }
 .home .growth-row {
@@ -434,10 +428,23 @@ header {
   -ms-flex-negative: 0;
       flex-shrink: 0;
   letter-spacing: -0.02em;
-  opacity: 0;
+  text-align: left;
   -webkit-transition: none;
   transition: none;
   font-size: clamp(14px, 2vw, 24px);
+}
+.home .growth-ko br {
+  display: none;
+}
+@media (max-width: 540px) {
+  .home .growth-ko {
+    -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+            order: 2;
+  }
+  .home .growth-ko br {
+    display: block;
+  }
 }
 .home .growth-dots {
   margin: 0 0.5em;
@@ -451,13 +458,15 @@ header {
   transition: none;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  opacity: 0;
   background: repeating-linear-gradient(to right, #999, #999 8px, transparent 8px, transparent 16px);
   background-size: 32px 1px;
 }
+@media (max-width: 540px) {
+  .home .growth-dots {
+    display: none;
+  }
+}
 .home .growth-en {
-  position: absolute;
-  right: 0;
   white-space: nowrap;
   font-weight: 400;
   font-size: 1em;
@@ -465,12 +474,20 @@ header {
       flex-shrink: 0;
   text-transform: none;
   font-size: clamp(14px, 2vw, 20px);
-  -webkit-transform: translateX(100%);
-          transform: translateX(100%);
   font-family: "futura-pt", sans-serif;
-  opacity: 0;
   -webkit-transition: none;
   transition: none;
+}
+@media (max-width: 540px) {
+  .home .growth-en {
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1;
+    line-height: 2;
+  }
+  .home .growth-en::after {
+    content: ":";
+  }
 }
 @media (max-width: 600px) {
   .home .growth-row {
@@ -522,6 +539,30 @@ header {
   color: #000;
   font-family: "SUIT", sans-serif;
 }
+.work .swiper::after {
+  content: "";
+  position: absolute;
+  top: 64px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  z-index: 100;
+  pointer-events: none;
+  -webkit-clip-path: polygon(0 0, 100% 0, 0 100%);
+          clip-path: polygon(0 0, 100% 0, 0 100%);
+  background-color: white;
+}
+@media (max-width: 1024px) {
+  .work .swiper::after {
+    top: 72px;
+  }
+}
+@media (max-width: 540px) {
+  .work .swiper::after {
+    top: 64px;
+  }
+}
 .work .swiper-slide {
   height: 100%;
   display: -webkit-box;
@@ -538,16 +579,24 @@ header {
       -ms-flex-direction: column;
           flex-direction: column;
 }
-@media (max-width: 480px) {
+@media (max-width: 1024px) {
   .work .swiper-slide {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: start;
-    padding-top: 64px;
+    padding-top: 72px;
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: start;
   }
+}
+@media (max-width: 540px) {
+  .work .swiper-slide {
+    padding-top: 64px;
+  }
+}
+.work .swiper-slide-next .work-info * {
+  opacity: 0;
 }
 .work .contents {
   display: -webkit-box;
@@ -561,7 +610,7 @@ header {
           justify-content: center;
   gap: clamp(40px, 5vw, 80px);
 }
-@media (max-width: 480px) {
+@media (max-width: 1024px) {
   .work .contents {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -571,7 +620,7 @@ header {
 }
 .work .work-img {
   width: 100%;
-  max-width: 720px;
+  max-width: 40vw;
 }
 .work .work-img img {
   width: 100%;
@@ -579,24 +628,22 @@ header {
   -o-object-fit: cover;
      object-fit: cover;
 }
-@media (max-width: 480px) {
+@media (max-width: 540px) {
   .work .work-img img {
     aspect-ratio: 54/35;
-    -webkit-mask-image: url(/assets/images/mask.svg);
-            mask-image: url(/assets/images/mask.svg);
-    -webkit-mask-size: 100% 100%;
-            mask-size: 100% 100%;
-    -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-            mask-position: center;
+  }
+}
+@media (max-width: 1024px) {
+  .work .work-img {
+    max-width: 100%;
   }
 }
 .work .work-info {
+  width: 100%;
   max-width: 480px;
   text-align: left;
 }
-@media (max-width: 480px) {
+@media (max-width: 540px) {
   .work .work-info {
     max-width: 100%;
     padding-inline: 13vw;
@@ -604,7 +651,8 @@ header {
 }
 .work .work-info h2 {
   text-align: left;
-  font-size: clamp(20px, 2vw, 24px);
+  font-size: clamp(20px, 2vw, 32px);
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 0.5em;
 }
@@ -612,16 +660,57 @@ header {
   text-align: left;
   font-family: "SUIT", sans-serif;
   font-size: clamp(14px, 2vw, 20px);
+  font-weight: 300;
   margin: 0;
 }
 .work .work-info .brand {
   font-size: clamp(16px, 2vw, 20px);
   color: #888;
-  margin-bottom: clamp(20px, 2vw, 24px);
+  margin-bottom: clamp(20px, 2vw, 20px);
 }
 .work .work-info .work-desc {
   color: #444;
   line-height: 1.5;
+}
+.work .swiper-pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end;
+  gap: 0.15em;
+}
+.work .swiper-pagination-bullet {
+  width: 100%;
+  height: 10px;
+  border-radius: 0;
+  background: transparent;
+  margin: 0 !important;
+  -webkit-transition: none;
+  transition: none;
+  position: relative;
+}
+.work .swiper-pagination-bullet:hover::after {
+  height: 4px;
+  background: #000;
+}
+.work .swiper-pagination-bullet::after {
+  position: absolute;
+  bottom: 0px;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #999;
+  -webkit-transition: all 0.23s ease-in-out;
+  transition: all 0.23s ease-in-out;
+}
+.work .swiper-pagination-bullet-active::after {
+  background: #000;
 }
 
 .swiper,
@@ -630,6 +719,10 @@ header {
       overscroll-behavior: contain;
   -ms-touch-action: pan-x pan-y;
       touch-action: pan-x pan-y;
+}
+
+.work-img.fixed-mask {
+  display: none;
 }
 
 .link {
@@ -687,5 +780,5 @@ header {
 .contact .contact-section a {
   display: inline-block;
   font-size: clamp(16px, 2vw, 24px);
-  margin-top: 8px;
+  margin-top: 0.5em;
 }

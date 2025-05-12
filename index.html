@@ -19,8 +19,8 @@
 			<nav class="nav">
 				<a href="/" class="logo"><img src="/assets/images/logo.svg" alt="logo" /></a>
 				<ul class="nav-menu">
-					<li><a href="/work/">Works</a></li>
-					<li><a href="/contact/">Contact</a></li>
+					<li><a href="/work/" class="link">Work</a></li>
+					<li><a href="/contact/" class="link">Contact</a></li>
 				</ul>
 				<button class="hamburger" aria-label="메뉴 열기" type="button">
 					<span class="bar bar1"></span>
@@ -28,8 +28,8 @@
 				</button>
 				<div class="drawer">
 					<ul>
-						<li><a href="/work/" class="line">Works</a></li>
-						<li><a href="/contact/" class="line">Contact</a></li>
+						<li><a href="/work/" class="link">Work</a></li>
+						<li><a href="/contact/" class="link">Contact</a></li>
 					</ul>
 				</div>
 				<div class="drawer-dim"></div>
@@ -39,9 +39,36 @@
 			<!-- Swiper -->
 			<div class="swiper mySwiper swiper-v">
 				<div class="swiper-wrapper">
+					<!-- <div class="swiper-slide">
+						<div class="contents">
+							<h2>G-C-I PROGRAM</h2>
+							<div class="growth-list">
+								<div class="growth-row">
+									<span class="growth-ko">통찰력 있는 성장 목표를 설정하고</span>
+									<span class="growth-dots"></span>
+									<span class="growth-en">Goal of Growth</span>
+								</div>
+								<div class="growth-row">
+									<span class="growth-ko">그 목표를 달성할 수 있는 핵심 역량을 발견하여</span>
+									<span class="growth-dots"></span>
+									<span class="growth-en">Core of Growth</span>
+								</div>
+								<div class="growth-row">
+									<span class="growth-ko">
+										그를 바탕으로 성장을 실행할 차별적
+										<br />
+										아이디어를 제안한다.
+									</span>
+									<span class="growth-dots"></span>
+									<span class="growth-en">Idea of Growth</span>
+								</div>
+							</div>
+						</div>
+					</div> -->
+
 					<div class="swiper-slide">
 						<div class="contents">
-							<svg width="500" height="auto" viewBox="0 0 500 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<svg class="symbol" width="500" height="auto" viewBox="0 0 500 200" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M0 200V132.19L500 0V200H0Z" fill="black" style="fill: black; fill-opacity: 1" />
 							</svg>
 							<h1>GROW OR DISAPPEAR</h1>
@@ -76,25 +103,29 @@
 							<h2>G-C-I PROGRAM</h2>
 							<div class="growth-list">
 								<div class="growth-row">
-									<span class="growth-en">Goal of Growth</span>
 									<span class="growth-ko">통찰력 있는 성장 목표를 설정하고</span>
 									<span class="growth-dots"></span>
+									<span class="growth-en">Goal of Growth</span>
 								</div>
 								<div class="growth-row">
-									<span class="growth-en">Core of Growth</span>
 									<span class="growth-ko">그 목표를 달성할 수 있는 핵심 역량을 발견하여</span>
 									<span class="growth-dots"></span>
+									<span class="growth-en">Core of Growth</span>
 								</div>
 								<div class="growth-row">
-									<span class="growth-en">Idea of Growth</span>
-									<span class="growth-ko">그를 바탕으로 성장을 실행할 차별적 아이디어를 제안한다</span>
+									<span class="growth-ko">
+										그를 바탕으로 성장을 실행할 차별적
+										<br />
+										아이디어를 제안한다.
+									</span>
 									<span class="growth-dots"></span>
+									<span class="growth-en">Idea of Growth</span>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="swiper-pagination"></div>
+				<!-- <div class="swiper-pagination"></div> -->
 			</div>
 		</main>
 		<div id="orientation-lock">
@@ -106,93 +137,7 @@
 		</div>
 		<!-- Swiper JS -->
 		<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-		<!-- Initialize Swiper -->
-		<script>
-			function animateGrowthRows() {
-				document.querySelectorAll('.swiper-slide-active .growth-row').forEach((row, i) => {
-					const ko = row.querySelector('.growth-ko');
-					const dots = row.querySelector('.growth-dots');
-					const en = row.querySelector('.growth-en');
-
-					gsap.set(ko, { opacity: 0 });
-					gsap.set(dots, { opacity: 0, width: 0 });
-					gsap.set(en, { opacity: 0 });
-
-					const tl = gsap.timeline({ delay: i * 0.5 });
-					tl.to(ko, { opacity: 1, duration: 0.5, ease: 'power2.in' })
-						.to(dots, { opacity: 1, width: '100%', duration: 0.8, ease: 'power2.in' }, '+=0.2')
-						.to(en, { opacity: 1, duration: 0.9, ease: 'power2.in' }, '-=0.1');
-				});
-			}
-
-			function animateSlideContent(slide) {
-				const h1 = slide.querySelector('h1');
-				const h2 = slide.querySelector('h2');
-				const desc = slide.querySelector('p.desc');
-				const growthList = slide.querySelector('.growth-list');
-
-				if (h1) gsap.set(h1, { opacity: 0, y: 40 });
-				if (h2) gsap.set(h2, { opacity: 0, y: 40 });
-				if (desc) gsap.set(desc, { opacity: 0, y: 40 });
-
-				const tl = gsap.timeline();
-				if (h1) tl.to(h1, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
-				if (h2) tl.to(h2, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.8);
-				if (desc) tl.to(desc, { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, 1.2);
-
-				if (growthList) animateGrowthRows();
-			}
-
-			function fadeOutSlideContent(slide) {
-				const h1 = slide.querySelector('h1');
-				const h2 = slide.querySelector('h2');
-				const desc = slide.querySelector('p.desc');
-
-				const tl = gsap.timeline();
-				if (h1) tl.to(h1, { opacity: 0, y: 40, duration: 0.3, ease: 'power2.in' }, 0);
-				if (h2) tl.to(h2, { opacity: 0, y: 40, duration: 0.3, ease: 'power2.in' }, 0);
-				if (desc) tl.to(desc, { opacity: 0, y: 40, duration: 0.3, ease: 'power2.in' }, 0);
-			}
-
-			function fadeOutGrowthRows() {
-				document.querySelectorAll('.swiper-slide .growth-row').forEach(row => {
-					const en = row.querySelector('.growth-en');
-					if (en) {
-						gsap.to(en, { opacity: 0, x: '100%', duration: 0.5, ease: 'power2.in' });
-					}
-				});
-			}
-
-			var prevIndex = 0;
-			var swiperV = new Swiper('.swiper-v', {
-				direction: 'vertical',
-				mousewheel: true,
-				speed: 1200,
-				pagination: {
-					el: '.swiper-pagination',
-					clickable: true,
-				},
-				on: {
-					slideChangeTransitionStart: function () {
-						// 이전 슬라이드 텍스트 자연스럽게 사라지게
-						if (typeof prevIndex === 'number' && this.slides[prevIndex]) {
-							fadeOutSlideContent(this.slides[prevIndex]);
-						}
-						// 새 슬라이드 텍스트는 바로 나타나게
-						const activeSlide = this.slides[this.activeIndex];
-						animateSlideContent(activeSlide);
-						prevIndex = this.activeIndex;
-					},
-				},
-			});
-
-			// 첫 로드시에도 모션 적용
-			document.addEventListener('DOMContentLoaded', function () {
-				const firstActive = document.querySelector('.swiper-slide-active');
-				if (firstActive) animateSlideContent(firstActive);
-			});
-		</script>
+		<script src="/assets/js/home.js"></script>
 		<script src="/assets/js/common.js"></script>
 	</body>
 </html>

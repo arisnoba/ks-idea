@@ -20,6 +20,7 @@
 		transform: scaleX(1);
 	}
 }
+
 .contact {
 	.contact-section {
 		display: flex;
@@ -37,7 +38,7 @@
 		a {
 			display: inline-block;
 			font-size: clamp(16px, 2vw, 24px);
-			margin-top: 8px;
+			margin-top: 0.5em;
 		}
 	}
 }
