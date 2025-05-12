@@ -97,6 +97,7 @@ fetch('/assets/data/works.json')
 				},
 			},
 		});
+		enableVerticalSwipeOnMobile(window.swiperH);
 		// 첫 로드시에도 모션 적용
 		document.addEventListener('DOMContentLoaded', function () {
 			const firstActive = document.querySelector('.swiper-slide-active');
@@ -104,3 +105,34 @@ fetch('/assets/data/works.json')
 		});
 		window.prevIndex = 0;
 	});
+
+// 모바일에서 수직 스와이프도 슬라이드 넘기기
+function enableVerticalSwipeOnMobile(swiper) {
+	if (!('ontouchstart' in window)) return;
+	let startY = null;
+	let startX = null;
+	let threshold = 40; // 최소 스와이프 거리(px)
+	const el = swiper.el;
+	el.addEventListener('touchstart', function (e) {
+		if (e.touches.length === 1) {
+			startY = e.touches[0].clientY;
+			startX = e.touches[0].clientX;
+		}
+	});
+	el.addEventListener('touchend', function (e) {
+		if (startY === null || startX === null) return;
+		const endY = e.changedTouches[0].clientY;
+		const endX = e.changedTouches[0].clientX;
+		const diffY = endY - startY;
+		const diffX = endX - startX;
+		if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > threshold) {
+			if (diffY < 0) {
+				swiper.slideNext(); // 위에서 아래로 스와이프(다음)
+			} else {
+				swiper.slidePrev(); // 아래에서 위로 스와이프(이전)
+			}
+		}
+		startY = null;
+		startX = null;
+	});
+}

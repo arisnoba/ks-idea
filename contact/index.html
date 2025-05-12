@@ -17,10 +17,21 @@
 		<header>
 			<nav class="nav">
 				<a href="/" class="logo"><img src="/assets/images/logo.svg" alt="logo" /></a>
-				<ul>
-					<li><a href="/work/">Work</a></li>
+				<ul class="nav-menu">
+					<li><a href="/work/">Works</a></li>
 					<li><a href="/contact/">Contact</a></li>
 				</ul>
+				<button class="hamburger" aria-label="메뉴 열기" type="button">
+					<span class="bar bar1"></span>
+					<span class="bar bar2"></span>
+				</button>
+				<div class="drawer">
+					<ul>
+						<li><a href="/work/" class="line">Works</a></li>
+						<li><a href="/contact/" class="line">Contact</a></li>
+					</ul>
+				</div>
+				<div class="drawer-dim"></div>
 			</nav>
 		</header>
 		<main class="contact">
@@ -33,6 +44,14 @@
 				</div>
 			</div>
 		</main>
+		<div id="orientation-lock">
+			<div class="orientation-message">
+				화면을 세로로 돌려주세요.
+				<br />
+				Please rotate your device to portrait.
+			</div>
+		</div>
+		<script src="/assets/js/common.js"></script>
 		<script src="/assets/js/contact.js"></script>
 	</body>
 </html>
