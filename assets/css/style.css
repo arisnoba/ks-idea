@@ -772,6 +772,7 @@ header {
 .work .work-info .work-desc {
   color: #444;
   line-height: 1.5;
+  word-break: keep-all;
 }
 .work .swiper-pagination {
   display: -webkit-box;

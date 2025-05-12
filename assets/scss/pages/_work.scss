@@ -123,6 +123,7 @@
 		.work-desc {
 			color: $body-text;
 			line-height: 1.5;
+			word-break: keep-all;
 		}
 	}
 	.swiper-pagination {
