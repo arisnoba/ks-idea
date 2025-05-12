@@ -10,10 +10,12 @@
 	justify-content: center;
 	align-items: center;
 	z-index: 9999;
+	opacity: 1;
+	transition: opacity 0.5s ease;
 
 	.loader-spinner {
-		width: 50px;
-		height: 50px;
+		width: 60px;
+		height: 60px;
 		border: 3px solid #f3f3f3;
 		border-top: 3px solid black;
 		border-radius: 50%;
@@ -38,13 +40,13 @@
 }
 
 .swiper-lazy-preloader {
-	width: 42px;
-	height: 42px;
+	width: 50px;
+	height: 50px;
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-left: -21px;
-	margin-top: -21px;
+	margin-left: -25px;
+	margin-top: -25px;
 	z-index: 10;
 	transform-origin: 50%;
 	box-sizing: border-box;
@@ -52,4 +54,34 @@
 	border-radius: 50%;
 	border-top-color: transparent;
 	animation: spin 1s infinite linear;
+}
+
+// 이미지 로딩 중에도 크기 유지
+.swiper-slide .work-img {
+	position: relative;
+	overflow: hidden;
+
+	img {
+		// 이미지가 로드되기 전에도 공간 확보
+		min-height: 100%;
+
+		// 원본 이미지 비율 유지
+		object-fit: cover;
+
+		// 로드 중일 때 배경색 표시
+		background-color: #f9f9f9;
+
+		// 점진적으로 이미지 표시 (부드러운 전환)
+		transition: opacity 0.3s ease;
+
+		// Swiper lazy loading과 충돌 해결
+		&.swiper-lazy {
+			opacity: 1 !important; // 강제 표시
+		}
+
+		// 이미지가 로드되는 동안 배경색만 표시
+		&.swiper-lazy-loading {
+			background-color: #f9f9f9;
+		}
+	}
 }
