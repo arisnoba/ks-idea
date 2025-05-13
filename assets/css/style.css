@@ -641,21 +641,22 @@ header {
   font-family: "SUIT", sans-serif;
 }
 .work .swiper::after {
-  content: "";
-  position: absolute;
+  position: fixed;
   top: 64px;
   left: 0;
   width: 100%;
-  height: 100px;
-  position: absolute;
-  z-index: 100;
+  height: 80px;
+  z-index: 10;
   pointer-events: none;
   -webkit-clip-path: polygon(0 0, 100% 0, 0 100%);
           clip-path: polygon(0 0, 100% 0, 0 100%);
   background-color: white;
+  -webkit-transition: height 0.3s ease-in-out;
+  transition: height 0.3s ease-in-out;
 }
 @media (max-width: 1024px) {
   .work .swiper::after {
+    content: "";
     top: 72px;
   }
 }
@@ -663,6 +664,9 @@ header {
   .work .swiper::after {
     top: 64px;
   }
+}
+.work .swiper.dis-cover::after {
+  height: 0;
 }
 .work .swiper-slide {
   height: 100%;
@@ -681,7 +685,7 @@ header {
           flex-direction: column;
 }
 @media (max-width: 1024px) {
-  .work .swiper-slide {
+  .work .swiper-slide:not(.type-text) {
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: start;
@@ -692,7 +696,7 @@ header {
   }
 }
 @media (max-width: 540px) {
-  .work .swiper-slide {
+  .work .swiper-slide:not(.type-text) {
     padding-top: 64px;
   }
 }
@@ -719,6 +723,41 @@ header {
             flex-direction: column;
   }
 }
+.work .contents .work-info:only-child {
+  max-width: 800px;
+  padding: 0 5vw;
+  text-align: center;
+}
+.work .contents .work-info:only-child h2 {
+  position: relative;
+  margin-bottom: 32px;
+  z-index: 110;
+}
+.work .contents .work-info:only-child .work-desc,
+.work .contents .work-info:only-child p {
+  line-height: 1.5;
+  text-align: left;
+}
+.work .contents .work-info:only-child .work-desc + p,
+.work .contents .work-info:only-child p + p {
+  margin-top: 0.85em;
+}
+.work .contents .work-info:only-child .work-desc strong,
+.work .contents .work-info:only-child p strong {
+  font-weight: 500;
+  font-size: 1.1em;
+}
+@media (max-width: 540px) {
+  .work .contents .work-info:only-child {
+    padding: 0 8vw;
+  }
+  .work .contents .work-info:only-child h2 {
+    margin-bottom: 30px;
+  }
+  .work .contents .work-info:only-child .work-desc {
+    text-align: left;
+  }
+}
 .work .work-img {
   width: 100%;
   max-width: 40vw;
@@ -731,7 +770,7 @@ header {
 }
 @media (max-width: 540px) {
   .work .work-img img {
-    aspect-ratio: 54/35;
+    height: 35dvh;
   }
 }
 @media (max-width: 1024px) {
@@ -821,10 +860,6 @@ header {
       overscroll-behavior: contain;
   -ms-touch-action: pan-x pan-y;
       touch-action: pan-x pan-y;
-}
-
-.work-img.fixed-mask {
-  display: none;
 }
 
 .link {

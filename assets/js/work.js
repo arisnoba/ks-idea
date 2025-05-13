@@ -1,27 +1,98 @@
 function animateSlideContent(slide) {
+	if (!slide) return;
+
 	const heading = slide.querySelector('.section-heading');
 	const brand = slide.querySelector('.brand');
 	const desc = slide.querySelector('.work-desc');
+	const descDiv = slide.querySelector('div.work-desc'); // 특별한 div.work-desc 처리
+	const img = slide.querySelector('.work-img img');
 
+	// 요소 초기 상태 설정
 	if (heading) gsap.set(heading, { opacity: 0, x: 40 });
 	if (brand) gsap.set(brand, { opacity: 0, x: 40 });
-	if (desc) gsap.set(desc, { opacity: 0, x: 40 });
+	if (desc && desc.tagName === 'P') gsap.set(desc, { opacity: 0, x: 40 });
 
+	// div.work-desc 내부 p 태그들 초기화
+	if (descDiv && descDiv.tagName === 'DIV') {
+		const paragraphs = descDiv.querySelectorAll('p');
+		if (paragraphs.length > 0) {
+			gsap.set(paragraphs, { opacity: 0, x: 40 });
+		} else {
+			gsap.set(descDiv, { opacity: 0, x: 40 });
+		}
+	}
+
+	// 타임라인으로 애니메이션 실행
 	const tl = gsap.timeline();
-	if (heading) tl.to(heading, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
-	if (brand) tl.to(brand, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.8);
-	if (desc) tl.to(desc, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.9);
+
+	// 헤딩 애니메이션
+	if (heading) {
+		tl.to(heading, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
+	}
+
+	// 브랜드 애니메이션
+	if (brand) {
+		tl.to(brand, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.8);
+	}
+
+	// 일반 work-desc 애니메이션
+	if (desc && desc.tagName === 'P') {
+		tl.to(desc, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.9);
+	}
+
+	// div.work-desc 내부 p 태그들 애니메이션
+	if (descDiv && descDiv.tagName === 'DIV') {
+		const paragraphs = descDiv.querySelectorAll('p');
+		if (paragraphs.length > 0) {
+			tl.to(
+				paragraphs,
+				{
+					opacity: 1,
+					x: 0,
+					duration: 0.7,
+					stagger: 0.1,
+					ease: 'power2.out',
+				},
+				0.9
+			);
+		} else {
+			tl.to(descDiv, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.9);
+		}
+	}
+
+	// 이미지 애니메이션 (있는 경우에만)
+	if (img) {
+		gsap.fromTo(
+			img,
+			{ scale: 1.05, opacity: 0.8 },
+			{
+				scale: 1,
+				opacity: 1,
+				duration: 1.2,
+				ease: 'power2.out',
+			}
+		);
+	}
 }
 
 function fadeOutSlideContent(slide) {
 	const heading = slide.querySelector('.section-heading');
 	const brand = slide.querySelector('.brand');
 	const desc = slide.querySelector('.work-desc');
+	const descDiv = slide.querySelector('div.work-desc');
+	const descParagraphs = descDiv ? descDiv.querySelectorAll('p') : null;
 
 	const tl = gsap.timeline();
 	if (heading) tl.to(heading, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
 	if (brand) tl.to(brand, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
-	if (desc) tl.to(desc, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
+	if (desc && desc.tagName === 'P') tl.to(desc, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
+
+	// div.work-desc 내부 p 태그들 페이드아웃
+	if (descParagraphs && descParagraphs.length > 0) {
+		tl.to(descParagraphs, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
+	} else if (descDiv) {
+		tl.to(descDiv, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
+	}
 }
 
 var prevIndex = 0;
@@ -54,65 +125,73 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (firstActive) animateSlideContent(firstActive);
 });
 
-// 슬라이드 동적 생성
-fetch('/assets/data/works.json')
-	.then(res => res.json())
-	.then(data => {
-		// 모든 이미지 미리 로드
-		preloadImages(data.map(work => work.image));
+// 슬라이드 동적 생성 (이제 하드코딩으로 변경)
+// 현재 DOM에 있는 슬라이드를 사용하도록 수정
+document.addEventListener('DOMContentLoaded', function () {
+	// 모든 이미지 미리 로드 (하드코딩된 이미지를 모두 찾아서 배열로 만듦)
+	const imageElements = document.querySelectorAll('.swiper-slide .work-img img');
+	const imageUrls = Array.from(imageElements).map(img => img.src);
 
-		const wrapper = document.querySelector('.swiper-wrapper');
-		wrapper.innerHTML = '';
-		data.forEach(work => {
-			const slide = document.createElement('div');
-			slide.className = 'swiper-slide';
-			slide.innerHTML = `
-				<div class="contents">
-					<div class="work-img">
-						<img src="${work.image}" alt="${work.id}" loading="eager" />
-						<div class="swiper-lazy-preloader"></div>
-					</div>
-					<div class="work-info">
-						<h2 class="section-heading">${work.title}</h2>
-						<p class="brand">${work.brand}</p>
-						<p class="work-desc">${work.desc}</p>
-					</div>
-				</div>
-			`;
-			wrapper.appendChild(slide);
-		});
-		// 동적으로 생성 후 Swiper 재초기화
-		if (window.swiperH) window.swiperH.destroy(true, true);
-		window.swiperH = new Swiper('.swiper-h', {
-			direction: 'horizontal',
-			mousewheel: true,
-			speed: 1000,
-			// 커스텀 프리로더를 사용하므로 lazy loading 비활성화
-			lazy: false,
-			pagination: {
-				el: '.swiper-pagination',
-				clickable: true,
-			},
-			on: {
-				slideChangeTransitionStart: function () {
-					if (typeof window.prevIndex === 'number' && this.slides[window.prevIndex]) {
-						fadeOutSlideContent(this.slides[window.prevIndex]);
-					}
-					const activeSlide = this.slides[this.activeIndex];
+	// 전체 페이지 로딩 상태 표시
+	preloadImages(imageUrls);
+
+	// 동적으로 생성 대신 기존 슬라이드 사용하여 Swiper 초기화
+	window.swiperH = new Swiper('.swiper-h', {
+		direction: 'horizontal',
+		mousewheel: true,
+		speed: 1000,
+		// 커스텀 프리로더를 사용하므로 lazy loading 비활성화
+		lazy: false,
+		pagination: {
+			el: '.swiper-pagination',
+			clickable: true,
+		},
+		on: {
+			slideChangeTransitionStart: function () {
+				// 이전 슬라이드 텍스트 자연스럽게 사라지게
+				if (typeof window.prevIndex === 'number' && this.slides[window.prevIndex]) {
+					fadeOutSlideContent(this.slides[window.prevIndex]);
+				}
+				// 새 슬라이드 텍스트는 바로 나타나게
+				const activeSlide = this.slides[this.activeIndex];
+				if (activeSlide) {
 					animateSlideContent(activeSlide);
-					window.prevIndex = this.activeIndex;
-				},
+
+					// data-type에 따라 클래스 추가/제거
+					const slideType = activeSlide.dataset.type;
+					const swiperContainer = document.querySelector('.swiper.swiper-h');
+
+					if (slideType === 'text') {
+						swiperContainer.classList.add('dis-cover');
+					} else {
+						swiperContainer.classList.remove('dis-cover');
+					}
+				}
+				window.prevIndex = this.activeIndex;
 			},
-		});
-		enableVerticalSwipeOnMobile(window.swiperH);
-		setupMobileWorkImgMask(window.swiperH);
-		// 첫 로드시에도 모션 적용
-		document.addEventListener('DOMContentLoaded', function () {
-			const firstActive = document.querySelector('.swiper-slide-active');
-			if (firstActive) animateSlideContent(firstActive);
-		});
-		window.prevIndex = 0;
+		},
 	});
+	enableVerticalSwipeOnMobile(window.swiperH);
+	// setupMobileWorkImgMask(window.swiperH);
+
+	// 첫 로드시에도 모션 적용
+	const firstActive = document.querySelector('.swiper-slide-active');
+	if (firstActive) {
+		animateSlideContent(firstActive);
+
+		// 첫 로드시에도 data-type 확인하여 클래스 추가/제거
+		const slideType = firstActive.dataset.type;
+		const swiperContainer = document.querySelector('.swiper.swiper-h');
+
+		if (slideType === 'text') {
+			swiperContainer.classList.add('dis-cover');
+		} else {
+			swiperContainer.classList.remove('dis-cover');
+		}
+	}
+
+	window.prevIndex = 0;
+});
 
 // 모바일에서 수직 스와이프도 슬라이드 넘기기
 function enableVerticalSwipeOnMobile(swiper) {
@@ -135,9 +214,9 @@ function enableVerticalSwipeOnMobile(swiper) {
 		const diffX = endX - startX;
 		if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > threshold) {
 			if (diffY < 0) {
-				swiper.slideNext(); // 위에서 아래로 스와이프(다음)
+				swiper.slidePrev(); // 위에서 아래로 스와이프(다음)
 			} else {
-				swiper.slidePrev(); // 아래에서 위로 스와이프(이전)
+				swiper.slideNext(); // 아래에서 위로 스와이프(이전)
 			}
 		}
 		startY = null;
@@ -169,7 +248,21 @@ function setupMobileWorkImgMask(swiper) {
 	function setWorkImg(idx) {
 		const dataSlides = Array.from(wrapper.children);
 		if (!dataSlides[idx]) return;
-		const imgSrc = dataSlides[idx].querySelector('.work-img img').getAttribute('src');
+		const imgElement = dataSlides[idx].querySelector('.work-img img');
+		// 이미지가 없는 슬라이드는 처리하지 않음
+		if (!imgElement) {
+			if (workImg.style.display !== 'none') {
+				workImg.style.display = 'none';
+			}
+			return;
+		}
+
+		// 이미지가 있는 경우 표시
+		if (workImg.style.display === 'none') {
+			workImg.style.display = '';
+		}
+
+		const imgSrc = imgElement.getAttribute('src');
 		const oldImg = workImg.querySelector('img.active');
 		const newImg = document.createElement('img');
 		newImg.src = imgSrc;
