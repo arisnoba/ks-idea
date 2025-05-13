@@ -212,88 +212,25 @@ function enableVerticalSwipeOnMobile(swiper) {
 		const endX = e.changedTouches[0].clientX;
 		const diffY = endY - startY;
 		const diffX = endX - startX;
+
+		// 수직 스와이프 감지
 		if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > threshold) {
 			if (diffY < 0) {
-				swiper.slidePrev(); // 위에서 아래로 스와이프(다음)
+				swiper.slidePrev(); // 위에서 아래로 스와이프(이전)
 			} else {
-				swiper.slideNext(); // 아래에서 위로 스와이프(이전)
+				swiper.slideNext(); // 아래에서 위로 스와이프(다음)
+			}
+		}
+		// 수평 스와이프 감지 추가
+		else if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > threshold) {
+			if (diffX < 0) {
+				swiper.slideNext(); // 왼쪽에서 오른쪽으로 스와이프(다음)
+			} else {
+				swiper.slidePrev(); // 오른쪽에서 왼쪽으로 스와이프(이전)
 			}
 		}
 		startY = null;
 		startX = null;
-	});
-}
-
-// 모바일 마스크 패럴렉스 이미지 전환
-function setupMobileWorkImgMask(swiper) {
-	if (window.innerWidth > 768) return;
-	const wrapper = document.querySelector('.swiper-wrapper');
-	if (!wrapper) return;
-	// .work-img를 고정 위치에 하나만 두고, 이미지 레이어를 관리
-	let workImg = document.querySelector('.work-img.fixed-mask');
-	if (!workImg) {
-		workImg = document.createElement('div');
-		workImg.className = 'work-img fixed-mask';
-		workImg.style.position = 'fixed';
-		workImg.style.top = '80px';
-		workImg.style.left = '0';
-		workImg.style.width = '100vw';
-		workImg.style.height = '40vh';
-		workImg.style.zIndex = '10';
-		workImg.style.overflow = 'hidden';
-		workImg.style.background = '#fff';
-		document.body.appendChild(workImg);
-	}
-	// 이미지 레이어 초기화
-	function setWorkImg(idx) {
-		const dataSlides = Array.from(wrapper.children);
-		if (!dataSlides[idx]) return;
-		const imgElement = dataSlides[idx].querySelector('.work-img img');
-		// 이미지가 없는 슬라이드는 처리하지 않음
-		if (!imgElement) {
-			if (workImg.style.display !== 'none') {
-				workImg.style.display = 'none';
-			}
-			return;
-		}
-
-		// 이미지가 있는 경우 표시
-		if (workImg.style.display === 'none') {
-			workImg.style.display = '';
-		}
-
-		const imgSrc = imgElement.getAttribute('src');
-		const oldImg = workImg.querySelector('img.active');
-		const newImg = document.createElement('img');
-		newImg.src = imgSrc;
-		newImg.className = 'work-img-item animating';
-		newImg.style.position = 'absolute';
-		newImg.style.left = '0';
-		newImg.style.top = '0';
-		newImg.style.width = '100%';
-		newImg.style.height = '100%';
-		newImg.style.objectFit = 'cover';
-		newImg.style.opacity = 1;
-		newImg.style.zIndex = 3;
-		newImg.style.clipPath = 'circle(0% at 50% 50%)';
-		workImg.appendChild(newImg);
-		gsap.to(newImg, {
-			clipPath: 'circle(100% at 50% 50%)',
-			duration: 0.7,
-			ease: 'power2.out',
-			onComplete: () => {
-				newImg.classList.remove('animating');
-				newImg.classList.add('active');
-				newImg.style.zIndex = 2;
-				// 이전 이미지 제거
-				if (oldImg) workImg.removeChild(oldImg);
-			},
-		});
-	}
-	// 최초
-	setWorkImg(swiper.activeIndex);
-	swiper.on('slideChangeTransitionStart', function () {
-		setWorkImg(this.activeIndex);
 	});
 }
 
