@@ -718,9 +718,6 @@ header {
     padding-top: 64px;
   }
 }
-.work .swiper-slide-next .work-info * {
-  opacity: 0;
-}
 .work .contents {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -800,6 +797,8 @@ header {
   max-width: 480px;
   text-align: left;
   margin-bottom: 100px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 @media (max-width: 1024px) {
   .work .work-info {

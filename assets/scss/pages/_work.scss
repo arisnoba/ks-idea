@@ -58,13 +58,13 @@
 		}
 	}
 
-	.swiper-slide-next {
-		.work-info {
-			* {
-				opacity: 0;
-			}
-		}
-	}
+	// .swiper-slide-next {
+	// 	.work-info {
+	// 		* {
+	// 			opacity: 0;
+	// 		}
+	// 	}
+	// }
 
 	.contents {
 		display: flex;
@@ -139,6 +139,7 @@
 		max-width: 480px;
 		text-align: left;
 		margin-bottom: 100px;
+		transition: all 0.5s ease-in-out;
 		@include mq(tablet) {
 			max-width: 100%;
 			padding-inline: 13vw;

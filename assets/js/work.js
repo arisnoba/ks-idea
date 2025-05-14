@@ -32,12 +32,12 @@ function animateSlideContent(slide) {
 
 	// 브랜드 애니메이션
 	if (brand) {
-		tl.to(brand, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.8);
+		tl.to(brand, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
 	}
 
 	// 일반 work-desc 애니메이션
 	if (desc && desc.tagName === 'P') {
-		tl.to(desc, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.9);
+		tl.to(desc, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
 	}
 
 	// div.work-desc 내부 p 태그들 애니메이션
@@ -50,13 +50,13 @@ function animateSlideContent(slide) {
 					opacity: 1,
 					x: 0,
 					duration: 0.7,
-					stagger: 0.1,
+					stagger: 0,
 					ease: 'power2.out',
 				},
-				0.9
+				0.5
 			);
 		} else {
-			tl.to(descDiv, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.9);
+			tl.to(descDiv, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
 		}
 	}
 
