@@ -769,6 +769,30 @@ header {
   font-weight: 500;
   font-size: 1.05em;
 }
+.work .contents .work-info:only-child .work-desc p,
+.work .contents .work-info:only-child p p {
+  position: relative;
+}
+.work .contents .work-info:only-child .work-desc p::before,
+.work .contents .work-info:only-child p p::before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 7px;
+  height: 7px;
+  background-color: #4d4d4d;
+  border-radius: 50%;
+  top: 0.65em;
+  left: -12px;
+}
+@media (max-width: 540px) {
+  .work .contents .work-info:only-child .work-desc p::before,
+  .work .contents .work-info:only-child p p::before {
+    width: 4px;
+    height: 4px;
+    left: -7px;
+  }
+}
 @media (max-width: 540px) {
   .work .contents .work-info:only-child h2 {
     margin-bottom: 30px;
@@ -802,7 +826,7 @@ header {
 }
 .work .work-info {
   width: 100%;
-  max-width: 480px;
+  max-width: 500px;
   text-align: left;
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
@@ -840,6 +864,7 @@ header {
   color: #888;
   margin-bottom: clamp(20px, 2vw, 30px);
   line-height: 1.5;
+  word-break: keep-all;
 }
 .work .work-info .work-desc {
   color: #444;

@@ -63,6 +63,8 @@
 		.type-text {
 			.contents {
 				align-items: center;
+				.work-desc {
+				}
 			}
 		}
 	}
@@ -98,6 +100,25 @@
 				strong {
 					font-weight: 500;
 					font-size: 1.05em;
+				}
+				p {
+					position: relative;
+					&::before {
+						position: absolute;
+						content: '';
+						display: block;
+						width: 7px;
+						height: 7px;
+						background-color: #4d4d4d;
+						border-radius: 50%;
+						top: 0.65em;
+						left: -12px;
+						@include mq(mobile) {
+							width: 4px;
+							height: 4px;
+							left: -7px;
+						}
+					}
 				}
 			}
 
@@ -138,7 +159,7 @@
 
 	.work-info {
 		width: 100%;
-		max-width: 480px;
+		max-width: 500px;
 		text-align: left;
 		// margin-bottom: 100px;
 		transition: all 0.5s ease-in-out;
@@ -173,6 +194,7 @@
 			color: $sub-text;
 			margin-bottom: clamp(20px, 2vw, 30px);
 			line-height: 1.5;
+			word-break: keep-all;
 		}
 
 		.work-desc {
