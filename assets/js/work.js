@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const imageUrls = Array.from(imageElements).map(img => img.src);
 
 	// 전체 페이지 로딩 상태 표시
-	preloadImages(imageUrls);
+	// preloadImages(imageUrls);
 
 	// 동적으로 생성 대신 기존 슬라이드 사용하여 Swiper 초기화
 	window.swiperH = new Swiper('.swiper-h', {
