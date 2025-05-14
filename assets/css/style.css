@@ -141,6 +141,7 @@ header {
   padding: 0 5%;
   width: 100%;
   z-index: 3;
+  top: 0;
   height: clamp(64px, 7vw, 112px);
   font-size: clamp(0.66rem, 2vw, 1rem);
   letter-spacing: 0.5em;
@@ -658,6 +659,9 @@ header {
   color: #000;
   font-family: "SUIT", sans-serif;
 }
+.work .swiper {
+  position: relative;
+}
 .work .swiper::after {
   position: fixed;
   top: 64px;
@@ -680,7 +684,7 @@ header {
 }
 @media (max-width: 540px) {
   .work .swiper::after {
-    top: 64px;
+    top: 72px;
   }
 }
 .work .swiper.dis-cover::after {
@@ -711,11 +715,6 @@ header {
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: start;
-  }
-}
-@media (max-width: 540px) {
-  .work .swiper-slide:not(.type-text) {
-    padding-top: 64px;
   }
 }
 .work .swiper-slide .type-text .contents {
@@ -786,7 +785,9 @@ header {
 }
 @media (max-width: 540px) {
   .work .work-img img {
-    height: 35dvh;
+    aspect-ratio: 720/469;
+    -o-object-position: bottom;
+       object-position: bottom;
   }
 }
 @media (max-width: 1024px) {
@@ -811,6 +812,7 @@ header {
   text-align: left;
   font-size: clamp(20px, 2vw, 32px);
   font-weight: 600;
+  font-family: "SUIT", sans-serif;
   margin-top: 0;
   margin-bottom: 0.25em;
 }
@@ -830,7 +832,6 @@ header {
   }
 }
 .work .work-info .brand {
-  font-size: clamp(16px, 2vw, 20px);
   color: #888;
   margin-bottom: clamp(20px, 2vw, 30px);
   line-height: 1.5;

@@ -13,6 +13,7 @@
 	}
 
 	.swiper {
+		position: relative;
 		&::after {
 			position: fixed;
 			top: 64px;
@@ -29,7 +30,7 @@
 				top: 72px;
 			}
 			@include mq(mobile) {
-				top: 64px;
+				top: 72px;
 			}
 		}
 		&.dis-cover {
@@ -37,6 +38,9 @@
 				height: 0;
 			}
 		}
+		// @include mq(tablet) {
+		// 	margin-top: 72px;
+		// }
 	}
 
 	.swiper-slide {
@@ -53,7 +57,7 @@
 				justify-content: start;
 			}
 			@include mq(mobile) {
-				padding-top: 64px;
+				// padding-top: 64px;
 			}
 		}
 		.type-text {
@@ -121,8 +125,9 @@
 			object-fit: cover;
 
 			@include mq(mobile) {
-				// aspect-ratio: 54 / 35;
-				height: 35dvh;
+				aspect-ratio: 720 / 469;
+				// height: 40dvh;
+				object-position: bottom;
 			}
 		}
 
@@ -146,6 +151,7 @@
 			text-align: left;
 			font-size: clamp(20px, 2vw, 32px);
 			font-weight: 600;
+			font-family: 'SUIT', sans-serif;
 			margin-top: 0;
 			margin-bottom: 0.25em;
 		}
@@ -164,7 +170,6 @@
 			}
 		}
 		.brand {
-			font-size: clamp(16px, 2vw, 20px);
 			color: $sub-text;
 			margin-bottom: clamp(20px, 2vw, 30px);
 			line-height: 1.5;
