@@ -6,8 +6,8 @@ function animateGrowthRows() {
 		// row 내부 요소들은 따로 애니메이션 처리하지 않음
 		// 대신 row와 함께 나타나도록 함
 
-		const tl = gsap.timeline({ delay: i * 0.9 + 1.2 });
-		tl.to(row, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+		const tl = gsap.timeline({});
+		tl.to(row, { opacity: 1, y: 0, duration: 0, ease: 'power2.out' });
 
 		// 내부 요소 개별 애니메이션 제거
 	});
@@ -16,7 +16,7 @@ function animateGrowthRows() {
 function animateSlideContent(slide) {
 	const h1 = slide.querySelector('h1');
 	const h2 = slide.querySelector('h2');
-	const desc = slide.querySelector('p.desc');
+	const desc = slide.querySelector('.desc');
 	const growthList = slide.querySelector('.growth-list');
 
 	if (h1) gsap.set(h1, { opacity: 0, y: 40 });
@@ -25,16 +25,16 @@ function animateSlideContent(slide) {
 
 	const tl = gsap.timeline();
 	if (h1) tl.to(h1, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
-	if (h2) tl.to(h2, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.8);
-	if (desc) tl.to(desc, { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, 1.2);
+	if (h2) tl.to(h2, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
+	if (desc) tl.to(desc, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
 
-	if (growthList) animateGrowthRows();
+	// if (growthList) animateGrowthRows();
 }
 
 function fadeOutSlideContent(slide) {
 	const h1 = slide.querySelector('h1');
 	const h2 = slide.querySelector('h2');
-	const desc = slide.querySelector('p.desc');
+	const desc = slide.querySelector('.desc');
 
 	const tl = gsap.timeline();
 	if (h1) tl.to(h1, { opacity: 0, duration: 0.3, ease: 'power2.in' }, 0);
@@ -46,7 +46,7 @@ function fadeOutGrowthRows() {
 	document.querySelectorAll('.swiper-slide .growth-row').forEach(row => {
 		const en = row.querySelector('.growth-en');
 		if (en) {
-			gsap.to(en, { opacity: 0, x: '100%', duration: 0.5, ease: 'power2.in' });
+			gsap.to(en, { opacity: 0, x: '100%', duration: 0.3, ease: 'power2.in' });
 		}
 	});
 }

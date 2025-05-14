@@ -216,9 +216,9 @@ function enableVerticalSwipeOnMobile(swiper) {
 		// 수직 스와이프 감지
 		if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > threshold) {
 			if (diffY < 0) {
-				swiper.slidePrev(); // 위에서 아래로 스와이프(이전)
+				swiper.slideNext(); // 위에서 아래로 스와이프(이전)
 			} else {
-				swiper.slideNext(); // 아래에서 위로 스와이프(다음)
+				swiper.slidePrev(); // 아래에서 위로 스와이프(다음)
 			}
 		}
 		// 수평 스와이프 감지 추가

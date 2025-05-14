@@ -1,5 +1,5 @@
 body {
-  font-family: "SUIT", "sans-serif";
+  font-family: "SUIT Variable", "sans-serif";
   color: #444;
   font-size: 16px;
 }
@@ -11,7 +11,7 @@ h4,
 h5,
 h6 {
   color: #111;
-  font-family: "SUIT", "sans-serif";
+  font-family: "SUIT Variable", "sans-serif";
 }
 
 html,
@@ -372,7 +372,7 @@ header {
   margin-bottom: 20px;
 }
 .page-loader .loader-text {
-  font-family: "SUIT", sans-serif;
+  font-family: "SUIT Variable", sans-serif;
   font-size: 16px;
   color: #333;
 }
@@ -657,7 +657,7 @@ header {
   text-align: center;
   letter-spacing: -0.02em;
   color: #000;
-  font-family: "SUIT", sans-serif;
+  font-family: "SUIT Variable", sans-serif;
 }
 .work .swiper {
   position: relative;
@@ -812,13 +812,13 @@ header {
   text-align: left;
   font-size: clamp(20px, 2vw, 32px);
   font-weight: 600;
-  font-family: "SUIT", sans-serif;
+  font-family: "SUIT Variable", sans-serif;
   margin-top: 0;
   margin-bottom: 0.25em;
 }
 .work .work-info p {
   text-align: left;
-  font-family: "SUIT", sans-serif;
+  font-family: "SUIT Variable", sans-serif;
   font-size: clamp(14px, 2vw, 20px);
   font-weight: 300;
   margin: 0;
