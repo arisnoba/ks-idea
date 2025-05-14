@@ -510,6 +510,7 @@ header {
   position: relative;
   width: 100%;
   font-size: clamp(14px, 2vw, 24px);
+  font-family: "SUIT Variable", sans-serif;
   line-height: 1.7;
   color: #444;
   color: #4d4d4d;
