@@ -5,7 +5,7 @@
 
 	h2 {
 		font-size: clamp(1rem, 5vw, 36px);
-		font-weight: 400;
+		font-weight: 700;
 		text-align: center;
 		letter-spacing: -0.02em;
 		color: #000;
@@ -68,7 +68,7 @@
 
 	.contents {
 		display: flex;
-		align-items: center;
+		align-items: start;
 		justify-content: center;
 		gap: clamp(40px, 5vw, 80px);
 
@@ -85,7 +85,6 @@
 			h2 {
 				position: relative;
 				margin-bottom: 32px;
-				z-index: 110;
 			}
 
 			.work-desc,
@@ -139,8 +138,8 @@
 		width: 100%;
 		max-width: 480px;
 		text-align: left;
-
-		@include mq(mobile) {
+		margin-bottom: 100px;
+		@include mq(tablet) {
 			max-width: 100%;
 			padding-inline: 13vw;
 		}
@@ -150,7 +149,7 @@
 			font-size: clamp(20px, 2vw, 32px);
 			font-weight: 600;
 			margin-top: 0;
-			margin-bottom: 0.5em;
+			margin-bottom: 0.25em;
 		}
 
 		p {
@@ -160,16 +159,22 @@
 			font-weight: 300;
 			margin: 0;
 		}
-
+		.mobile-br {
+			display: none;
+			@include mq(mobile) {
+				display: block;
+			}
+		}
 		.brand {
 			font-size: clamp(16px, 2vw, 20px);
 			color: $sub-text;
-			margin-bottom: clamp(20px, 2vw, 20px);
+			margin-bottom: clamp(20px, 2vw, 30px);
+			line-height: 1.5;
 		}
 
 		.work-desc {
 			color: $body-text;
-			line-height: 1.5;
+			line-height: 1.6;
 			word-break: keep-all;
 		}
 	}

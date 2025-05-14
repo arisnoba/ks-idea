@@ -114,7 +114,7 @@ nav ul {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  gap: 24px;
+  gap: 60px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -123,8 +123,8 @@ nav ul a {
   text-transform: uppercase;
   text-decoration: none;
   color: #444;
-  letter-spacing: 0.3em;
-  font-size: clamp(14px, 2vw, 16px);
+  letter-spacing: 0.2em;
+  font-size: 14px;
 }
 
 header {
@@ -186,12 +186,11 @@ header {
     position: fixed;
     top: 0;
     right: -100vw;
-    width: 70vw;
-    max-width: 320px;
+    width: 50vw;
     height: 100vh;
     background: #fff;
-    -webkit-box-shadow: -2px 0 16px rgba(0, 0, 0, 0.08);
-            box-shadow: -2px 0 16px rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: -1.66666667px 1.66666667px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: -1.66666667px 1.66666667px 10px rgba(0, 0, 0, 0.3);
     z-index: 20;
     -webkit-transition: right 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
     transition: right 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
@@ -202,12 +201,12 @@ header {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: start;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: start;
   }
   .drawer.open {
     right: 0;
@@ -224,21 +223,24 @@ header {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: end;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: end;
+    gap: 26.66666667px;
+    margin-top: 160px;
   }
   .drawer li {
-    margin: 2em 0;
     text-align: center;
+    padding-right: 30px;
   }
   .drawer a {
-    font-size: 1.5em;
+    font-size: 14px;
     color: #222;
     text-decoration: none;
+    text-align: center;
   }
   .hamburger.open .bar1 {
     -webkit-transform: rotate(45deg) translateY(8px);
@@ -254,7 +256,7 @@ header {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(255, 255, 255, 0.8);
     z-index: 1;
     opacity: 0;
     pointer-events: none;
@@ -451,13 +453,14 @@ header {
 .home h2 {
   width: 100%;
   letter-spacing: 0.35em;
-  margin-bottom: clamp(42px, 5vw, 64px);
+  margin-bottom: clamp(46px, 5vw, 64px);
   color: #111;
   font-family: "futura-pt", sans-serif;
   font-size: clamp(16px, 4vw, 2rem);
   line-height: 1.2;
   margin-top: 0;
   text-align: left;
+  font-weight: 500;
 }
 @media (max-width: 540px) {
   .home h1,
@@ -504,13 +507,27 @@ header {
   font-size: clamp(14px, 2vw, 24px);
   line-height: 1.7;
   color: #444;
+  color: #4d4d4d;
   text-align: left;
   letter-spacing: -0.02em;
   margin: 0;
+  font-weight: 300;
   word-break: keep-all;
 }
 .home .growth-list {
   position: relative;
+}
+@media (max-width: 540px) {
+  .home .growth-list {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 1em;
+  }
 }
 .home .growth-row {
   display: -webkit-box;
@@ -519,7 +536,6 @@ header {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 1.2em;
   font-size: clamp(1rem, 2vw, 1.3em);
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
@@ -532,7 +548,9 @@ header {
   text-align: left;
   -webkit-transition: none;
   transition: none;
+  line-height: 1.7;
   font-size: clamp(14px, 2vw, 24px);
+  font-weight: 300;
 }
 .home .growth-ko br {
   display: none;
@@ -559,7 +577,7 @@ header {
   transition: none;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  background: repeating-linear-gradient(to right, #999, #999 8px, transparent 8px, transparent 16px);
+  background: repeating-linear-gradient(to right, #4d4d4d, #4d4d4d 2px, transparent 2px, transparent 4px);
   background-size: 32px 1px;
 }
 @media (max-width: 540px) {
@@ -781,8 +799,9 @@ header {
   width: 100%;
   max-width: 480px;
   text-align: left;
+  margin-bottom: 100px;
 }
-@media (max-width: 540px) {
+@media (max-width: 1024px) {
   .work .work-info {
     max-width: 100%;
     padding-inline: 13vw;
@@ -890,7 +909,7 @@ header {
   transition: transform 0.5s, -webkit-transform 0.5s;
   left: 0;
   width: 100%;
-  height: 2px;
+  height: 1px;
   bottom: -0.1em;
   -webkit-transform: scaleX(0);
           transform: scaleX(0);
