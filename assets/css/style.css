@@ -634,7 +634,7 @@ header {
 }
 .work h2 {
   font-size: clamp(1rem, 5vw, 36px);
-  font-weight: 400;
+  font-weight: 700;
   text-align: center;
   letter-spacing: -0.02em;
   color: #000;
@@ -707,9 +707,9 @@ header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -731,7 +731,6 @@ header {
 .work .contents .work-info:only-child h2 {
   position: relative;
   margin-bottom: 32px;
-  z-index: 110;
 }
 .work .contents .work-info:only-child .work-desc,
 .work .contents .work-info:only-child p {
@@ -794,7 +793,7 @@ header {
   font-size: clamp(20px, 2vw, 32px);
   font-weight: 600;
   margin-top: 0;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.25em;
 }
 .work .work-info p {
   text-align: left;
@@ -803,14 +802,23 @@ header {
   font-weight: 300;
   margin: 0;
 }
+.work .work-info .mobile-br {
+  display: none;
+}
+@media (max-width: 540px) {
+  .work .work-info .mobile-br {
+    display: block;
+  }
+}
 .work .work-info .brand {
   font-size: clamp(16px, 2vw, 20px);
   color: #888;
-  margin-bottom: clamp(20px, 2vw, 20px);
+  margin-bottom: clamp(20px, 2vw, 30px);
+  line-height: 1.5;
 }
 .work .work-info .work-desc {
   color: #444;
-  line-height: 1.5;
+  line-height: 1.6;
   word-break: keep-all;
 }
 .work .swiper-pagination {
@@ -909,13 +917,19 @@ header {
 }
 .contact .contact-section h2 {
   margin-bottom: 48px;
-  font-size: clamp(24px, 2vw, 48px);
+  font-size: clamp(20px, 4vw, 32px);
   text-transform: uppercase;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.2em;
   text-indent: 0.3em;
+  font-weight: 400;
+  font-family: "futura-pt", sans-serif;
+  margin-top: 0;
+  margin-bottom: clamp(27px, 2vw, 48px);
 }
 .contact .contact-section a {
   display: inline-block;
-  font-size: clamp(16px, 2vw, 24px);
+  font-size: clamp(14px, 2vw, 24px);
   margin-top: 0.5em;
+  text-transform: none;
+  font-weight: 300;
 }
