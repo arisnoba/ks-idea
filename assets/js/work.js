@@ -95,6 +95,7 @@ function fadeOutSlideContent(slide) {
 	}
 }
 
+// Swiper 인스턴스 한 번만 생성
 var prevIndex = 0;
 var swiperH = new Swiper('.swiper-h', {
 	direction: 'horizontal',
@@ -107,90 +108,48 @@ var swiperH = new Swiper('.swiper-h', {
 	},
 	on: {
 		slideChangeTransitionStart: function () {
+			console.log('[Swiper] slideChangeTransitionStart');
+			console.log('Swiper activeIndex:', this.activeIndex, 'prevIndex:', prevIndex);
 			// 이전 슬라이드 텍스트 자연스럽게 사라지게
 			if (typeof prevIndex === 'number' && this.slides[prevIndex]) {
 				fadeOutSlideContent(this.slides[prevIndex]);
 			}
 			// 새 슬라이드 텍스트는 바로 나타나게
 			const activeSlide = this.slides[this.activeIndex];
-			animateSlideContent(activeSlide);
+			if (activeSlide) {
+				animateSlideContent(activeSlide);
+				// data-type에 따라 클래스 추가/제거
+				const slideType = activeSlide.dataset.type;
+				const swiperContainer = document.querySelector('.swiper.swiper-h');
+				console.log('slideType:', slideType, 'swiperContainer:', swiperContainer, 'dis-cover:', swiperContainer && swiperContainer.classList.contains('dis-cover'));
+				if (slideType === 'text') {
+					swiperContainer.classList.add('dis-cover');
+				} else {
+					swiperContainer.classList.remove('dis-cover');
+				}
+			}
 			prevIndex = this.activeIndex;
 		},
 	},
 });
 
-// 첫 로드시에도 모션 적용
+enableVerticalSwipeOnMobile(swiperH);
+
+// 첫 로드시에도 모션 적용 및 클래스 처리
 document.addEventListener('DOMContentLoaded', function () {
-	const firstActive = document.querySelector('.swiper-slide-active');
-	if (firstActive) animateSlideContent(firstActive);
-});
-
-// 슬라이드 동적 생성 (이제 하드코딩으로 변경)
-// 현재 DOM에 있는 슬라이드를 사용하도록 수정
-document.addEventListener('DOMContentLoaded', function () {
-	// 모든 이미지 미리 로드 (하드코딩된 이미지를 모두 찾아서 배열로 만듦)
-	const imageElements = document.querySelectorAll('.swiper-slide .work-img img');
-	const imageUrls = Array.from(imageElements).map(img => img.src);
-
-	// 전체 페이지 로딩 상태 표시
-	// preloadImages(imageUrls);
-
-	// 동적으로 생성 대신 기존 슬라이드 사용하여 Swiper 초기화
-	window.swiperH = new Swiper('.swiper-h', {
-		direction: 'horizontal',
-		mousewheel: true,
-		speed: 1000,
-		// 커스텀 프리로더를 사용하므로 lazy loading 비활성화
-		lazy: false,
-		pagination: {
-			el: '.swiper-pagination',
-			clickable: true,
-		},
-		on: {
-			slideChangeTransitionStart: function () {
-				// 이전 슬라이드 텍스트 자연스럽게 사라지게
-				if (typeof window.prevIndex === 'number' && this.slides[window.prevIndex]) {
-					fadeOutSlideContent(this.slides[window.prevIndex]);
-				}
-				// 새 슬라이드 텍스트는 바로 나타나게
-				const activeSlide = this.slides[this.activeIndex];
-				if (activeSlide) {
-					animateSlideContent(activeSlide);
-
-					// data-type에 따라 클래스 추가/제거
-					const slideType = activeSlide.dataset.type;
-					const swiperContainer = document.querySelector('.swiper.swiper-h');
-
-					if (slideType === 'text') {
-						swiperContainer.classList.add('dis-cover');
-					} else {
-						swiperContainer.classList.remove('dis-cover');
-					}
-				}
-				window.prevIndex = this.activeIndex;
-			},
-		},
-	});
-	enableVerticalSwipeOnMobile(window.swiperH);
-	// setupMobileWorkImgMask(window.swiperH);
-
-	// 첫 로드시에도 모션 적용
 	const firstActive = document.querySelector('.swiper-slide-active');
 	if (firstActive) {
 		animateSlideContent(firstActive);
-
 		// 첫 로드시에도 data-type 확인하여 클래스 추가/제거
 		const slideType = firstActive.dataset.type;
 		const swiperContainer = document.querySelector('.swiper.swiper-h');
-
 		if (slideType === 'text') {
 			swiperContainer.classList.add('dis-cover');
 		} else {
 			swiperContainer.classList.remove('dis-cover');
 		}
 	}
-
-	window.prevIndex = 0;
+	prevIndex = 0;
 });
 
 // 모바일에서 수직 스와이프도 슬라이드 넘기기
@@ -216,18 +175,24 @@ function enableVerticalSwipeOnMobile(swiper) {
 		// 수직 스와이프 감지
 		if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > threshold) {
 			if (diffY < 0) {
-				swiper.slideNext(); // 위에서 아래로 스와이프(이전)
+				console.log('[CustomTouch] swipe up (slidePrev)');
+				swiper.slidePrev(); // 위에서 아래로 스와이프(이전)
 			} else {
-				swiper.slidePrev(); // 아래에서 위로 스와이프(다음)
+				console.log('[CustomTouch] swipe down (slideNext)');
+				swiper.slideNext(); // 아래에서 위로 스와이프(다음)
 			}
+			console.log('CustomTouch after swipe, swiper.activeIndex:', swiper.activeIndex);
 		}
 		// 수평 스와이프 감지 추가
 		else if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > threshold) {
 			if (diffX < 0) {
+				console.log('[CustomTouch] swipe left (slideNext)');
 				swiper.slideNext(); // 왼쪽에서 오른쪽으로 스와이프(다음)
 			} else {
+				console.log('[CustomTouch] swipe right (slidePrev)');
 				swiper.slidePrev(); // 오른쪽에서 왼쪽으로 스와이프(이전)
 			}
+			console.log('CustomTouch after swipe, swiper.activeIndex:', swiper.activeIndex);
 		}
 		startY = null;
 		startX = null;
