@@ -56,3 +56,13 @@ a {
 		// box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
 	}
 }
+@media (orientation: portrait) {
+	html {
+		font-size: 16px;
+	}
+}
+@media (orientation: landscape) {
+	html {
+		font-size: 14px;
+	}
+}

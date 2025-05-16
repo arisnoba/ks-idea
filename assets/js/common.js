@@ -42,3 +42,10 @@ window.addEventListener('resize', () => {
 	document.documentElement.style.fontSize = '16px'; // 기본값 재설정
 	console.log('resize');
 });
+window.addEventListener('orientationchange', function () {
+	// iOS/Safari 등에서 폰트 크기 버그 방지: 강제 리플로우 유도
+	document.documentElement.style.fontSize = '100.01%';
+	setTimeout(function () {
+		document.documentElement.style.fontSize = '';
+	}, 10);
+});
