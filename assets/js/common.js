@@ -38,3 +38,7 @@ function checkOrientationLock() {
 window.addEventListener('resize', checkOrientationLock);
 window.addEventListener('orientationchange', checkOrientationLock);
 document.addEventListener('DOMContentLoaded', checkOrientationLock);
+window.addEventListener('resize', () => {
+	document.documentElement.style.fontSize = '16px'; // 기본값 재설정
+	console.log('resize');
+});

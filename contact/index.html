@@ -2,7 +2,7 @@
 <html lang="ko">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>CONTACT - KS IDEA</title>
 
 		<link rel="stylesheet" href="https://use.typekit.net/xsz5gdr.css" />
@@ -53,5 +53,20 @@
 		</div>
 		<script src="/assets/js/common.js"></script>
 		<script src="/assets/js/contact.js"></script>
+		<script>
+			let zoomResetTimeout;
+			function resetMobileZoom() {
+				document.body.style.zoom = 'reset';
+				document.body.style.transform = 'none';
+				clearTimeout(zoomResetTimeout);
+				zoomResetTimeout = setTimeout(function () {
+					document.body.style.zoom = 'reset';
+					window.scrollTo(0, 1);
+					window.scrollTo(0, 0);
+				}, 200);
+			}
+			window.addEventListener('orientationchange', resetMobileZoom);
+			window.addEventListener('resize', resetMobileZoom);
+		</script>
 	</body>
 </html>

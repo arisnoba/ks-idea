@@ -106,6 +106,7 @@ var swiperH = new Swiper('.swiper-h', {
 		el: '.swiper-pagination',
 		clickable: true,
 	},
+	allowTouchMove: false, // Swiper의 기본 터치 비활성화
 	on: {
 		slideChangeTransitionStart: function () {
 			console.log('[Swiper] slideChangeTransitionStart');
@@ -133,7 +134,7 @@ var swiperH = new Swiper('.swiper-h', {
 	},
 });
 
-enableVerticalSwipeOnMobile(swiperH);
+enableVerticalSwipeOnMobile(swiperH); // 커스텀 터치만 사용
 
 // 첫 로드시에도 모션 적용 및 클래스 처리
 document.addEventListener('DOMContentLoaded', function () {
@@ -153,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // 모바일에서 수직 스와이프도 슬라이드 넘기기
+let lastTouchTime = 0;
 function enableVerticalSwipeOnMobile(swiper) {
 	if (!('ontouchstart' in window)) return;
 	let startY = null;
@@ -167,6 +169,9 @@ function enableVerticalSwipeOnMobile(swiper) {
 	});
 	el.addEventListener('touchend', function (e) {
 		if (startY === null || startX === null) return;
+		const now = Date.now();
+		if (now - lastTouchTime < 500) return; // 0.5초 이내 중복 방지
+		lastTouchTime = now;
 		const endY = e.changedTouches[0].clientY;
 		const endX = e.changedTouches[0].clientX;
 		const diffY = endY - startY;
