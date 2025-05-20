@@ -22,7 +22,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 });
+
+function isTouchDevice() {
+	return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+}
+
 function checkOrientationLock() {
+	if (!isTouchDevice()) return; // 터치 디바이스가 아니면 동작하지 않음
 	const lock = document.getElementById('orientation-lock');
 	if (!lock) return;
 	const isSmall = window.innerWidth <= 768 || window.innerHeight <= 768;
