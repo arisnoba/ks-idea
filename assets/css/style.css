@@ -120,7 +120,7 @@ nav .logo {
 }
 nav .logo img {
   display: block;
-  height: clamp(12px, 2vw, 16px);
+  height: clamp(10px, 2vw, 16px);
 }
 nav ul {
   display: -webkit-box;
@@ -156,13 +156,18 @@ header {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  padding: 0 5%;
+  padding: 0 clamp(3.125rem, -4.545rem + 20.455vw, 20rem);
   width: 100%;
   z-index: 3;
   top: 0;
   height: clamp(64px, 7vw, 112px);
   font-size: clamp(0.66rem, 2vw, 1rem);
   letter-spacing: 0.5em;
+}
+@media (max-width: 540px) {
+  header {
+    padding: 0 25px 0 clamp(3.125rem, -4.545rem + 20.455vw, 20rem) !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -193,7 +198,7 @@ header {
   }
   .bar {
     display: block;
-    width: 28px;
+    width: 24px;
     height: 1px;
     background: #222;
     margin: 4px 0;
@@ -755,6 +760,7 @@ header {
       -ms-flex-pack: center;
           justify-content: center;
   gap: clamp(40px, 5vw, 80px);
+  width: 100%;
 }
 @media (max-width: 1024px) {
   .work .contents {
@@ -765,6 +771,9 @@ header {
   }
 }
 .work .contents .work-info:only-child {
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
   width: 100%;
   text-align: center;
 }
@@ -775,6 +784,12 @@ header {
   font-family: "futura-pt", sans-serif;
   font-weight: 500;
   letter-spacing: 0.025em;
+}
+.work .contents .work-info:only-child .work-desc {
+  max-width: 540px;
+}
+.work .contents .work-info:only-child .work-desc-list {
+  max-width: 1200px;
 }
 .work .contents .work-info:only-child .work-desc-list ul {
   list-style: none;
@@ -819,6 +834,10 @@ header {
 .work .contents .work-info:only-child .work-desc-list ul li .content p {
   margin: 0;
   position: relative;
+  font-size: clamp(0.875rem, 0.544rem + 0.882vw, 1.25rem);
+  font-weight: 300;
+  line-height: 1.625;
+  color: #4d4d4d;
 }
 .work .contents .work-info:only-child .work-desc-list ul li .content p::before {
   position: absolute;
@@ -845,7 +864,7 @@ header {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    gap: 12px;
+    gap: 8px;
   }
   .work .contents .work-info:only-child .work-desc-list ul li .title {
     -webkit-box-orient: horizontal;
@@ -861,8 +880,10 @@ header {
 }
 .work .contents .work-info:only-child .work-desc,
 .work .contents .work-info:only-child p {
-  line-height: 1.7;
+  font-size: clamp(0.875rem, 0.544rem + 0.882vw, 1.25rem);
+  line-height: 1.625;
   text-align: left;
+  font-weight: 300;
 }
 .work .contents .work-info:only-child .work-desc + p,
 .work .contents .work-info:only-child p + p {
@@ -870,7 +891,7 @@ header {
 }
 .work .contents .work-info:only-child .work-desc strong,
 .work .contents .work-info:only-child p strong {
-  font-weight: 500;
+  font-weight: 700;
   font-size: 1.05em;
 }
 .work .contents .work-info:only-child .work-desc p,
@@ -938,7 +959,7 @@ header {
 @media (max-width: 1024px) {
   .work .work-info {
     max-width: 100%;
-    padding-inline: 13vw;
+    padding-inline: clamp(3.125rem, -4.545rem + 20.455vw, 20rem);
   }
 }
 .work .work-info h2 {
@@ -1014,7 +1035,11 @@ header {
 @media (max-width: 540px) {
   .work .swiper-pagination {
     gap: 12px;
-    bottom: 5vh !important;
+    bottom: 2vh !important;
+    padding-inline: clamp(3.125rem, -4.545rem + 20.455vw, 20rem);
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
   }
   .work .swiper-pagination-bullet {
     width: 5px;

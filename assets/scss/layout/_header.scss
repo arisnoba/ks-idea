@@ -9,7 +9,7 @@ nav {
 		display: block;
 		img {
 			display: block;
-			height: clamp(12px, 2vw, 16px);
+			height: clamp(10px, 2vw, 16px);
 		}
 	}
 	ul {
@@ -35,14 +35,16 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 0 5%;
+	padding: 0 clamp(3.125rem, -4.545rem + 20.455vw, 20rem);
 	width: 100%;
 	z-index: 3;
 	top: 0;
 	height: clamp(64px, 7vw, 112px);
-
 	font-size: clamp(0.66rem, 2vw, 1rem);
 	letter-spacing: 0.5em;
+	@include mq(mobile) {
+		padding: 0 25px 0 clamp(3.125rem, -4.545rem + 20.455vw, 20rem) !important;
+	}
 }
 @media (max-width: 768px) {
 	.nav-menu {
@@ -63,7 +65,7 @@ header {
 	}
 	.bar {
 		display: block;
-		width: 28px;
+		width: 24px;
 		height: 1px;
 		background: #222;
 		margin: 4px 0;

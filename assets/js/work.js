@@ -4,23 +4,12 @@ function animateSlideContent(slide) {
 	const heading = slide.querySelector('.section-heading');
 	const brand = slide.querySelector('.brand');
 	const desc = slide.querySelector('.work-desc');
-	const descDiv = slide.querySelector('div.work-desc'); // 특별한 div.work-desc 처리
 	const img = slide.querySelector('.work-img img');
 
 	// 요소 초기 상태 설정
 	if (heading) gsap.set(heading, { opacity: 0, x: 40 });
 	if (brand) gsap.set(brand, { opacity: 0, x: 40 });
-	if (desc && desc.tagName === 'P') gsap.set(desc, { opacity: 0, x: 40 });
-
-	// div.work-desc 내부 p 태그들 초기화
-	if (descDiv && descDiv.tagName === 'DIV') {
-		const paragraphs = descDiv.querySelectorAll('p');
-		if (paragraphs.length > 0) {
-			gsap.set(paragraphs, { opacity: 0, x: 40 });
-		} else {
-			gsap.set(descDiv, { opacity: 0, x: 40 });
-		}
-	}
+	if (desc) gsap.set(desc, { opacity: 0, x: 40 });
 
 	// 타임라인으로 애니메이션 실행
 	const tl = gsap.timeline();
@@ -35,29 +24,9 @@ function animateSlideContent(slide) {
 		tl.to(brand, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
 	}
 
-	// 일반 work-desc 애니메이션
-	if (desc && desc.tagName === 'P') {
+	// work-desc 애니메이션 (P 태그든 DIV든 통합 처리)
+	if (desc) {
 		tl.to(desc, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
-	}
-
-	// div.work-desc 내부 p 태그들 애니메이션
-	if (descDiv && descDiv.tagName === 'DIV') {
-		const paragraphs = descDiv.querySelectorAll('p');
-		if (paragraphs.length > 0) {
-			tl.to(
-				paragraphs,
-				{
-					opacity: 1,
-					x: 0,
-					duration: 0.7,
-					stagger: 0,
-					ease: 'power2.out',
-				},
-				0.5
-			);
-		} else {
-			tl.to(descDiv, { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, 0.5);
-		}
 	}
 
 	// 이미지 애니메이션 (있는 경우에만)
@@ -79,20 +48,11 @@ function fadeOutSlideContent(slide) {
 	const heading = slide.querySelector('.section-heading');
 	const brand = slide.querySelector('.brand');
 	const desc = slide.querySelector('.work-desc');
-	const descDiv = slide.querySelector('div.work-desc');
-	const descParagraphs = descDiv ? descDiv.querySelectorAll('p') : null;
 
 	const tl = gsap.timeline();
 	if (heading) tl.to(heading, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
 	if (brand) tl.to(brand, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
-	if (desc && desc.tagName === 'P') tl.to(desc, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
-
-	// div.work-desc 내부 p 태그들 페이드아웃
-	if (descParagraphs && descParagraphs.length > 0) {
-		tl.to(descParagraphs, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
-	} else if (descDiv) {
-		tl.to(descDiv, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
-	}
+	if (desc) tl.to(desc, { opacity: 0, x: 40, duration: 0.3, ease: 'power2.in' }, 0);
 }
 
 // Swiper 인스턴스 한 번만 생성
