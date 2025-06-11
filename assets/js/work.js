@@ -58,7 +58,7 @@ function fadeOutSlideContent(slide) {
 // Swiper 인스턴스 한 번만 생성
 var prevIndex = 0;
 var swiperH = new Swiper('.swiper-h', {
-	initialSlide: 14,
+	// initialSlide: 14,
 	direction: 'horizontal',
 	mousewheel: true,
 	parallax: true,
