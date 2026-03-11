@@ -16,18 +16,34 @@ const containerVariants = {
 	hidden: {},
 	visible: {
 		transition: {
-			staggerChildren: 0.18,
-			delayChildren: 0.82,
+			staggerChildren: 0.1,
+			delayChildren: 0.4,
+		},
+	},
+};
+
+const titleVariants = {
+	hidden: { y: '105%', opacity: 0 },
+	visible: {
+		y: 0,
+		opacity: 1,
+		transition: {
+			duration: 1.2,
+			delay: 0.2, // Start slightly after load
+			ease: [0.16, 1, 0.3, 1] as const, // Premium ease-out
 		},
 	},
 };
 
 const lineVariants = {
-	hidden: { opacity: 0, y: 16 },
+	hidden: { y: '105%', opacity: 0 },
 	visible: {
-		opacity: 1,
 		y: 0,
-		transition: { duration: 0.55, ease: 'easeOut' as const },
+		opacity: 1,
+		transition: {
+			duration: 0.8,
+			ease: [0.22, 1, 0.36, 1] as const, // Smooth deceleration
+		},
 	},
 };
 
@@ -36,29 +52,31 @@ export default function HeroSection() {
 		<section className={`section-hero ${styles.hero}`} id="about">
 			<div className="container">
 				<div className={styles.about}>
-					{/* 타이틀 */}
-					<motion.h2
-						className={`heading-xl ${styles.aboutHeading}`}
-						initial={{ opacity: 0, y: 24 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, margin: '-80px' }}
-						transition={{ duration: 0.7 }}
-					>
-						The Brand Clinic
-					</motion.h2>
+					{/* 타이틀 - Masked Reveal */}
+					<div className={styles.headingWrapper}>
+						<motion.h2
+							className={`heading-xl ${styles.aboutHeading}`}
+							variants={titleVariants}
+							initial="hidden"
+							animate="visible"
+						>
+							The Brand Clinic
+						</motion.h2>
+					</div>
 
-					{/* 설명 라인 한 줄씩 등장 */}
+					{/* 설명 라인 한 줄씩 등장 - Masked Reveal */}
 					<motion.div
 						className={styles.aboutDesc}
 						variants={containerVariants}
 						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true, margin: '-80px' }}
+						animate="visible"
 					>
 						{lines.map((line, i) => (
-							<motion.p key={i} variants={lineVariants}>
-								{line}
-							</motion.p>
+							<div key={i} className={styles.lineWrapper}>
+								<motion.p variants={lineVariants}>
+									{line}
+								</motion.p>
+							</div>
 						))}
 					</motion.div>
 				</div>

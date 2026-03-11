@@ -15,14 +15,30 @@
 	padding: 80px 0;
 }
 
+.headingWrapper {
+	overflow: hidden;
+	margin-bottom: 32px;
+	padding-bottom: 0.1em; // descenders padding
+}
+
+.aboutHeading {
+	margin-bottom: 0 !important; // override typography margin to handle in wrapper
+	line-height: 1.2;
+}
+
 .aboutDesc {
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
+	gap: 4px;
 
 	p {
 		font-family: var(--font-suit);
 		font-size: $font-body-base;
 		line-height: 2.3;
 	}
+}
+
+.lineWrapper {
+	overflow: hidden;
+	padding-bottom: 0.2em; // descenders padding
 }
