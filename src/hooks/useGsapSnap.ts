@@ -14,25 +14,28 @@ export function useGsapSnap(totalSnaps: number) {
 		let previousWidth = window.innerWidth;
 		let previousHeight = window.innerHeight;
 		let rafId = 0;
+
 		const setAppHeight = (height: number) => {
 			document.documentElement.style.setProperty('--app-height', `${height}px`);
 		};
+
 		const commitViewportChange = () => {
 			const nextWidth = window.innerWidth;
 			const nextHeight = window.innerHeight;
 			const widthChanged = nextWidth !== previousWidth;
 			const heightDelta = Math.abs(nextHeight - previousHeight);
+
+			// 모바일 주소창 표시/숨김(50px 미만)은 무시
 			const shouldUpdate = widthChanged || heightDelta > 120;
 
-			if (!shouldUpdate) {
-				return;
-			}
+			if (!shouldUpdate) return;
 
 			previousWidth = nextWidth;
 			previousHeight = nextHeight;
 			setAppHeight(nextHeight);
 			ScrollTrigger.refresh();
 		};
+
 		const handleResize = () => {
 			cancelAnimationFrame(rafId);
 			rafId = window.requestAnimationFrame(commitViewportChange);
@@ -52,32 +55,23 @@ export function useGsapSnap(totalSnaps: number) {
 
 	useLayoutEffect(() => {
 		const stage = stageRef.current;
-		const panels = panelRefs.current.slice(0, totalSnaps).filter((panel): panel is HTMLDivElement => panel !== null);
+		const panels = panelRefs.current
+			.slice(0, totalSnaps)
+			.filter((panel): panel is HTMLDivElement => panel !== null);
 
-		if (!stage || panels.length === 0) {
-			return;
-		}
+		if (!stage || panels.length === 0) return;
 
 		const ctx = gsap.context(() => {
-			const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
-			const isTouchDevice = ScrollTrigger.isTouch === 1 || window.matchMedia('(pointer: coarse)').matches;
-			const useSnap = isDesktop && !isTouchDevice;
-
-			if (!useSnap) {
-				return;
-			}
-
 			let currentIndex = 0;
 			let animating = false;
 			let wasInsideSnapZone = false;
 			let lastScrollY = window.scrollY;
 			let observer: ReturnType<typeof ScrollTrigger.observe> | null = null;
 
-			const syncWindowScroll = (y: number) => {
-				window.scrollTo(0, Math.round(y));
-			};
+			const syncWindowScroll = (y: number) => window.scrollTo(0, Math.round(y));
 
-			const getTravelDuration = (fromY: number, toY: number) => gsap.utils.clamp(0.9, 1.2, Math.abs(toY - fromY) / 800);
+			const getTravelDuration = (fromY: number, toY: number) =>
+				gsap.utils.clamp(0.9, 1.2, Math.abs(toY - fromY) / 800);
 
 			const stageTop = () => stage.offsetTop;
 			const stageBottom = () => stage.offsetTop + stage.offsetHeight;
@@ -88,6 +82,7 @@ export function useGsapSnap(totalSnaps: number) {
 
 				animating = true;
 				observer?.disable();
+
 				gsap.to(scrollState, {
 					y: targetY,
 					duration: getTravelDuration(startY, targetY),
@@ -104,15 +99,8 @@ export function useGsapSnap(totalSnaps: number) {
 				});
 			};
 
-			const releaseToContent = () => {
-				animateStageScroll(stageBottom() + 2);
-			};
-
-			const enterFromContent = () => {
-				animateStageScroll(stageTop(), () => {
-					observer?.enable();
-				});
-			};
+			const releaseToContent = () => animateStageScroll(stageBottom() + 2);
+			const enterFromContent = () => animateStageScroll(stageTop(), () => observer?.enable());
 
 			const syncPanelPositions = (activeIndex: number) => {
 				panels.forEach((panel, index) => {
@@ -124,13 +112,8 @@ export function useGsapSnap(totalSnaps: number) {
 			};
 
 			const updatePanelState = (nextIndex: number, direction: 1 | -1) => {
-				if (animating || nextIndex === currentIndex) {
-					return;
-				}
-
-				if (nextIndex < 0) {
-					return;
-				}
+				if (animating || nextIndex === currentIndex) return;
+				if (nextIndex < 0) return;
 
 				if (nextIndex >= panels.length) {
 					releaseToContent();
@@ -157,10 +140,7 @@ export function useGsapSnap(totalSnaps: number) {
 				gsap.set(currentPanel, { zIndex: 2 });
 
 				gsap.timeline({
-					defaults: {
-						duration: 0.95,
-						ease: 'power2.inOut',
-					},
+					defaults: { duration: 0.95, ease: 'power2.inOut' },
 					onComplete: () => {
 						currentIndex = nextIndex;
 						syncPanelPositions(currentIndex);
@@ -192,33 +172,21 @@ export function useGsapSnap(totalSnaps: number) {
 				lastScrollY = window.scrollY;
 			};
 
-			const handleScroll = () => {
-				syncObserver();
-			};
-
-			const goNext = () => updatePanelState(currentIndex + 1, 1);
-			const goPrev = () => updatePanelState(currentIndex - 1, -1);
-
 			syncPanelPositions(0);
 
+			// wheelSpeed: -1 로 wheel/touch 방향을 통일
+			// 휠 아래 / 터치 위로 쓸기 → onUp → 다음 패널
+			// 휠 위   / 터치 아래로 쓸기 → onDown → 이전 패널
 			observer = ScrollTrigger.observe({
 				target: window,
-				type: 'wheel,touch,pointer',
+				type: 'wheel,touch',
+				wheelSpeed: -1,
 				preventDefault: true,
 				lockAxis: true,
-				tolerance: 14,
+				tolerance: 10,
 				dragMinimum: 10,
-				onPress: (self) => {
-					if (ScrollTrigger.isTouch) {
-						self.event.preventDefault();
-					}
-				},
-				onDown: () => {
-					goNext();
-				},
-				onUp: () => {
-					goPrev();
-				},
+				onUp: () => updatePanelState(currentIndex + 1, 1),
+				onDown: () => updatePanelState(currentIndex - 1, -1),
 			});
 
 			window.addEventListener('scroll', handleScroll, { passive: true });
@@ -229,6 +197,10 @@ export function useGsapSnap(totalSnaps: number) {
 				window.removeEventListener('scroll', handleScroll);
 				observer?.kill();
 			};
+
+			function handleScroll() {
+				syncObserver();
+			}
 		}, stage);
 
 		return () => ctx.revert();
@@ -238,8 +210,5 @@ export function useGsapSnap(totalSnaps: number) {
 		panelRefs.current[index] = node;
 	};
 
-	return {
-		stageRef,
-		setPanelRef,
-	};
+	return { stageRef, setPanelRef };
 }

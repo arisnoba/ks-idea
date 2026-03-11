@@ -10,8 +10,7 @@ const footerLinkRevealStyle = {
 	WebkitBackfaceVisibility: 'hidden' as const,
 };
 
-const footerLinkTransformTemplate = (_: unknown, generatedTransform: string) =>
-	generatedTransform ? `${generatedTransform} translateZ(0)` : 'translateZ(0)';
+const footerLinkTransformTemplate = (_: unknown, generatedTransform: string) => (generatedTransform ? `${generatedTransform} translateZ(0)` : 'translateZ(0)');
 
 export default function Footer() {
 	return (
@@ -31,10 +30,9 @@ export default function Footer() {
 							viewport={{ once: true, margin: '-60px' }}
 							transition={{ duration: 0.55 }}
 							style={footerLinkRevealStyle}
-							transformTemplate={footerLinkTransformTemplate}
-						>
+							transformTemplate={footerLinkTransformTemplate}>
 							<Image src="/images/instagram.svg" alt="Instagram" width={28} height={28} />
-							<span className={styles.snsLabel}>인스타그램 보기</span>
+							<span className={`body-base ${styles.snsLabel}`}>인스타그램 보기</span>
 						</motion.a>
 						<motion.a
 							href="https://www.youtube.com/@mr.good_b"
@@ -47,10 +45,9 @@ export default function Footer() {
 							viewport={{ once: true, margin: '-60px' }}
 							transition={{ duration: 0.55, delay: 0.08 }}
 							style={footerLinkRevealStyle}
-							transformTemplate={footerLinkTransformTemplate}
-						>
+							transformTemplate={footerLinkTransformTemplate}>
 							<Image src="/images/youtube.svg" alt="YouTube" width={28} height={28} />
-							<span className={styles.snsLabel}>유튜브 보기</span>
+							<span className={`body-base ${styles.snsLabel}`}>유튜브 보기</span>
 						</motion.a>
 					</div>
 
@@ -61,8 +58,7 @@ export default function Footer() {
 							initial={{ opacity: 0, y: 24 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true, margin: '-60px' }}
-							transition={{ duration: 0.6 }}
-						>
+							transition={{ duration: 0.6 }}>
 							Contact
 						</motion.h2>
 						<motion.a
@@ -73,8 +69,7 @@ export default function Footer() {
 							viewport={{ once: true, margin: '-60px' }}
 							transition={{ duration: 0.55, delay: 0.08 }}
 							style={footerLinkRevealStyle}
-							transformTemplate={footerLinkTransformTemplate}
-						>
+							transformTemplate={footerLinkTransformTemplate}>
 							ksidea@ksidea.co.kr
 						</motion.a>
 						<motion.a
@@ -87,8 +82,7 @@ export default function Footer() {
 							viewport={{ once: true, margin: '-60px' }}
 							transition={{ duration: 0.55, delay: 0.16 }}
 							style={footerLinkRevealStyle}
-							transformTemplate={footerLinkTransformTemplate}
-						>
+							transformTemplate={footerLinkTransformTemplate}>
 							강남구 봉은사로 306 NK타워 9층
 						</motion.a>
 					</div>
