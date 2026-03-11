@@ -21,12 +21,15 @@ export function useSnapScroll({ totalSnaps, trackRef }: UseSnapScrollOptions) {
 	const touchStartRef = useRef({ y: 0, time: 0 });
 
 	useEffect(() => {
+		// Lock scroll position at 0 during snap mode (keeps scrollbar visible)
+		const preventScroll = () => window.scrollTo(0, 0);
+
 		const hideScrollbar = () => {
-			document.documentElement.style.overflow = 'hidden';
+			window.addEventListener('scroll', preventScroll, { passive: true });
 		};
 
 		const showScrollbar = () => {
-			document.documentElement.style.overflow = '';
+			window.removeEventListener('scroll', preventScroll);
 		};
 
 		hideScrollbar();
@@ -156,7 +159,7 @@ export function useSnapScroll({ totalSnaps, trackRef }: UseSnapScrollOptions) {
 		return () => {
 			cancelAnimationFrame(rafId);
 			lenis.destroy();
-			document.documentElement.style.overflow = '';
+			window.removeEventListener('scroll', preventScroll);
 			window.removeEventListener('wheel', handleWheel);
 			window.removeEventListener('touchstart', handleTouchStart);
 			window.removeEventListener('touchend', handleTouchEnd);

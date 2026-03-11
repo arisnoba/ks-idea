@@ -13,14 +13,9 @@
 
 .heading {
 	max-width: 720px;
-	margin-bottom: 60px;
 	margin-left: auto;
 	margin-right: auto;
 	color: var(--color-white);
-
-	@include mobile {
-		margin-bottom: 40px;
-	}
 }
 
 .list {
@@ -49,7 +44,7 @@
 	width: 100%;
 	display: flex;
 	align-items: center;
-	gap: 16px;
+	// gap: 16px;
 	background: none;
 	border: none;
 	color: var(--color-white);
@@ -105,7 +100,7 @@
 
 .itemList {
 	list-style: none;
-	padding-top: clamp(26px, 5vw, 32px);
+	padding-top: clamp(20px, 5vw, 32px);
 	margin: 0;
 	display: flex;
 	flex-direction: column;
@@ -119,8 +114,20 @@
 		font-family: var(--font-suit);
 		font-size: $font-body-sm;
 		line-height: 1.6;
-
 		color: var(--color-white);
+
+		display: flex;
+		gap: 0px;
+	}
+
+	.itemNumber {
+		flex-shrink: 0;
+		font-weight: 500;
+		width: 1.5em; /* Ensures enough space for "1) " */
+	}
+
+	.itemText {
+		flex: 1;
 	}
 }
 
@@ -129,25 +136,27 @@
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
-
+	max-width: 720px;
+	margin: clamp(32px, 5vw, 40px) auto 0;
 	@include mobile {
 		margin-top: 50px;
 	}
 }
-
 .footerMain {
-	font-family: var(--font-suit);
-	font-size: $font-heading-lg;
 	font-weight: 600;
-	color: var(--color-white);
 }
-
 .footerSub {
 	font-family: var(--font-suit);
 	font-size: $font-caption;
 	font-weight: 300;
 	color: var(--color-white);
-	opacity: 0.7;
+
+	display: flex;
+	gap: 4px;
+
+	span:first-child {
+		flex-shrink: 0;
+	}
 }
 
 .active {

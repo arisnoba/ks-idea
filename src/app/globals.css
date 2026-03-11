@@ -37,10 +37,12 @@
 
 html {
 	/* scroll-behavior intentionally omitted — snap scroll uses CSS transform */
-	/* Reserve consistent scrollbar gutter space even when overflow:hidden */
+	/* Always show scrollbar (prevents layout shift & visible from first section) */
+	overflow-y: scroll;
 	scrollbar-gutter: stable;
 	scrollbar-width: thin;
 	scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+	word-break: keep-all;
 }
 
 /* Custom scrollbar — WebKit (Chrome, Safari, Edge) */
