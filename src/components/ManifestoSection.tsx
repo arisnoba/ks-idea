@@ -211,6 +211,12 @@ export default function ManifestoSection() {
   return (
     <section className={`section-manifesto ${styles.manifesto}`} id="work">
       <div className="container">
+        {/* SEO 보조 텍스트 - 시각적으로는 숨김 */}
+        <div className="sr-only">
+          <h2>KS IDEA Manifesto - Brand Clinic</h2>
+          <p>성장이 멈춘 브랜드를 위해 KS IDEA가 제안하는 해결책입니다. 우리는 증상이 아니라 원인을 진단하며, 브랜드가 한계를 넘어 다시 성장할 수 있도록 치료합니다.</p>
+        </div>
+
         <div className={styles.videoWrapper}>
           {/* Desktop 16:9 */}
           <motion.div

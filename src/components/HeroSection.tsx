@@ -54,14 +54,14 @@ export default function HeroSection() {
 				<div className={styles.about}>
 					{/* 타이틀 - Masked Reveal */}
 					<div className={styles.headingWrapper}>
-						<motion.h2
+						<motion.h1
 							className={`heading-xl ${styles.aboutHeading}`}
 							variants={titleVariants}
 							initial="hidden"
 							animate="visible"
 						>
 							The Brand Clinic
-						</motion.h2>
+						</motion.h1>
 					</div>
 
 					{/* 설명 라인 한 줄씩 등장 - Masked Reveal */}

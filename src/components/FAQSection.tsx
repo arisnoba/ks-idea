@@ -79,7 +79,7 @@ export default function FAQSection() {
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true, margin: '-100px' }}
 					transition={{ duration: 0.7 }}>
-					6 Questions<sup>*</sup>
+					<span className="sr-only">브랜드 성장 자가 진단 - </span>6 Questions<sup>*</sup>
 				</motion.h2>
 				<motion.div
 					className={styles.list}
