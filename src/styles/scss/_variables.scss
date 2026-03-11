@@ -1,0 +1,11 @@
+// Typography Scale (mobile → desktop, clamp 적용)
+$font-heading-xl: clamp(27px, 2vw + 20px, 37px);
+$font-heading-lg: clamp(24px, 2vw + 17px, 34px);
+$font-body-base: clamp(14px, 0.5vw + 12px, 19px);
+$font-body-sm: clamp(12px, 0.7vw + 8px, 19px);
+$font-caption: clamp(11px, 0.5vw + 8px, 16px);
+
+// Container
+$container-max: 1280px;
+$container-padding: 20px;
+$container-total: 1320px; // $container-max + ($container-padding * 2)

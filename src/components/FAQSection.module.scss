@@ -1,0 +1,81 @@
+@use "../styles/scss/variables" as *;
+@use "../styles/scss/mixins" as *;
+
+.faq {
+  padding: 120px 0;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-suit);
+  font-size: $font-body-base;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.number {
+  font-family: var(--font-futura);
+  font-weight: 700;
+  font-size: $font-body-base;
+  white-space: nowrap;
+}
+
+.text {
+  flex: 1;
+  font-family: var(--font-futura);
+  font-weight: 500;
+}
+
+.arrow {
+  font-size: 10px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.answer {
+  overflow: hidden;
+
+  p {
+    padding: 0 0 20px 0;
+    font-size: $font-body-sm;
+    line-height: 1.7;
+    opacity: 0.8;
+    padding-left: 40px;
+
+    @include mobile {
+      padding-left: 0;
+    }
+  }
+}
+
+.active {
+  .question {
+    opacity: 1;
+  }
+}

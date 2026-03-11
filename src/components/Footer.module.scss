@@ -1,0 +1,61 @@
+@use "../styles/scss/variables" as *;
+@use "../styles/scss/mixins" as *;
+
+.footer {
+  padding: 80px 0 60px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+.sns {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.snsLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-white);
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.snsLabel {
+  font-size: $font-caption;
+  font-family: var(--font-futura);
+}
+
+.contact {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contactHeading {
+  font-family: var(--font-futura);
+  font-size: $font-body-base;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.contactLink {
+  font-size: $font-body-sm;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
