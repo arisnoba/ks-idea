@@ -1,20 +1,12 @@
-.snapViewport {
-	height: 100dvh;
-	overflow: hidden;
-	touch-action: none;
+.layout {
 	position: relative;
 }
 
-.snapTrack {
-	transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
-	will-change: transform;
+.snapSection {
+	position: relative;
+	min-height: 100vh;
 }
 
-.snapSlide {
-	height: 100dvh;
-	overflow: hidden;
-}
-
-.freeZone {
-	// Normal document flow — no special styles needed
+.freeSections {
+	position: relative;
 }

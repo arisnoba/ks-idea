@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef, ReactNode } from 'react';
-import { useSnapScroll } from '@/hooks/useSnapScroll';
+import type { ReactNode } from 'react';
+import { useGsapSnap } from '@/hooks/useGsapSnap';
 import styles from './SnapScrollLayout.module.scss';
 
 interface SnapScrollLayoutProps {
@@ -10,23 +10,18 @@ interface SnapScrollLayoutProps {
 }
 
 export default function SnapScrollLayout({ snapSections, freeSections }: SnapScrollLayoutProps) {
-	const trackRef = useRef<HTMLDivElement>(null);
-	useSnapScroll({ totalSnaps: snapSections.length, trackRef });
+	const { setSnapSectionRef } = useGsapSnap(snapSections.length);
 
 	return (
-		<>
-			<div className={styles.snapViewport}>
-				<div ref={trackRef} className={styles.snapTrack}>
-					{snapSections.map((section, i) => (
-						<div key={i} className={styles.snapSlide}>
-							{section}
-						</div>
-					))}
+		<div className={styles.layout}>
+			{snapSections.map((section, i) => (
+				<div key={i} ref={setSnapSectionRef(i)} className={styles.snapSection}>
+					{section}
 				</div>
-			</div>
-			<div className={styles.freeZone}>
+			))}
+			<div className={styles.freeSections}>
 				{freeSections}
 			</div>
-		</>
+		</div>
 	);
 }
