@@ -26,6 +26,16 @@
 	--spacing-container: 20px;
 }
 
+:root {
+	--viewport-height: 100vh;
+}
+
+@supports (height: 100dvh) {
+	:root {
+		--viewport-height: 100dvh;
+	}
+}
+
 /* Base styles */
 *,
 *::before,

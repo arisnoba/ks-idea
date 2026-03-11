@@ -10,15 +10,17 @@ interface SnapScrollLayoutProps {
 }
 
 export default function SnapScrollLayout({ snapSections, freeSections }: SnapScrollLayoutProps) {
-	const { setSnapSectionRef } = useGsapSnap(snapSections.length);
+	const { stageRef, setPanelRef } = useGsapSnap(snapSections.length);
 
 	return (
 		<div className={styles.layout}>
-			{snapSections.map((section, i) => (
-				<div key={i} ref={setSnapSectionRef(i)} className={styles.snapSection}>
-					{section}
-				</div>
-			))}
+			<div ref={stageRef} className={styles.snapStage}>
+				{snapSections.map((section, i) => (
+					<div key={i} ref={setPanelRef(i)} className={styles.snapPanel}>
+						{section}
+					</div>
+				))}
+			</div>
 			<div className={styles.freeSections}>
 				{freeSections}
 			</div>

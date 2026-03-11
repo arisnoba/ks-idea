@@ -1,16 +1,14 @@
 'use client';
 
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function useGsapSnap(totalSnaps: number) {
-	const snapSectionRefs = useRef<(HTMLDivElement | null)[]>([]);
-	const currentIndexRef = useRef(0);
-	const isAutoScrollingRef = useRef(false);
+	const stageRef = useRef<HTMLDivElement>(null);
+	const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
 	useEffect(() => {
 		const handleResize = () => ScrollTrigger.refresh();
@@ -21,112 +19,179 @@ export function useGsapSnap(totalSnaps: number) {
 	}, []);
 
 	useLayoutEffect(() => {
-		const sections = snapSectionRefs.current.slice(0, totalSnaps).filter((section): section is HTMLDivElement => section !== null);
+		const stage = stageRef.current;
+		const panels = panelRefs.current.slice(0, totalSnaps).filter((panel): panel is HTMLDivElement => panel !== null);
 
-		if (sections.length === 0) {
+		if (!stage || panels.length === 0) {
 			return;
 		}
 
-		const lenis = new Lenis({
-			duration: 1.05,
-			smoothWheel: true,
-			syncTouch: false,
-			overscroll: false,
-		});
-		const triggers: ScrollTrigger[] = [];
-		const handleLenisScroll = () => ScrollTrigger.update();
-		const handleTick = (time: number) => {
-			lenis.raf(time * 1000);
-		};
-		const getClosestIndex = () => {
-			const scrollY = window.scrollY;
-			let closestIndex = 0;
-			let closestDistance = Number.POSITIVE_INFINITY;
+		const ctx = gsap.context(() => {
+			let currentIndex = 0;
+			let animating = false;
+			let wasInsideSnapZone = false;
+			let lastScrollY = window.scrollY;
+			let observer: ReturnType<typeof ScrollTrigger.observe> | null = null;
 
-			sections.forEach((section, index) => {
-				const distance = Math.abs(section.offsetTop - scrollY);
-				if (distance < closestDistance) {
-					closestDistance = distance;
-					closestIndex = index;
+			const stageTop = () => stage.offsetTop;
+			const stageBottom = () => stage.offsetTop + stage.offsetHeight;
+			const releaseToContent = () => {
+				const scrollState = { y: window.scrollY };
+				const targetY = stageBottom() + 2;
+
+				animating = true;
+				observer?.disable();
+				gsap.to(scrollState, {
+					y: targetY,
+					duration: 0.72,
+					ease: 'power2.inOut',
+					onUpdate: () => {
+						window.scrollTo(0, scrollState.y);
+						ScrollTrigger.update();
+					},
+					onComplete: () => {
+						animating = false;
+						window.scrollTo(0, targetY);
+					},
+				});
+			};
+			const enterFromContent = () => {
+				const scrollState = { y: window.scrollY };
+				const targetY = stageTop();
+
+				animating = true;
+				observer?.disable();
+				gsap.to(scrollState, {
+					y: targetY,
+					duration: 0.72,
+					ease: 'power2.inOut',
+					onUpdate: () => {
+						window.scrollTo(0, scrollState.y);
+						ScrollTrigger.update();
+					},
+					onComplete: () => {
+						animating = false;
+						window.scrollTo(0, targetY);
+						observer?.enable();
+					},
+				});
+			};
+			const syncPanelPositions = (activeIndex: number) => {
+				panels.forEach((panel, index) => {
+					gsap.set(panel, {
+						yPercent: index < activeIndex ? -100 : index > activeIndex ? 100 : 0,
+						zIndex: index === activeIndex ? 2 : 1,
+					});
+				});
+			};
+			const updatePanelState = (nextIndex: number, direction: 1 | -1) => {
+				if (animating || nextIndex === currentIndex) {
+					return;
 				}
-			});
 
-			return closestIndex;
-		};
-		const goToSection = (index: number) => {
-			const targetSection = sections[index];
+				if (nextIndex < 0) {
+					return;
+				}
 
-			if (!targetSection) {
-				return;
-			}
+				if (nextIndex >= panels.length) {
+					releaseToContent();
+					return;
+				}
 
-			if (currentIndexRef.current === index && Math.abs(window.scrollY - targetSection.offsetTop) < 2) {
-				return;
-			}
+				animating = true;
+				const currentPanel = panels[currentIndex];
+				const nextPanel = panels[nextIndex];
 
-			isAutoScrollingRef.current = true;
-			currentIndexRef.current = index;
+				panels.forEach((panel, index) => {
+					if (index !== currentIndex && index !== nextIndex) {
+						gsap.set(panel, {
+							yPercent: index < nextIndex ? -100 : 100,
+							zIndex: 1,
+						});
+					}
+				});
 
-			lenis.scrollTo(targetSection, {
-				duration: 0.85,
-				lock: true,
-				force: true,
-				onComplete: () => {
-					isAutoScrollingRef.current = false;
-					currentIndexRef.current = index;
+				gsap.set(nextPanel, {
+					yPercent: direction === 1 ? 100 : -100,
+					zIndex: 3,
+				});
+				gsap.set(currentPanel, { zIndex: 2 });
+
+				gsap.timeline({
+					defaults: {
+						duration: 0.72,
+						ease: 'power2.inOut',
+					},
+					onComplete: () => {
+						currentIndex = nextIndex;
+						syncPanelPositions(currentIndex);
+						animating = false;
+					},
+				})
+					.to(currentPanel, { yPercent: direction === 1 ? -100 : 100 }, 0)
+					.to(nextPanel, { yPercent: 0 }, 0);
+			};
+			const syncObserver = () => {
+				const insideSnapZone = window.scrollY < stageBottom() - 2;
+				const scrollingUp = window.scrollY < lastScrollY;
+
+				if (!animating && insideSnapZone && !wasInsideSnapZone && scrollingUp && window.scrollY > stageTop()) {
+					enterFromContent();
+					wasInsideSnapZone = insideSnapZone;
+					lastScrollY = window.scrollY;
+					return;
+				}
+
+				if (insideSnapZone) {
+					observer?.enable();
+				} else {
+					observer?.disable();
+				}
+
+				wasInsideSnapZone = insideSnapZone;
+				lastScrollY = window.scrollY;
+			};
+			const handleScroll = () => {
+				syncObserver();
+			};
+
+			syncPanelPositions(0);
+
+			observer = ScrollTrigger.observe({
+				target: window,
+				type: 'wheel,touch,pointer',
+				preventDefault: true,
+				lockAxis: true,
+				tolerance: 14,
+				dragMinimum: 10,
+				onPress: (self) => {
+					if (ScrollTrigger.isTouch) {
+						self.event.preventDefault();
+					}
 				},
+				onDown: () => updatePanelState(currentIndex + 1, 1),
+				onUp: () => updatePanelState(currentIndex - 1, -1),
 			});
-		};
 
-		lenis.on('scroll', handleLenisScroll);
-		gsap.ticker.add(handleTick);
-		gsap.ticker.lagSmoothing(0);
-		currentIndexRef.current = getClosestIndex();
+			window.addEventListener('scroll', handleScroll, { passive: true });
+			syncObserver();
+			ScrollTrigger.refresh();
 
-		sections.forEach((section, index) => {
-			triggers.push(
-				ScrollTrigger.create({
-					trigger: section,
-					start: 'top bottom',
-					onEnter: () => {
-						if (isAutoScrollingRef.current || index <= currentIndexRef.current) {
-							return;
-						}
+			return () => {
+				window.removeEventListener('scroll', handleScroll);
+				observer?.kill();
+			};
+		}, stage);
 
-						goToSection(index);
-					},
-				})
-			);
-
-			triggers.push(
-				ScrollTrigger.create({
-					trigger: section,
-					start: 'bottom bottom',
-					onEnterBack: () => {
-						if (isAutoScrollingRef.current || index >= currentIndexRef.current) {
-							return;
-						}
-
-						goToSection(index);
-					},
-				})
-			);
-		});
-
-		ScrollTrigger.refresh();
-
-		return () => {
-			triggers.forEach((trigger) => trigger.kill());
-			gsap.ticker.remove(handleTick);
-			lenis.off('scroll', handleLenisScroll);
-			lenis.destroy();
-			isAutoScrollingRef.current = false;
-		};
+		return () => ctx.revert();
 	}, [totalSnaps]);
 
-	const setSnapSectionRef = (index: number) => (node: HTMLDivElement | null) => {
-		snapSectionRefs.current[index] = node;
+	const setPanelRef = (index: number) => (node: HTMLDivElement | null) => {
+		panelRefs.current[index] = node;
 	};
 
-	return { setSnapSectionRef };
+	return {
+		stageRef,
+		setPanelRef,
+	};
 }
