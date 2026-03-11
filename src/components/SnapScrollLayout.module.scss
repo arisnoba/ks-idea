@@ -4,12 +4,8 @@
 
 .snapStage {
 	position: relative;
-	height: 100vh;
+	height: var(--app-height);
 	overflow: hidden;
-
-	@supports (height: 100dvh) {
-		height: 100dvh;
-	}
 }
 
 .snapPanel {

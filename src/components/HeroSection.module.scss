@@ -3,14 +3,10 @@
 
 .hero {
 	padding: 120px 0;
-	height: 100vh;
+	height: var(--app-height);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
-	@supports (height: 100dvh) {
-		height: 100dvh;
-	}
 }
 
 /* ─── Visual (슬로건 영역) ─── */
@@ -21,12 +17,8 @@
 	text-align: center;
 	gap: 32px;
 	margin-bottom: 120px;
-	min-height: 100vh;
+	min-height: var(--app-height);
 	justify-content: center;
-
-	@supports (height: 100dvh) {
-		min-height: 100dvh;
-	}
 }
 
 .symbol {

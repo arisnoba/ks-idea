@@ -11,11 +11,43 @@ export function useGsapSnap(totalSnaps: number) {
 	const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
 	useEffect(() => {
-		const handleResize = () => ScrollTrigger.refresh();
+		let previousWidth = window.innerWidth;
+		let previousHeight = window.innerHeight;
+		let rafId = 0;
+		const setAppHeight = (height: number) => {
+			document.documentElement.style.setProperty('--app-height', `${height}px`);
+		};
+		const commitViewportChange = () => {
+			const nextWidth = window.innerWidth;
+			const nextHeight = window.innerHeight;
+			const widthChanged = nextWidth !== previousWidth;
+			const heightDelta = Math.abs(nextHeight - previousHeight);
+			const shouldUpdate = widthChanged || heightDelta > 120;
+
+			if (!shouldUpdate) {
+				return;
+			}
+
+			previousWidth = nextWidth;
+			previousHeight = nextHeight;
+			setAppHeight(nextHeight);
+			ScrollTrigger.refresh();
+		};
+		const handleResize = () => {
+			cancelAnimationFrame(rafId);
+			rafId = window.requestAnimationFrame(commitViewportChange);
+		};
+
+		setAppHeight(previousHeight);
 
 		window.addEventListener('resize', handleResize);
+		window.addEventListener('orientationchange', handleResize);
 
-		return () => window.removeEventListener('resize', handleResize);
+		return () => {
+			cancelAnimationFrame(rafId);
+			window.removeEventListener('resize', handleResize);
+			window.removeEventListener('orientationchange', handleResize);
+		};
 	}, []);
 
 	useLayoutEffect(() => {
