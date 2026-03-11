@@ -77,7 +77,7 @@ export function useGsapSnap(totalSnaps: number) {
 				window.scrollTo(0, Math.round(y));
 			};
 
-			const getTravelDuration = (fromY: number, toY: number) => gsap.utils.clamp(0.88, 1.08, Math.abs(toY - fromY) / 900);
+			const getTravelDuration = (fromY: number, toY: number) => gsap.utils.clamp(0.9, 1.2, Math.abs(toY - fromY) / 800);
 
 			const stageTop = () => stage.offsetTop;
 			const stageBottom = () => stage.offsetTop + stage.offsetHeight;
@@ -91,7 +91,7 @@ export function useGsapSnap(totalSnaps: number) {
 				gsap.to(scrollState, {
 					y: targetY,
 					duration: getTravelDuration(startY, targetY),
-					ease: 'sine.inOut',
+					ease: 'power2.inOut',
 					onUpdate: () => {
 						syncWindowScroll(scrollState.y);
 						ScrollTrigger.update();
@@ -158,8 +158,8 @@ export function useGsapSnap(totalSnaps: number) {
 
 				gsap.timeline({
 					defaults: {
-						duration: 0.88,
-						ease: 'sine.inOut',
+						duration: 0.95,
+						ease: 'power2.inOut',
 					},
 					onComplete: () => {
 						currentIndex = nextIndex;
