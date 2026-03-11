@@ -2,7 +2,7 @@
 @use '../styles/scss/mixins' as *;
 
 .manifesto {
-	padding: 200px 0;
+	padding: clamp(100px, 10vw, 200px) 0;
 }
 
 .videoWrapper {

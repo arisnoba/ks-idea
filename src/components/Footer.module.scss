@@ -17,7 +17,7 @@
 
 .sns {
 	display: flex;
-	gap: 150px;
+	gap: clamp(100px, 10vw, 150px);
 	align-items: center;
 	margin-bottom: 150px;
 }
