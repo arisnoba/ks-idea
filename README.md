@@ -54,13 +54,11 @@ KS IDEA 브랜드 성장 연구소 웹사이트 리뉴얼.
 | # | 섹션 | className | 설명 |
 |---|------|-----------|------|
 | 1 | Header | `header` | 로고 + 네비게이션 (앵커 링크) |
-| 2 | Hero | `section-hero` | 메인 비주얼, 슬로건 |
-| 3 | About | `section-about` | The Brand Clinic 소개 |
-| 4 | Clients | `section-clients` | 클라이언트 목록 |
-| 5 | FAQ | `section-faq` | 아코디언 방식 Q&A (6개) |
-| 6 | Work | `section-work` | 포트폴리오 / Manifesto |
-| 7 | SNS | `section-sns` | Instagram, YouTube |
-| 8 | Footer | `footer` | Contact 정보 |
+| 2 | Hero | `section-hero` | 메인 비주얼, 슬로건 (스냅 섹션) |
+| 3 | Clients | `section-clients` | 클라이언트 목록 |
+| 4 | FAQ | `section-faq` | 아코디언 방식 Q&A (6개) |
+| 5 | Manifesto | `section-manifesto` | 브랜드 철학 및 영상 |
+| 6 | Footer | `footer` | Contact 정보 |
 
 > 각 섹션 컴포넌트에 **고유 className** 필수 부여
 
@@ -72,9 +70,9 @@ KS IDEA 브랜드 성장 연구소 웹사이트 리뉴얼.
 - 질문 클릭 시 답변 영역 토글 (Framer Motion `AnimatePresence`)
 - 하나만 열리거나 복수 열림 옵션
 
-### 애니메이션
-- Framer Motion 기반 스크롤 인터랙션
-- 섹션 진입 시 fade-in / slide-up 등
+### 스냅 스크롤 (Snap Scroll)
+- Hero 섹션은 GSAP ScrollTrigger Observer를 이용한 전체 화면 스냅 적용
+- 이후 섹션은 부드러운 수직 스크롤 (Lenis) 연동
 
 ### 정적 배포
 - `next build` → `out/` 디렉토리 생성
@@ -88,7 +86,8 @@ KS IDEA 브랜드 성장 연구소 웹사이트 리뉴얼.
 ```
 ks-idea/
 ├── public/
-│   └── images/
+│   ├── images/
+│   └── video/
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx
@@ -96,21 +95,19 @@ ks-idea/
 │   ├── components/
 │   │   ├── Header.tsx
 │   │   ├── HeroSection.tsx
-│   │   ├── AboutSection.tsx
-│   │   ├── GCISection.tsx
 │   │   ├── ClientsSection.tsx
 │   │   ├── FAQSection.tsx
-│   │   ├── WorkSection.tsx
-│   │   ├── ContactSection.tsx
-│   │   └── Footer.tsx
+│   │   ├── ManifestoSection.tsx
+│   │   ├── Footer.tsx
+│   │   └── SnapScrollLayout.tsx
+│   ├── hooks/
+│   │   └── useGsapSnap.ts
 │   ├── styles/
 │   │   ├── globals.css
 │   │   └── scss/
 │   │       ├── _variables.scss
 │   │       ├── _mixins.scss
 │   │       └── _typography.scss
-│   └── data/
-│       └── works.ts
 ├── next.config.ts
 ├── tsconfig.json
 └── package.json

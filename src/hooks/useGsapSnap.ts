@@ -59,19 +59,29 @@ export function useGsapSnap(totalSnaps: number) {
 		}
 
 		const ctx = gsap.context(() => {
+			const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+			const isTouchDevice = ScrollTrigger.isTouch === 1 || window.matchMedia('(pointer: coarse)').matches;
+			const useSnap = isDesktop && !isTouchDevice;
+
+			if (!useSnap) {
+				return;
+			}
+
 			let currentIndex = 0;
 			let animating = false;
 			let wasInsideSnapZone = false;
 			let lastScrollY = window.scrollY;
 			let observer: ReturnType<typeof ScrollTrigger.observe> | null = null;
-			const isTouchDevice = ScrollTrigger.isTouch === 1 || window.matchMedia('(pointer: coarse)').matches;
+
 			const syncWindowScroll = (y: number) => {
 				window.scrollTo(0, Math.round(y));
 			};
+
 			const getTravelDuration = (fromY: number, toY: number) => gsap.utils.clamp(0.88, 1.08, Math.abs(toY - fromY) / 900);
 
 			const stageTop = () => stage.offsetTop;
 			const stageBottom = () => stage.offsetTop + stage.offsetHeight;
+
 			const animateStageScroll = (targetY: number, onComplete?: () => void) => {
 				const startY = window.scrollY;
 				const scrollState = { y: startY };
@@ -93,14 +103,17 @@ export function useGsapSnap(totalSnaps: number) {
 					},
 				});
 			};
+
 			const releaseToContent = () => {
 				animateStageScroll(stageBottom() + 2);
 			};
+
 			const enterFromContent = () => {
 				animateStageScroll(stageTop(), () => {
 					observer?.enable();
 				});
 			};
+
 			const syncPanelPositions = (activeIndex: number) => {
 				panels.forEach((panel, index) => {
 					gsap.set(panel, {
@@ -109,6 +122,7 @@ export function useGsapSnap(totalSnaps: number) {
 					});
 				});
 			};
+
 			const updatePanelState = (nextIndex: number, direction: 1 | -1) => {
 				if (animating || nextIndex === currentIndex) {
 					return;
@@ -156,6 +170,7 @@ export function useGsapSnap(totalSnaps: number) {
 					.to(currentPanel, { yPercent: direction === 1 ? -100 : 100 }, 0)
 					.to(nextPanel, { yPercent: 0 }, 0);
 			};
+
 			const syncObserver = () => {
 				const insideSnapZone = window.scrollY < stageBottom() - 2;
 				const scrollingUp = window.scrollY < lastScrollY;
@@ -176,9 +191,11 @@ export function useGsapSnap(totalSnaps: number) {
 				wasInsideSnapZone = insideSnapZone;
 				lastScrollY = window.scrollY;
 			};
+
 			const handleScroll = () => {
 				syncObserver();
 			};
+
 			const goNext = () => updatePanelState(currentIndex + 1, 1);
 			const goPrev = () => updatePanelState(currentIndex - 1, -1);
 
@@ -197,19 +214,9 @@ export function useGsapSnap(totalSnaps: number) {
 					}
 				},
 				onDown: () => {
-					if (isTouchDevice) {
-						goPrev();
-						return;
-					}
-
 					goNext();
 				},
 				onUp: () => {
-					if (isTouchDevice) {
-						goNext();
-						return;
-					}
-
 					goPrev();
 				},
 			});

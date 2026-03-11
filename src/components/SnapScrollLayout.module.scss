@@ -1,18 +1,32 @@
+@use "@/styles/scss/mixins" as *;
+
 .layout {
 	position: relative;
 }
 
 .snapStage {
 	position: relative;
-	height: var(--app-height);
-	overflow: hidden;
+	height: auto;
+	overflow: visible;
+
+	@include desktop {
+		height: var(--app-height);
+		overflow: hidden;
+	}
 }
 
 .snapPanel {
-	position: absolute;
-	inset: 0;
+	position: relative;
 	width: 100%;
-	height: 100%;
+	height: auto;
+	min-height: 100vh;
+	min-height: var(--app-height);
+
+	@include desktop {
+		position: absolute;
+		inset: 0;
+		height: 100%;
+	}
 }
 
 .freeSections {
