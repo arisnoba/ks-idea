@@ -79,8 +79,11 @@
 }
 
 .arrow {
-	font-size: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	opacity: 0.9;
+	color: var(--color-white);
 }
 
 .guide {

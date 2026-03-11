@@ -87,7 +87,16 @@ export default function FAQSection() {
 										</span>
 										<div className={styles.indicator}>
 											{index === 0 && <span className={styles.guide}>(내려보기)</span>}
-											<span className={styles.arrow}>{openIndex === index ? '▲' : '▼'}</span>
+											<motion.div
+												className={styles.arrow}
+												initial={false}
+												animate={{ rotate: openIndex === index ? 180 : 0 }}
+												transition={{ duration: 0.3, ease: 'easeInOut' }}
+											>
+												<svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M7 12L0.0717968 0L13.9282 0L7 12Z" fill="currentColor"/>
+												</svg>
+											</motion.div>
 										</div>
 									</button>
 									<p className={`body-sm ${styles.subtitle}`}>{item.subtitle}</p>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { RefObject } from 'react';
+import Lenis from 'lenis';
 
 type ScrollState = 'SNAP_ACTIVE' | 'SNAP_TRANSITIONING' | 'FREE_SCROLL';
 
@@ -20,7 +21,26 @@ export function useSnapScroll({ totalSnaps, trackRef }: UseSnapScrollOptions) {
 	const touchStartRef = useRef({ y: 0, time: 0 });
 
 	useEffect(() => {
-		document.documentElement.style.overflow = 'hidden';
+		const hideScrollbar = () => {
+			document.documentElement.style.overflow = 'hidden';
+		};
+
+		const showScrollbar = () => {
+			document.documentElement.style.overflow = '';
+		};
+
+		hideScrollbar();
+
+		// Lenis for smooth free-scroll — stopped initially (snap mode)
+		const lenis = new Lenis({ duration: 1.2 });
+		lenis.stop();
+
+		let rafId = 0;
+		const rafLoop = (time: number) => {
+			lenis.raf(time);
+			rafId = requestAnimationFrame(rafLoop);
+		};
+		rafId = requestAnimationFrame(rafLoop);
 
 		const applyTransform = (index: number) => {
 			if (trackRef.current) {
@@ -33,13 +53,16 @@ export function useSnapScroll({ totalSnaps, trackRef }: UseSnapScrollOptions) {
 		const enterFreeScroll = () => {
 			stateRef.current = 'FREE_SCROLL';
 			setIsSnapMode(false);
-			document.documentElement.style.overflow = '';
+			showScrollbar();
+			lenis.start();
 		};
 
 		const exitFreeScroll = () => {
+			lenis.stop();
+			window.scrollTo(0, 0);
 			stateRef.current = 'SNAP_ACTIVE';
 			setIsSnapMode(true);
-			document.documentElement.style.overflow = 'hidden';
+			hideScrollbar();
 		};
 
 		const navigate = (direction: 1 | -1) => {
@@ -131,6 +154,8 @@ export function useSnapScroll({ totalSnaps, trackRef }: UseSnapScrollOptions) {
 		window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
 		return () => {
+			cancelAnimationFrame(rafId);
+			lenis.destroy();
 			document.documentElement.style.overflow = '';
 			window.removeEventListener('wheel', handleWheel);
 			window.removeEventListener('touchstart', handleTouchStart);
