@@ -22,9 +22,8 @@ export default function ClientsSection() {
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
         >
           <h2 className={`heading-xl ${styles.heading}`}>Clients</h2>
           <div className={styles.list}>

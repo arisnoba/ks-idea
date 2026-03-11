@@ -100,7 +100,11 @@ function VideoPlayer({ src, className }: VideoPlayerProps) {
   }, []);
 
   return (
-    <div ref={containerRef} className={`${styles.videoContainer} ${className ?? ""}`}>
+    <div
+      ref={containerRef}
+      className={`${styles.videoContainer} ${className ?? ""}`}
+      onClick={togglePlay}
+    >
       <video
         ref={videoRef}
         src={src}
@@ -111,7 +115,7 @@ function VideoPlayer({ src, className }: VideoPlayerProps) {
       />
 
       {/* Custom controls */}
-      <div className={styles.controls}>
+      <div className={styles.controls} onClick={(e) => e.stopPropagation()}>
         {/* Timeline */}
         <div className={styles.progressWrapper}>
           <input

@@ -1,7 +1,10 @@
 @use '../styles/scss/variables' as *;
 
 .clients {
-	padding: 200px 0;
+	height: 100dvh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .heading {

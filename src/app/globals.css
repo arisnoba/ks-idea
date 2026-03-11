@@ -36,7 +36,7 @@
 }
 
 html {
-	scroll-behavior: smooth;
+	/* scroll-behavior intentionally omitted — snap scroll uses CSS transform */
 }
 
 body {
