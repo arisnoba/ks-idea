@@ -18,9 +18,8 @@ export function useLenis() {
 
 		lenisRef.current = lenis;
 
-		lenis.on('scroll', () => {
-			ScrollTrigger.update();
-		});
+		const onScroll = () => ScrollTrigger.update();
+		lenis.on('scroll', onScroll);
 
 		const ticker = (time: number) => {
 			lenis.raf(time * 1000);
@@ -33,6 +32,7 @@ export function useLenis() {
 		lenis.stop();
 
 		return () => {
+			lenis.off('scroll', onScroll);
 			gsap.ticker.remove(ticker);
 			lenis.destroy();
 			lenisRef.current = null;

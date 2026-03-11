@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, type RefObject } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import type Lenis from 'lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function useGsapSnap(totalSnaps: number, lenisRef?: { current: Lenis | null }) {
+export function useGsapSnap(totalSnaps: number, lenisRef?: RefObject<Lenis | null>) {
 	const stageRef = useRef<HTMLDivElement>(null);
 	const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
