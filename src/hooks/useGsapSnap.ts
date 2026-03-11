@@ -3,10 +3,11 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type Lenis from 'lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function useGsapSnap(totalSnaps: number) {
+export function useGsapSnap(totalSnaps: number, lenisRef?: { current: Lenis | null }) {
 	const stageRef = useRef<HTMLDivElement>(null);
 	const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -68,6 +69,9 @@ export function useGsapSnap(totalSnaps: number) {
 			let lastScrollY = window.scrollY;
 			let observer: ReturnType<typeof ScrollTrigger.observe> | null = null;
 
+			const lenisStop = () => lenisRef?.current?.stop();
+			const lenisStart = () => lenisRef?.current?.start();
+
 			const syncWindowScroll = (y: number) => window.scrollTo(0, Math.round(y));
 
 			const getTravelDuration = (fromY: number, toY: number) =>
@@ -99,8 +103,12 @@ export function useGsapSnap(totalSnaps: number) {
 				});
 			};
 
-			const releaseToContent = () => animateStageScroll(stageBottom() + 2);
-			const enterFromContent = () => animateStageScroll(stageTop(), () => observer?.enable());
+			const releaseToContent = () =>
+				animateStageScroll(stageBottom() + 2, () => lenisStart());
+			const enterFromContent = () => {
+				lenisStop();
+				animateStageScroll(stageTop(), () => observer?.enable());
+			};
 
 			const syncPanelPositions = (activeIndex: number) => {
 				panels.forEach((panel, index) => {
@@ -164,8 +172,10 @@ export function useGsapSnap(totalSnaps: number) {
 
 				if (insideSnapZone) {
 					observer?.enable();
+					if (!animating) lenisStop();
 				} else {
 					observer?.disable();
+					if (!animating) lenisStart();
 				}
 
 				wasInsideSnapZone = insideSnapZone;
@@ -204,7 +214,7 @@ export function useGsapSnap(totalSnaps: number) {
 		}, stage);
 
 		return () => ctx.revert();
-	}, [totalSnaps]);
+	}, [totalSnaps, lenisRef]);
 
 	const setPanelRef = (index: number) => (node: HTMLDivElement | null) => {
 		panelRefs.current[index] = node;

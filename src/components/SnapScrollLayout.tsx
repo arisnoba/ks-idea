@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { useGsapSnap } from '@/hooks/useGsapSnap';
+import { useLenis } from '@/hooks/useLenis';
 import styles from './SnapScrollLayout.module.scss';
 
 interface SnapScrollLayoutProps {
@@ -10,7 +11,8 @@ interface SnapScrollLayoutProps {
 }
 
 export default function SnapScrollLayout({ snapSections, freeSections }: SnapScrollLayoutProps) {
-	const { stageRef, setPanelRef } = useGsapSnap(snapSections.length);
+	const lenisRef = useLenis();
+	const { stageRef, setPanelRef } = useGsapSnap(snapSections.length, lenisRef);
 
 	return (
 		<div className={styles.layout}>
