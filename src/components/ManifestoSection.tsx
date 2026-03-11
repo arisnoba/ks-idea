@@ -6,10 +6,11 @@ import styles from "./ManifestoSection.module.scss";
 
 interface VideoPlayerProps {
   src: string;
+  poster: string;
   className?: string;
 }
 
-function VideoPlayer({ src, className }: VideoPlayerProps) {
+function VideoPlayer({ src, poster, className }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLInputElement>(null);
@@ -108,6 +109,8 @@ function VideoPlayer({ src, className }: VideoPlayerProps) {
       <video
         ref={videoRef}
         src={src}
+        poster={poster}
+        preload="metadata"
         muted
         loop
         playsInline
@@ -208,24 +211,34 @@ export default function ManifestoSection() {
   return (
     <section className={`section-manifesto ${styles.manifesto}`} id="work">
       <div className="container">
-        <motion.div
-          className={styles.videoWrapper}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
-        >
+        <div className={styles.videoWrapper}>
           {/* Desktop 16:9 */}
-          <VideoPlayer
-            src="/video/manifesto_1920_optim.mp4"
-            className={styles.desktop}
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7 }}
+          >
+            <VideoPlayer
+              src="/video/manifesto_1920_optim.mp4"
+              poster="/images/manifesto_1920_optim.jpg"
+              className={styles.desktop}
+            />
+          </motion.div>
           {/* Mobile 9:16 */}
-          <VideoPlayer
-            src="/video/manifesto_1080_optim.mp4"
-            className={styles.mobile}
-          />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7 }}
+          >
+            <VideoPlayer
+              src="/video/manifesto_1080_optim.mp4"
+              poster="/images/manifesto_1080_optim.jpg"
+              className={styles.mobile}
+            />
+          </motion.div>
+        </div>
       </div>
     </section>
   );

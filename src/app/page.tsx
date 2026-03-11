@@ -11,12 +11,10 @@ export default function Home() {
 		<>
 			<Header />
 			<SnapScrollLayout
-				snapSections={[
-					<HeroSection key='hero' />,
-					<ClientsSection key='clients' />,
-				]}
+				snapSections={[<HeroSection key='hero' />]}
 				freeSections={
 					<main>
+						<ClientsSection />
 						<FAQSection />
 						<ManifestoSection />
 						<Footer />

@@ -66,16 +66,26 @@ export default function ClientsSection() {
 	return (
 		<section className={`section-clients ${styles.clients}`}>
 			<div className="container">
-				<motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
-					<h2 className={`heading-xl ${styles.heading}`}>Clients</h2>
-					<div className={styles.list}>
-						{clients.map((name, i) => (
-							<span key={name} className={`body-base ${styles.client}`}>
-								{name}
-								{i < clients.length - 1 ? ' ' : ''}
-							</span>
-						))}
-					</div>
+				<motion.h2
+					className={`heading-xl ${styles.heading}`}
+					initial={{ opacity: 0, y: 32 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					viewport={{ once: true, margin: '-100px' }}
+					transition={{ duration: 0.6 }}>
+					Clients
+				</motion.h2>
+				<motion.div
+					className={styles.list}
+					initial={{ opacity: 0, y: 32 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					viewport={{ once: true, margin: '-80px' }}
+					transition={{ duration: 0.7, delay: 0.6 }}>
+					{clients.map((name, i) => (
+						<span key={name} className={`body-base ${styles.client}`}>
+							{name}
+							{i < clients.length - 1 ? ' ' : ''}
+						</span>
+					))}
 				</motion.div>
 			</div>
 		</section>

@@ -65,48 +65,40 @@ export function useGsapSnap(totalSnaps: number) {
 			let lastScrollY = window.scrollY;
 			let observer: ReturnType<typeof ScrollTrigger.observe> | null = null;
 			const isTouchDevice = ScrollTrigger.isTouch === 1 || window.matchMedia('(pointer: coarse)').matches;
+			const syncWindowScroll = (y: number) => {
+				window.scrollTo(0, Math.round(y));
+			};
+			const getTravelDuration = (fromY: number, toY: number) => gsap.utils.clamp(0.88, 1.08, Math.abs(toY - fromY) / 900);
 
 			const stageTop = () => stage.offsetTop;
 			const stageBottom = () => stage.offsetTop + stage.offsetHeight;
-			const releaseToContent = () => {
-				const scrollState = { y: window.scrollY };
-				const targetY = stageBottom() + 2;
+			const animateStageScroll = (targetY: number, onComplete?: () => void) => {
+				const startY = window.scrollY;
+				const scrollState = { y: startY };
 
 				animating = true;
 				observer?.disable();
 				gsap.to(scrollState, {
 					y: targetY,
-					duration: 0.72,
-					ease: 'power2.inOut',
+					duration: getTravelDuration(startY, targetY),
+					ease: 'sine.inOut',
 					onUpdate: () => {
-						window.scrollTo(0, scrollState.y);
+						syncWindowScroll(scrollState.y);
 						ScrollTrigger.update();
 					},
 					onComplete: () => {
 						animating = false;
-						window.scrollTo(0, targetY);
+						syncWindowScroll(targetY);
+						onComplete?.();
 					},
 				});
 			};
+			const releaseToContent = () => {
+				animateStageScroll(stageBottom() + 2);
+			};
 			const enterFromContent = () => {
-				const scrollState = { y: window.scrollY };
-				const targetY = stageTop();
-
-				animating = true;
-				observer?.disable();
-				gsap.to(scrollState, {
-					y: targetY,
-					duration: 0.72,
-					ease: 'power2.inOut',
-					onUpdate: () => {
-						window.scrollTo(0, scrollState.y);
-						ScrollTrigger.update();
-					},
-					onComplete: () => {
-						animating = false;
-						window.scrollTo(0, targetY);
-						observer?.enable();
-					},
+				animateStageScroll(stageTop(), () => {
+					observer?.enable();
 				});
 			};
 			const syncPanelPositions = (activeIndex: number) => {
@@ -152,8 +144,8 @@ export function useGsapSnap(totalSnaps: number) {
 
 				gsap.timeline({
 					defaults: {
-						duration: 0.72,
-						ease: 'power2.inOut',
+						duration: 0.88,
+						ease: 'sine.inOut',
 					},
 					onComplete: () => {
 						currentIndex = nextIndex;

@@ -73,65 +73,85 @@ export default function FAQSection() {
 	return (
 		<section className={`section-faq ${styles.faq}`}>
 			<div className="container">
-				<motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.7 }}>
-					<h2 className={`heading-xl ${styles.heading}`}>
-						6 Questions<sup>*</sup>
-					</h2>
-					<div className={styles.list}>
-						{faqData.map((item, index) => (
-							<motion.div key={index} className={`${styles.item} ${openIndex === index ? styles.active : ''}`} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.5, ease: 'easeOut', delay: index * 0.08 }}>
-								<div className={styles.header}>
-									<button className={styles.question} onClick={() => toggle(index)} type="button">
-										<span className={`heading-lg ${styles.title}`}>
-											Q{index + 1}. {item.title}
-										</span>
-										<div className={styles.indicator}>
-											{index === 0 && <span className={styles.guide}>(내려보기)</span>}
-											<motion.div className={styles.arrow} initial={false} animate={{ rotate: openIndex === index ? 180 : 0 }} transition={{ duration: 0.3, ease: 'easeInOut' }}>
-												<svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M7 12L0.0717968 0L13.9282 0L7 12Z" fill="currentColor" />
-												</svg>
-											</motion.div>
-										</div>
-									</button>
-									<p className={`body-sm ${styles.subtitle}`}>{item.subtitle}</p>
-								</div>
-								<AnimatePresence initial={false}>
-									{openIndex === index && (
-										<motion.div
-											className={styles.answer}
-											initial={{ height: 0, opacity: 0 }}
-											animate={{ height: 'auto', opacity: 1 }}
-											exit={{ height: 0, opacity: 0 }}
-											transition={{ duration: 0.3, ease: 'easeInOut' }}>
-											<ul className={styles.itemList}>
-												{item.items.map((line, i) => {
-													const firstSpaceIndex = line.indexOf(' ');
-													const number = line.substring(0, firstSpaceIndex);
-													const content = line.substring(firstSpaceIndex + 1);
-													return (
-														<li key={i}>
-															<span className={styles.itemNumber}>{number}</span>
-															<span className={styles.itemText}>{content}</span>
-														</li>
-													);
-												})}
-											</ul>
+				<motion.h2
+					className={`heading-xl ${styles.heading}`}
+					initial={{ opacity: 0, y: 40 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					viewport={{ once: true, margin: '-100px' }}
+					transition={{ duration: 0.7 }}>
+					6 Questions<sup>*</sup>
+				</motion.h2>
+				<motion.div
+					className={styles.list}
+					initial={{ opacity: 0, y: 32 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					viewport={{ once: true, margin: '-80px' }}
+					transition={{ duration: 0.55, ease: 'easeOut', delay: 0.2 }}>
+					{faqData.map((item, index) => (
+						<div key={index} className={`${styles.item} ${openIndex === index ? styles.active : ''}`}>
+							<div className={styles.header}>
+								<button className={styles.question} onClick={() => toggle(index)} type="button">
+									<span className={`heading-lg ${styles.title}`}>
+										Q{index + 1}. {item.title}
+									</span>
+									<div className={styles.indicator}>
+										{index === 0 && <span className={styles.guide}>(내려보기)</span>}
+										<motion.div className={styles.arrow} initial={false} animate={{ rotate: openIndex === index ? 180 : 0 }} transition={{ duration: 0.3, ease: 'easeInOut' }}>
+											<svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M7 12L0.0717968 0L13.9282 0L7 12Z" fill="currentColor" />
+											</svg>
 										</motion.div>
-									)}
-								</AnimatePresence>
-							</motion.div>
-						))}
-					</div>
-
-					<div className={styles.footer}>
-						<p className={`body-base ${styles.footerMain}`}>지금, KS IDEA를 만나 상의하세요</p>
-						<p className={`caption ${styles.footerSub}`}>
-							<span>*</span>
-							<span>6 Questions는 Brand Clinic를 위한 사전 분석 툴로서 그 저작권은 KS IDEA에 있습니다</span>
-						</p>
-					</div>
+									</div>
+								</button>
+								<p className={`body-sm ${styles.subtitle}`}>{item.subtitle}</p>
+							</div>
+							<AnimatePresence initial={false}>
+								{openIndex === index && (
+									<motion.div
+										className={styles.answer}
+										initial={{ height: 0, opacity: 0 }}
+										animate={{ height: 'auto', opacity: 1 }}
+										exit={{ height: 0, opacity: 0 }}
+										transition={{ duration: 0.3, ease: 'easeInOut' }}>
+										<ul className={styles.itemList}>
+											{item.items.map((line, i) => {
+												const firstSpaceIndex = line.indexOf(' ');
+												const number = line.substring(0, firstSpaceIndex);
+												const content = line.substring(firstSpaceIndex + 1);
+												return (
+													<li key={i}>
+														<span className={styles.itemNumber}>{number}</span>
+														<span className={styles.itemText}>{content}</span>
+													</li>
+												);
+											})}
+										</ul>
+									</motion.div>
+								)}
+							</AnimatePresence>
+						</div>
+					))}
 				</motion.div>
+
+				<div className={styles.footer}>
+					<motion.p
+						className={`body-base ${styles.footerMain}`}
+						initial={{ opacity: 0, y: 24 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, margin: '-80px' }}
+						transition={{ duration: 0.3, delay: 0.5 }}>
+						지금, KS IDEA를 만나 상의하세요
+					</motion.p>
+					<motion.p
+						className={`caption ${styles.footerSub}`}
+						initial={{ opacity: 0, y: 24 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, margin: '-80px' }}
+						transition={{ duration: 0.3, delay: 0.7 }}>
+						<span>*</span>
+						<span>6 Questions는 Brand Clinic를 위한 사전 분석 툴로서 그 저작권은 KS IDEA에 있습니다</span>
+					</motion.p>
+				</div>
 			</div>
 		</section>
 	);
