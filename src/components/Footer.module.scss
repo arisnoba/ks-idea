@@ -56,7 +56,7 @@
 }
 
 .contactMail {
-	font-size: clamp($font-body-sm, 1.5vw, 24px);
+	font-size: clamp(18px, 1.5vw, 24px);
 	opacity: 1;
 	transition: opacity 0.2s ease;
 
@@ -65,7 +65,7 @@
 	}
 }
 .contactMap {
-	font-size: clamp($font-body-sm, 1.5vw, 22px);
+	font-size: clamp(16px, 1.5vw, 22px);
 	opacity: 1;
 	transition: opacity 0.2s ease;
 
