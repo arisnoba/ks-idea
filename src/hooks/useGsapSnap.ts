@@ -32,6 +32,7 @@ export function useGsapSnap(totalSnaps: number) {
 			let wasInsideSnapZone = false;
 			let lastScrollY = window.scrollY;
 			let observer: ReturnType<typeof ScrollTrigger.observe> | null = null;
+			const isTouchDevice = ScrollTrigger.isTouch === 1 || window.matchMedia('(pointer: coarse)').matches;
 
 			const stageTop = () => stage.offsetTop;
 			const stageBottom = () => stage.offsetTop + stage.offsetHeight;
@@ -154,6 +155,8 @@ export function useGsapSnap(totalSnaps: number) {
 			const handleScroll = () => {
 				syncObserver();
 			};
+			const goNext = () => updatePanelState(currentIndex + 1, 1);
+			const goPrev = () => updatePanelState(currentIndex - 1, -1);
 
 			syncPanelPositions(0);
 
@@ -169,8 +172,22 @@ export function useGsapSnap(totalSnaps: number) {
 						self.event.preventDefault();
 					}
 				},
-				onDown: () => updatePanelState(currentIndex + 1, 1),
-				onUp: () => updatePanelState(currentIndex - 1, -1),
+				onDown: () => {
+					if (isTouchDevice) {
+						goPrev();
+						return;
+					}
+
+					goNext();
+				},
+				onUp: () => {
+					if (isTouchDevice) {
+						goNext();
+						return;
+					}
+
+					goPrev();
+				},
 			});
 
 			window.addEventListener('scroll', handleScroll, { passive: true });
