@@ -14,7 +14,7 @@ KS IDEA 브랜드 성장 연구소 웹사이트 리뉴얼.
 | 프레임워크 | Next.js (App Router, `output: 'export'`) |
 | 언어 | TypeScript |
 | CSS | Tailwind CSS v4 (`@theme`) + SCSS (`clamp`) |
-| 애니메이션 | Framer Motion |
+| 애니메이션 | Framer Motion + GSAP + Lenis |
 | 폰트 | Futura PT (Typekit) + SUIT Variable (CDN) |
 | 배포 | 정적 빌드(`out/`) → 웹호스팅 직접 업로드 |
 
@@ -71,8 +71,9 @@ KS IDEA 브랜드 성장 연구소 웹사이트 리뉴얼.
 - 하나만 열리거나 복수 열림 옵션
 
 ### 스냅 스크롤 (Snap Scroll)
-- Hero 섹션은 GSAP ScrollTrigger Observer를 이용한 전체 화면 스냅 적용
-- 이후 섹션은 부드러운 수직 스크롤 (Lenis) 연동
+- Hero 섹션은 GSAP ScrollTrigger Observer를 이용한 전체 화면 스냅 적용 (`useGsapSnap.ts`)
+- 스냅 구간 외에는 Lenis 부드러운 스크롤 활성화 (`useLenis.ts`)
+- 스크롤 위치에 따라 Header 패딩이 GSAP으로 동적 전환
 
 ### 정적 배포
 - `next build` → `out/` 디렉토리 생성
@@ -91,7 +92,9 @@ ks-idea/
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx
-│   │   └── page.tsx
+│   │   ├── page.tsx
+│   │   ├── robots.ts
+│   │   └── sitemap.ts
 │   ├── components/
 │   │   ├── Header.tsx
 │   │   ├── HeroSection.tsx
@@ -101,7 +104,8 @@ ks-idea/
 │   │   ├── Footer.tsx
 │   │   └── SnapScrollLayout.tsx
 │   ├── hooks/
-│   │   └── useGsapSnap.ts
+│   │   ├── useGsapSnap.ts
+│   │   └── useLenis.ts
 │   ├── styles/
 │   │   ├── globals.css
 │   │   └── scss/

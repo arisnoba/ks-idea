@@ -21,6 +21,12 @@
 	word-spacing: 0.15em;
 }
 
+.wordWrapper {
+	display: inline-block;
+	clip-path: inset(0 0 -0.2em 0);
+	vertical-align: bottom;
+}
+
 .client {
-	display: inline;
+	display: inline-block;
 }

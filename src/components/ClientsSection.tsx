@@ -1,7 +1,30 @@
 'use client';
 
+import { Fragment } from 'react';
 import { motion } from 'framer-motion';
 import styles from './ClientsSection.module.scss';
+
+const containerVariants = {
+	hidden: {},
+	visible: {
+		transition: {
+			staggerChildren: 0.04,
+			delayChildren: 0.1,
+		},
+	},
+};
+
+const clientVariants = {
+	hidden: { y: '105%', opacity: 0 },
+	visible: {
+		y: 0,
+		opacity: 1,
+		transition: {
+			duration: 0.8,
+			ease: [0.22, 1, 0.36, 1] as const,
+		},
+	},
+};
 
 const clients = [
 	'호카',
@@ -76,15 +99,22 @@ export default function ClientsSection() {
 				</motion.h2>
 				<motion.div
 					className={styles.list}
-					initial={{ opacity: 0, y: 32 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true, margin: '-80px' }}
-					transition={{ duration: 0.7, delay: 0.6 }}>
+					variants={containerVariants}
+					initial='hidden'
+					whileInView='visible'
+					viewport={{ once: true, margin: '-80px' }}>
 					{clients.map((name, i) => (
-						<span key={name} className={`body-base ${styles.client}`}>
-							{name}
+						<Fragment key={name}>
+							<span className={styles.wordWrapper}>
+								<motion.span
+									className={`body-base ${styles.client}`}
+									variants={clientVariants}
+								>
+									{name}
+								</motion.span>
+							</span>
 							{i < clients.length - 1 ? ' ' : ''}
-						</span>
+						</Fragment>
 					))}
 				</motion.div>
 			</div>
