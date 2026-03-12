@@ -1,7 +1,7 @@
 'use client';
 
-import type { CSSProperties } from 'react';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import { gsap } from 'gsap';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Header.module.scss';
@@ -13,18 +13,82 @@ function getExpandedPaddingTop(viewportWidth: number) {
 export default function Header() {
 	const [isScrolling, setIsScrolling] = useState(false);
 	const [scrollProgress, setScrollProgress] = useState(0);
-	const [paddingTop, setPaddingTop] = useState(60);
+	const headerRef = useRef<HTMLElement | null>(null);
 	const frameRef = useRef<number | null>(null);
 	const scrollStopTimerRef = useRef<number | null>(null);
+	const progressTweenRef = useRef<gsap.core.Tween | null>(null);
+	const progressStateRef = useRef({ value: 0 });
+	const targetProgressRef = useRef(0);
+	const roundedProgressRef = useRef(0);
+	const paddingMetricsRef = useRef({
+		expandedPaddingTop: 60,
+		reductionDistance: 30,
+	});
+
+	const syncPaddingMetrics = useEffectEvent(() => {
+		const expandedPaddingTop = getExpandedPaddingTop(window.innerWidth);
+
+		paddingMetricsRef.current = {
+			expandedPaddingTop,
+			reductionDistance: expandedPaddingTop / 2,
+		};
+	});
+
+	const renderHeaderPadding = useEffectEvent((progress: number) => {
+		const header = headerRef.current;
+
+		if (!header) {
+			return;
+		}
+
+		const { expandedPaddingTop, reductionDistance } = paddingMetricsRef.current;
+		const nextPaddingTop = expandedPaddingTop - (reductionDistance * progress);
+		const nextRoundedProgress = Number(progress.toFixed(1));
+
+		header.style.paddingTop = `${nextPaddingTop.toFixed(2)}px`;
+
+		if (roundedProgressRef.current !== nextRoundedProgress) {
+			roundedProgressRef.current = nextRoundedProgress;
+			setScrollProgress(nextRoundedProgress);
+		}
+	});
+
+	const animateHeaderProgress = useEffectEvent((nextProgress: number, immediate: boolean) => {
+		if (Math.abs(targetProgressRef.current - nextProgress) < 0.001 && !immediate) {
+			return;
+		}
+
+		targetProgressRef.current = nextProgress;
+		progressTweenRef.current?.kill();
+
+		if (immediate) {
+			progressStateRef.current.value = nextProgress;
+			renderHeaderPadding(nextProgress);
+			return;
+		}
+
+		progressTweenRef.current = gsap.to(progressStateRef.current, {
+			value: nextProgress,
+			duration: nextProgress > progressStateRef.current.value ? 1.15 : 0.9,
+			ease: nextProgress > progressStateRef.current.value ? 'expo.out' : 'power3.out',
+			overwrite: true,
+			onUpdate: () => {
+				renderHeaderPadding(progressStateRef.current.value);
+			},
+			onComplete: () => {
+				progressTweenRef.current = null;
+				renderHeaderPadding(nextProgress);
+			},
+		});
+	});
 
 	const syncScrollState = useEffectEvent((active: boolean) => {
-		const expandedPaddingTop = getExpandedPaddingTop(window.innerWidth);
-		const reductionDistance = expandedPaddingTop / 2;
-		const nextProgress = reductionDistance === 0 ? 1 : Math.min(window.scrollY / reductionDistance, 1);
-		const nextPaddingTop = expandedPaddingTop - (reductionDistance * nextProgress);
+		syncPaddingMetrics();
 
-		setScrollProgress((prev) => (Math.abs(prev - nextProgress) < 0.001 ? prev : nextProgress));
-		setPaddingTop((prev) => (Math.abs(prev - nextPaddingTop) < 0.25 ? prev : nextPaddingTop));
+		const { reductionDistance } = paddingMetricsRef.current;
+		const nextProgress = reductionDistance === 0 ? 1 : Math.min(window.scrollY / reductionDistance, 1);
+
+		animateHeaderProgress(nextProgress, !active);
 
 		if (!active) {
 			return;
@@ -65,6 +129,7 @@ export default function Header() {
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
 			window.removeEventListener('resize', handleResize);
+			progressTweenRef.current?.kill();
 
 			if (frameRef.current !== null) {
 				window.cancelAnimationFrame(frameRef.current);
@@ -76,16 +141,12 @@ export default function Header() {
 		};
 	}, []);
 
-	const headerStyle = {
-		'--header-padding-top': `${paddingTop.toFixed(2)}px`,
-	} as CSSProperties;
-
 	return (
 		<header
+			ref={headerRef}
 			className={`header ${styles.header}`}
 			data-scrolling={isScrolling}
 			data-scroll-progress={scrollProgress.toFixed(1)}
-			style={headerStyle}
 		>
 			<nav className={`container ${styles.nav}`}>
 				<Link href="/" className={styles.logo}>

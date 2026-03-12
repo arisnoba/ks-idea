@@ -2,13 +2,12 @@
 @use '../styles/scss/mixins' as *;
 
 .header {
-	--header-padding-top: 60px;
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	z-index: 100;
-	padding-top: var(--header-padding-top);
+	padding-top: clamp(60px, 5vw, 120px);
 	will-change: padding-top;
 }
 
