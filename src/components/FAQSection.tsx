@@ -88,7 +88,7 @@ export default function FAQSection() {
 					viewport={{ once: true, margin: '-80px' }}
 					transition={{ duration: 0.55, ease: 'easeOut', delay: 0.2 }}>
 					{faqData.map((item, index) => (
-						<div key={index} className={`${styles.item} ${openIndex === index ? styles.active : ''}`}>
+						<div key={index} className={`${styles.item} ${openIndex === index ? styles.active : ''} ${openIndex !== null && openIndex !== index ? styles.inactive : ''}`}>
 							<div className={styles.header}>
 								<button className={styles.question} onClick={() => toggle(index)} type="button">
 									<span className={`heading-lg ${styles.title}`}>
