@@ -11,22 +11,65 @@
 	text-align: center;
 }
 
-.list {
-	text-align: justify;
-	text-align-last: left;
-	max-width: 1100px;
-	margin: 0 auto;
-	line-height: 2.35em;
-	word-break: keep-all;
-	word-spacing: 0.15em;
+.listWrap {
+	position: relative;
 }
 
-.wordWrapper {
+.list {
+	max-width: 1100px;
+	margin: 0 auto;
+	width: 100%;
+}
+
+.rowMask {
+	overflow: hidden;
+	padding-bottom: 0.2em;
+}
+
+.row {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: baseline;
+	justify-content: space-between;
+	width: 100%;
+	line-height: 2.35em;
+	word-break: keep-all;
+}
+
+.singleRow {
+	justify-content: flex-start;
+	gap: 0.55em;
+}
+
+.client,
+.measureWord {
 	display: inline-block;
-	clip-path: inset(0 0 -0.2em 0);
+	white-space: nowrap;
+}
+
+.measurement {
+	position: absolute;
+	inset: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.measureList {
+	line-height: 2.35em;
+	word-break: keep-all;
+}
+
+.measureWord {
+	margin-right: 0.3em;
 	vertical-align: bottom;
 }
 
-.client {
-	display: inline-block;
+@media (max-width: 767px) {
+	// .singleRow {
+	// 	gap: 0.25em;
+	// }
+
+	.measureWord {
+		margin-right: 0.25em;
+	}
 }
