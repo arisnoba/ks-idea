@@ -31,7 +31,7 @@ export default function Footer() {
 							transition={{ duration: 0.55 }}
 							style={footerLinkRevealStyle}
 							transformTemplate={footerLinkTransformTemplate}>
-							<Image src="/images/instagram.svg" alt="Instagram" width={28} height={28} />
+							<Image src="/assets/images/instagram.svg" alt="Instagram" width={28} height={28} />
 							<span className={`body-base ${styles.snsLabel}`}>인스타그램 보기</span>
 						</motion.a>
 						<motion.a
@@ -46,7 +46,7 @@ export default function Footer() {
 							transition={{ duration: 0.55, delay: 0.08 }}
 							style={footerLinkRevealStyle}
 							transformTemplate={footerLinkTransformTemplate}>
-							<Image src="/images/youtube.svg" alt="YouTube" width={28} height={28} />
+							<Image src="/assets/images/youtube.svg" alt="YouTube" width={28} height={28} />
 							<span className={`body-base ${styles.snsLabel}`}>유튜브 보기</span>
 						</motion.a>
 					</div>

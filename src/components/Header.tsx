@@ -150,7 +150,7 @@ export default function Header() {
 		>
 			<nav className={`container ${styles.nav}`}>
 				<Link href="/" className={styles.logo}>
-					<Image src="/images/logo.svg" alt="KS IDEA" width={120} height={40} />
+					<Image src="/assets/images/logo.svg" alt="KS IDEA" width={120} height={40} />
 				</Link>
 			</nav>
 		</header>

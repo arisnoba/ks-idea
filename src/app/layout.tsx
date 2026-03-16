@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     siteName: "KS IDEA",
     images: [
       {
-        url: "/images/img-og.jpg",
+        url: "/assets/images/img-og.jpg",
         width: 1200,
         height: 630,
         alt: "KS IDEA - The Brand Clinic",
@@ -49,20 +49,20 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "KS IDEA | The Brand Clinic",
     description: "브랜드 성장 연구소 KS IDEA - Beyond the Plateau",
-    images: ["/images/img-og.jpg"],
+    images: ["/assets/images/img-og.jpg"],
   },
   icons: {
     icon: [
-      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon/favicon.ico" },
+      { url: "/assets/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/assets/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/assets/favicon/favicon.ico" },
     ],
-    shortcut: "/favicon/favicon.ico",
+    shortcut: "/assets/favicon/favicon.ico",
     apple: [
-      { url: "/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/assets/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
-  manifest: "/favicon/site.webmanifest",
+  manifest: "/assets/favicon/site.webmanifest",
   robots: {
     index: true,
     follow: true,
@@ -86,7 +86,7 @@ export default function RootLayout({
     "@type": "Organization",
     "name": "KS IDEA",
     "url": SITE_URL,
-    "logo": `${SITE_URL}/images/logo.svg`,
+    "logo": `${SITE_URL}/assets/images/logo.svg`,
     "description": "성장이 멈춘 브랜드를 위한 정밀 진단과 치료, 브랜드 성장 연구소 KS IDEA입니다.",
     "address": {
       "@type": "PostalAddress",

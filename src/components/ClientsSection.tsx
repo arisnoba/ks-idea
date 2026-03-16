@@ -11,7 +11,7 @@ const rowVariants = {
 		opacity: 1,
 		transition: {
 			duration: 0.8,
-			delay: 0.12 + (index * 0.08),
+			delay: 0.2 + index * 0.2,
 			ease: [0.22, 1, 0.36, 1] as const,
 		},
 	}),
@@ -125,7 +125,7 @@ export default function ClientsSection() {
 			return;
 		}
 
-		setRows((previousRows) => (areRowsEqual(previousRows, nextRows) ? previousRows : nextRows));
+		setRows(previousRows => (areRowsEqual(previousRows, nextRows) ? previousRows : nextRows));
 	});
 
 	useEffect(() => {
@@ -184,9 +184,8 @@ export default function ClientsSection() {
 									variants={rowVariants}
 									custom={rowIndex}
 									initial={isInView ? 'visible' : 'hidden'}
-									animate={isInView ? 'visible' : 'hidden'}
-								>
-									{row.map((name) => (
+									animate={isInView ? 'visible' : 'hidden'}>
+									{row.map(name => (
 										<span key={name} className={`body-base ${styles.client}`}>
 											{name}
 										</span>
@@ -201,11 +200,10 @@ export default function ClientsSection() {
 							{clients.map((name, index) => (
 								<span
 									key={name}
-									ref={(node) => {
+									ref={node => {
 										measureItemRefs.current[index] = node;
 									}}
-									className={`body-base ${styles.measureWord}`}
-								>
+									className={`body-base ${styles.measureWord}`}>
 									{name}
 								</span>
 							))}

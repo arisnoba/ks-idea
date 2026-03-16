@@ -54,7 +54,7 @@ export default function HeroSection() {
 		<section className={`section-hero ${styles.hero}`} id="about">
 			<div className={`container ${styles.heroInner}`}>
 				<Link href="/" className={styles.mobileLogo} aria-label="KS IDEA">
-					<Image src="/images/logo.svg" alt="KS IDEA" width={120} height={40} />
+					<Image src="/assets/images/logo.svg" alt="KS IDEA" width={120} height={40} />
 				</Link>
 				<div className={styles.about}>
 					{/* 타이틀 - Masked Reveal */}

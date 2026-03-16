@@ -302,8 +302,8 @@ export default function ManifestoSection() {
 						transition={{ duration: 0.7 }}
 					>
 						<VideoPlayer
-							src='/video/manifesto_1920_optim.mp4'
-							poster='/images/manifesto_1920_optim.webp'
+							src='/assets/video/manifesto_1920_optim.mp4'
+							poster='/assets/images/manifesto_1920_optim.webp'
 							className={styles.desktop}
 						/>
 					</motion.div>
@@ -315,8 +315,8 @@ export default function ManifestoSection() {
 						transition={{ duration: 0.7 }}
 					>
 						<VideoPlayer
-							src='/video/manifesto_1080_optim.mp4'
-							poster='/images/manifesto_1080_optim.webp'
+							src='/assets/video/manifesto_1080_optim.mp4'
+							poster='/assets/images/manifesto_1080_optim.webp'
 							className={styles.mobile}
 						/>
 					</motion.div>
