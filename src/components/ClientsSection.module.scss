@@ -38,7 +38,7 @@
 
 .singleRow {
 	justify-content: flex-start;
-	gap: 0.55em;
+	gap: 0.5em;
 }
 
 .client,
@@ -65,9 +65,9 @@
 }
 
 @media (max-width: 767px) {
-	// .singleRow {
-	// 	gap: 0.25em;
-	// }
+	.singleRow {
+		gap: 0.35em;
+	}
 
 	.measureWord {
 		margin-right: 0.25em;

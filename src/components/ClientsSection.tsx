@@ -147,20 +147,24 @@ export default function ClientsSection() {
 
 		let isMounted = true;
 
+		// fonts.ready 이후 재측정
 		if ('fonts' in document) {
 			document.fonts.ready.then(() => {
-				if (!isMounted) {
-					return;
-				}
-
+				if (!isMounted) return;
 				syncRows();
 			});
 		}
+
+		// 삼성 인터넷 등 fonts.ready 타이밍이 늦은 브라우저 대비 fallback 재측정
+		const timeoutId = setTimeout(() => {
+			if (isMounted) syncRows();
+		}, 800);
 
 		return () => {
 			isMounted = false;
 			window.cancelAnimationFrame(frameId);
 			observer.disconnect();
+			clearTimeout(timeoutId);
 		};
 	}, []);
 
