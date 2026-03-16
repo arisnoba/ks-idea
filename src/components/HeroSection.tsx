@@ -1,6 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
 import styles from './HeroSection.module.scss';
 
 const lines = [
@@ -50,7 +52,10 @@ const lineVariants = {
 export default function HeroSection() {
 	return (
 		<section className={`section-hero ${styles.hero}`} id="about">
-			<div className="container">
+			<div className={`container ${styles.heroInner}`}>
+				<Link href="/" className={styles.mobileLogo} aria-label="KS IDEA">
+					<Image src="/images/logo.svg" alt="KS IDEA" width={120} height={40} />
+				</Link>
 				<div className={styles.about}>
 					{/* 타이틀 - Masked Reveal */}
 					<div className={styles.headingWrapper}>
