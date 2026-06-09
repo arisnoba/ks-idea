@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import ClientsSection from '@/components/ClientsSection';
 import FAQSection from '@/components/FAQSection';
+import BrandDiagnosisSection from '@/components/BrandDiagnosisSection';
 import ManifestoSection from '@/components/ManifestoSection';
 import Footer from '@/components/Footer';
 import SnapScrollLayout from '@/components/SnapScrollLayout';
@@ -16,6 +17,7 @@ export default function Home() {
 					<main>
 						<ClientsSection />
 						<FAQSection />
+						<BrandDiagnosisSection />
 						<ManifestoSection />
 						<Footer />
 					</main>

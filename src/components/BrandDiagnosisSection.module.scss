@@ -1,0 +1,88 @@
+@use '../styles/scss/variables' as *;
+@use '../styles/scss/mixins' as *;
+
+.diagnosis {
+	padding: clamp(72px, 9vw, 120px) 0 clamp(96px, 11vw, 150px);
+	background-color: var(--color-brand);
+	color: var(--color-white);
+}
+
+.inner {
+	max-width: 720px;
+	margin: 0 auto;
+	text-align: left;
+	word-break: keep-all;
+}
+
+.title {
+	color: var(--color-white);
+	margin-bottom: clamp(28px, 4vw, 42px);
+	font-family: var(--font-suit);
+	font-weight: 700;
+	line-height: 1.35;
+	letter-spacing: 0;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: clamp(8px, 1.5vw, 14px);
+	margin-bottom: clamp(32px, 6vw, 48px);
+
+	.paragraph:first-child {
+		p {
+			font-size: clamp(15px, 0.5vw + 13px, 20px);
+		}
+	}
+}
+
+.paragraph {
+	p {
+		font-family: var(--font-suit);
+		font-size: $font-body-base;
+		line-height: 2.3;
+		font-weight: 400;
+		color: var(--color-white);
+		opacity: 0.92;
+	}
+}
+
+.boldBlock {
+	p {
+		font-weight: 700;
+		opacity: 1;
+	}
+}
+
+.footnote {
+	opacity: 0.78;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+
+	p {
+		font-family: var(--font-suit);
+		font-size: $font-caption;
+		font-weight: 400;
+		line-height: 2.1;
+	}
+}
+
+@include mobile {
+	.diagnosis {
+		padding: 68px 0 100px;
+	}
+
+	.title {
+		margin-bottom: 26px;
+	}
+
+	.content {
+		gap: 10px;
+		margin-bottom: 36px;
+	}
+
+	.footnote {
+		gap: 0;
+	}
+}
