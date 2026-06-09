@@ -6,12 +6,12 @@ import Link from 'next/link';
 import styles from './HeroSection.module.scss';
 
 const lines = [
-	'성장하지 않는 브랜드는 사라진다',
+	'성장하지 않는 브랜드는 사라집니다',
 	'성장이 멈춘 브랜드가 해야 할 일은',
-	'그 원인을 찾아 그에 맞는 치료법을 적용하는 것이다',
-	"성장이 멈춘 지점을 우리는 'Plateau'라 부른다",
+	'그 원인을 찾아 그에 맞는 치료법을 적용하는 것입니다',
+	"성장이 멈춘 지점을 우리는 'Plateau'라 부릅니다",
 	'Beyond the Plateau,',
-	'이것이 The Brand Clinic의 존재 이유이다',
+	'이것이 The Brand Clinic의 존재 이유입니다',
 ];
 
 const containerVariants = {
